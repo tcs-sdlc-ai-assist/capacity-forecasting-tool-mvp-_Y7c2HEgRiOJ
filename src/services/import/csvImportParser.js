@@ -224,7 +224,19 @@ export class CsvImportParser {
         dynamicTyping: false,
         transformHeader(header, index) {
           const normalizedHeader = normalizeHeader(header, index);
-          sourceHeaders.push(normalizedHeader);
+          const numericIndex = Number(index);
+
+          // Papa Parse can invoke transformHeader twice. Keep the first
+          // original header row so empty and duplicate columns are not
+          // misread from the renamed second pass.
+          if (
+            Number.isInteger(numericIndex)
+            && numericIndex >= 0
+            && sourceHeaders[numericIndex] === undefined
+          ) {
+            sourceHeaders[numericIndex] = normalizedHeader;
+          }
+
           return normalizedHeader;
         },
       });
@@ -258,7 +270,9 @@ export class CsvImportParser {
     ];
 
     if (
-      headers.length === 0
+      sourceHeaders.length === 0
+      || sourceHeaders.every((header) => !header)
+      || headers.length === 0
       || headers.every((header) => !header)
     ) {
       return createFailureResult(

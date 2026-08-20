@@ -91,7 +91,7 @@ describe('ForecastMatrixTable', () => {
     expect(screen.getByRole('columnheader', {
       name: 'Beacon',
     })).toBeInTheDocument();
-    expect(screen.getByRole('rowheader')).not.toBeInTheDocument();
+    expect(screen.queryByRole('rowheader')).not.toBeInTheDocument();
     expect(screen.getAllByRole('row')).toHaveLength(2);
 
     const availableAllocation = screen.getByRole('button', {

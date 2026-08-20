@@ -332,9 +332,14 @@ export const ScenarioPanel = ({
   const resolvedPersistenceMode = persistenceMode
     ?? scenarioState.persistenceMode
     ?? null;
-  const workItems = Array.isArray(resolvedDataset?.workItems)
-    ? resolvedDataset.workItems
-    : [];
+  const workItems = useMemo(
+    () => (
+      Array.isArray(resolvedDataset?.workItems)
+        ? resolvedDataset.workItems
+        : []
+    ),
+    [resolvedDataset],
+  );
   const teamOptions = useMemo(
     () => resolveTeamOptions(resolvedDataset),
     [resolvedDataset],

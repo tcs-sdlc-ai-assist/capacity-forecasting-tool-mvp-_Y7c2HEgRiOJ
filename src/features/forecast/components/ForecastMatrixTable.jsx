@@ -468,11 +468,16 @@ export const ForecastMatrixTable = ({
   );
   const [sortingError, setSortingError] = useState(null);
   const [isSorting, setIsSorting] = useState(false);
-  const resolvedRows = Array.isArray(rows)
-    ? rows
-    : Array.isArray(data)
-      ? data
-      : [];
+  const resolvedRows = useMemo(
+    () => (
+      Array.isArray(rows)
+        ? rows
+        : Array.isArray(data)
+          ? data
+          : []
+    ),
+    [rows, data],
+  );
   const resolvedSorting = normalizeSorting(
     sorting ?? storeSorting,
   );

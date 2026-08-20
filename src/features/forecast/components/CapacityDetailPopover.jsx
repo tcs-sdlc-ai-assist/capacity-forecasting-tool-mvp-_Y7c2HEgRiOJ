@@ -320,7 +320,6 @@ export const CapacityDetailPopover = ({
   utilizationPercent = undefined,
   state = '',
   isAvailable = undefined,
-  title = 'Capacity details',
   ariaLabel = '',
   unavailableLabel = 'Unavailable',
   disabled = false,

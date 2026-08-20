@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import {
   createContext,
   useContext,
@@ -35,6 +36,7 @@ export const AuthProvider = ({
   fallback = null,
 }) => {
   const auth = useAuth();
+  const { restoreSession } = auth;
   const restorePromiseRef = useRef(null);
   const [restorationError, setRestorationError] = useState(null);
 
@@ -44,7 +46,7 @@ export const AuthProvider = ({
     if (!restorePromiseRef.current) {
       try {
         restorePromiseRef.current = Promise.resolve(
-          auth.restoreSession(),
+          restoreSession(),
         );
       } catch (error) {
         restorePromiseRef.current = Promise.reject(error);
@@ -72,7 +74,7 @@ export const AuthProvider = ({
     return () => {
       active = false;
     };
-  }, [auth.restoreSession]);
+  }, [restoreSession]);
 
   const value = useMemo(() => ({
     ...auth,

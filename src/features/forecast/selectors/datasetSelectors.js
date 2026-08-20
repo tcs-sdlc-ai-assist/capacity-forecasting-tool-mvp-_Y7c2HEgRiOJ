@@ -93,10 +93,6 @@ const hasOwn = (value, key) => (
   Object.prototype.hasOwnProperty.call(value, key)
 );
 
-const normalizeString = (value) => (
-  typeof value === 'string' ? value.trim() : ''
-);
-
 const normalizeSearchTerm = (value) => {
   if (value === null || value === undefined) {
     return '';

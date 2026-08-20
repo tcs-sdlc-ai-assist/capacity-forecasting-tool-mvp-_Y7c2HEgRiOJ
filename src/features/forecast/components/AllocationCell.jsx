@@ -338,7 +338,6 @@ StateIcon.propTypes = {
 const AllocationContent = ({
   formattedValue,
   state,
-  unavailableLabel,
 }) => {
   const stateConfig = CAPACITY_STATE_CONFIG[state];
 
@@ -348,10 +347,8 @@ const AllocationContent = ({
     >
       <span className="min-w-0">
         <span className="block text-sm font-semibold leading-5">
-          {formattedValue ?? unavailableLabel}
-          {formattedValue !== null ? (
-            <span className="sr-only"> allocation points</span>
-          ) : null}
+          {formattedValue}
+          <span className="sr-only"> allocation points</span>
         </span>
         <span className="block truncate text-xs font-medium opacity-80">
           {stateConfig.label}
@@ -369,9 +366,8 @@ const AllocationContent = ({
 };
 
 AllocationContent.propTypes = {
-  formattedValue: PropTypes.string,
+  formattedValue: PropTypes.string.isRequired,
   state: PropTypes.oneOf(Object.keys(CAPACITY_STATE_CONFIG)).isRequired,
-  unavailableLabel: PropTypes.string.isRequired,
 };
 
 /**
@@ -484,11 +480,20 @@ export const AllocationCell = ({
     && Boolean(resolvedTeam)
     && Boolean(resolvedPlanningLevel)
   );
+
+  if (formattedValue === null) {
+    return (
+      <span
+        className={`block min-h-12 w-full ${className}`}
+        aria-hidden="true"
+      />
+    );
+  }
+
   const content = (
     <AllocationContent
       formattedValue={formattedValue}
       state={resolvedState}
-      unavailableLabel={unavailableLabel}
     />
   );
 

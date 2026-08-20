@@ -28,6 +28,10 @@ export const DATASET_RECOVERY_NOTICE_CODE = (
   'DATASET_RECOVERED_FROM_INVALID_STATE'
 );
 
+export const MISSING_DATASET_NOTICE_MESSAGE = (
+  'No saved dataset was available. The bundled demo dataset has been loaded.'
+);
+
 const createError = (code, message) => ({
   code,
   message,
@@ -86,7 +90,7 @@ const normalizeReasonCode = (reason) => {
 
 const getRecoveryMessage = (reasonCode) => {
   if (reasonCode === RECOVERY_REASON_CODES.MISSING_DATASET) {
-    return 'No saved dataset was available. The bundled demo dataset has been loaded.';
+    return MISSING_DATASET_NOTICE_MESSAGE;
   }
 
   if (reasonCode === RECOVERY_REASON_CODES.UNSUPPORTED_SCHEMA) {
@@ -433,19 +437,21 @@ export class RecoveryService {
       ));
     }
 
-    const noticeResult = publishRecoveryNotice(
-      this.noticeCenterStore,
-      {
-        code: DATASET_RECOVERY_NOTICE_CODE,
-        severity: 'info',
-        message: getRecoveryMessage(reasonCode),
-        dismissible: true,
-        createdAt: timestamp,
-      },
-    );
+    if (reasonCode !== RECOVERY_REASON_CODES.MISSING_DATASET) {
+      const noticeResult = publishRecoveryNotice(
+        this.noticeCenterStore,
+        {
+          code: DATASET_RECOVERY_NOTICE_CODE,
+          severity: 'info',
+          message: getRecoveryMessage(reasonCode),
+          dismissible: true,
+          createdAt: timestamp,
+        },
+      );
 
-    if (noticeResult?.error) {
-      warnings.push({ ...noticeResult.error });
+      if (noticeResult?.error) {
+        warnings.push({ ...noticeResult.error });
+      }
     }
 
     const finalStatus = persistenceMode === 'memory'

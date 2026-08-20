@@ -167,7 +167,35 @@ const compareText = (first, second) => {
   return String(first).localeCompare(String(second));
 };
 
-const uniqueSortedStrings = (values) => (
+const getPlanningLevelSortRank = (value) => {
+  const normalized = String(value).trim().toLowerCase();
+
+  if (normalized === 'current pi') {
+    return 0;
+  }
+
+  if (normalized.endsWith(' train')) {
+    return 1;
+  }
+
+  return 2;
+};
+
+const comparePlanningLevels = (first, second) => {
+  const rankDiff = getPlanningLevelSortRank(first)
+    - getPlanningLevelSortRank(second);
+
+  if (rankDiff !== 0) {
+    return rankDiff;
+  }
+
+  return String(first).localeCompare(String(second), undefined, {
+    numeric: true,
+    sensitivity: 'base',
+  });
+};
+
+const uniqueSortedStrings = (values, compare = compareText) => (
   [...new Set(
     values
       .filter((value) => (
@@ -175,7 +203,7 @@ const uniqueSortedStrings = (values) => (
       ))
       .map((value) => String(value).trim())
       .filter(Boolean),
-  )].sort(compareText)
+  )].sort(compare)
 );
 
 const resolveDataset = (source) => {
@@ -292,7 +320,7 @@ const createOptions = (source) => {
         : []),
       ...workItems.map((item) => item?.planningLevel),
       ...capacityRecords.map((record) => record?.planningLevel),
-    ]),
+    ], comparePlanningLevels),
     owners: uniqueSortedStrings([
       ...(Array.isArray(dimensions.owners) ? dimensions.owners : []),
       ...workItems.map((item) => item?.owner),

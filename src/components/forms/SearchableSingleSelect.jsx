@@ -384,6 +384,21 @@ export const SearchableSingleSelect = ({
     inputRef.current?.focus();
   };
 
+  const handleToggleListbox = () => {
+    if (disabled) {
+      return;
+    }
+
+    if (isOpen) {
+      closeListbox();
+      inputRef.current?.focus();
+      return;
+    }
+
+    openListbox();
+    inputRef.current?.focus();
+  };
+
   const hasNoOptions = normalizedOptions.length === 0;
   const emptyOptionsMessage = hasNoOptions
     ? emptyMessage
@@ -433,6 +448,7 @@ export const SearchableSingleSelect = ({
           aria-autocomplete="list"
           aria-controls={listboxId}
           aria-expanded={isOpen}
+          aria-haspopup="listbox"
           aria-activedescendant={isOpen ? activeOptionId : undefined}
           aria-describedby={describedBy}
           aria-invalid={error ? 'true' : undefined}
@@ -444,12 +460,14 @@ export const SearchableSingleSelect = ({
           onKeyDown={handleKeyDown}
         />
 
-        <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1">
           {selectedOption && !disabled ? (
             <button
               type="button"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-md text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-800 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-1"
+              className="pointer-events-auto inline-flex h-7 w-7 items-center justify-center rounded-md text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-800 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-1"
               aria-label={clearLabel || `Clear ${label}`}
+              tabIndex={-1}
+              onMouseDown={(event) => event.preventDefault()}
               onClick={handleClear}
             >
               <svg
@@ -463,24 +481,34 @@ export const SearchableSingleSelect = ({
             </button>
           ) : null}
 
-          <span
-            className={`pointer-events-none ml-1 text-neutral-500 transition-transform ${
-              isOpen ? 'rotate-180' : ''
-            }`}
-            aria-hidden="true"
+          <button
+            type="button"
+            className="pointer-events-auto inline-flex h-7 w-7 items-center justify-center rounded-md text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-800 disabled:cursor-not-allowed"
+            aria-label={`${isOpen ? 'Close' : 'Open'} ${label} options`}
+            aria-expanded={isOpen}
+            aria-controls={listboxId}
+            tabIndex={-1}
+            disabled={disabled}
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={handleToggleListbox}
           >
-            <svg
-              className="h-4 w-4"
-              viewBox="0 0 20 20"
-              fill="currentColor"
+            <span
+              className={`transition-transform ${isOpen ? 'rotate-180' : ''}`}
+              aria-hidden="true"
             >
-              <path
-                fillRule="evenodd"
-                d="M5.22 7.97a.75.75 0 0 1 1.06 0L10 11.69l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.03a.75.75 0 0 1 0-1.06Z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </span>
+              <svg
+                className="h-4 w-4"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.22 7.97a.75.75 0 0 1 1.06 0L10 11.69l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.03a.75.75 0 0 1 0-1.06Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </span>
+          </button>
         </div>
 
         {isOpen ? (
@@ -488,7 +516,7 @@ export const SearchableSingleSelect = ({
             id={listboxId}
             role="listbox"
             aria-label={`${label} options`}
-            className="absolute z-30 mt-1 max-h-60 w-full overflow-auto rounded-md border border-neutral-200 bg-neutral-0 py-1 shadow-lg"
+            className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border border-neutral-200 bg-neutral-0 py-1 shadow-lg"
           >
             {filteredOptions.length > 0 ? (
               filteredOptions.map((option, index) => {

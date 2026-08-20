@@ -398,6 +398,21 @@ export const SearchableMultiSelect = ({
     }
   };
 
+  const handleToggleListbox = () => {
+    if (disabled) {
+      return;
+    }
+
+    if (isOpen) {
+      closeListbox();
+      inputRef.current?.focus();
+      return;
+    }
+
+    openListbox();
+    inputRef.current?.focus();
+  };
+
   const handleInputChange = (event) => {
     if (disabled) {
       return;
@@ -522,7 +537,7 @@ export const SearchableMultiSelect = ({
         </span>
       </div>
 
-      <div className="relative mt-1.5">
+      <div className={`relative mt-1.5 ${isOpen ? 'z-50' : ''}`}>
         {name ? (
           selectedValues.length > 0 ? (
             selectedValues.map((selectedValue, index) => (
@@ -567,28 +582,40 @@ export const SearchableMultiSelect = ({
           onKeyDown={handleKeyDown}
         />
 
-        <span
-          className={`pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-neutral-500 transition-transform ${
-            isOpen ? 'rotate-180' : ''
-          }`}
-          aria-hidden="true"
-        >
-          <svg
-            className="h-4 w-4"
-            viewBox="0 0 20 20"
-            fill="currentColor"
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1">
+          <button
+            type="button"
+            className="pointer-events-auto inline-flex h-7 w-7 items-center justify-center rounded-md text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-800 disabled:cursor-not-allowed"
+            aria-label={`${isOpen ? 'Close' : 'Open'} ${label} options`}
+            aria-expanded={isOpen}
+            aria-controls={listboxId}
+            tabIndex={-1}
+            disabled={disabled}
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={handleToggleListbox}
           >
-            <path
-              fillRule="evenodd"
-              d="M5.22 7.97a.75.75 0 0 1 1.06 0L10 11.69l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.03a.75.75 0 0 1 0-1.06Z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </span>
+            <span
+              className={`transition-transform ${isOpen ? 'rotate-180' : ''}`}
+              aria-hidden="true"
+            >
+              <svg
+                className="h-4 w-4"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.22 7.97a.75.75 0 0 1 1.06 0L10 11.69l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.03a.75.75 0 0 1 0-1.06Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
 
         {isOpen ? (
           <div
-            className="absolute z-30 mt-1 w-full overflow-hidden rounded-md border border-neutral-200 bg-neutral-0 shadow-lg"
+            className="absolute z-50 mt-1 w-full overflow-hidden rounded-md border border-neutral-200 bg-neutral-0 shadow-lg"
           >
             <div className="flex items-center justify-between gap-3 border-b border-neutral-200 bg-neutral-50 px-3 py-2">
               <button

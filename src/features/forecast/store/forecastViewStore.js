@@ -26,6 +26,12 @@ export const FORECAST_FILTER_KEYS = Object.freeze({
 
 export const DEFAULT_FORECAST_SORTING = Object.freeze([]);
 
+export const WORKSPACE_VIEWS = Object.freeze({
+  FORECAST: 'forecast',
+  IMPORT: 'import',
+  SCENARIOS: 'scenarios',
+});
+
 const defaultSelector = (state) => state;
 
 const createError = (code, message) => ({
@@ -117,6 +123,12 @@ const normalizeSorting = (value) => {
 
 const cloneSorting = (sorting) => (
   sorting.map((sort) => ({ ...sort }))
+);
+
+const normalizeWorkspaceView = (view) => (
+  Object.values(WORKSPACE_VIEWS).includes(view)
+    ? view
+    : WORKSPACE_VIEWS.FORECAST
 );
 
 const createDefaultFilters = () => ({
@@ -364,6 +376,7 @@ export const createForecastViewStore = (
 ) => createStore((set, get) => ({
   ...createFilterState(),
   thresholds: createThresholds(DEFAULT_THRESHOLDS),
+  workspaceView: WORKSPACE_VIEWS.FORECAST,
   isFilterPanelOpen: false,
   isFilterDialogOpen: false,
   isThresholdDialogOpen: false,
@@ -690,6 +703,24 @@ export const createForecastViewStore = (
     get().setThresholdDialogOpen(false);
   },
 
+  setWorkspaceView(view) {
+    set({
+      workspaceView: normalizeWorkspaceView(view),
+    });
+  },
+
+  openImportWorkspace() {
+    get().setWorkspaceView(WORKSPACE_VIEWS.IMPORT);
+  },
+
+  openScenariosWorkspace() {
+    get().setWorkspaceView(WORKSPACE_VIEWS.SCENARIOS);
+  },
+
+  openForecastWorkspace() {
+    get().setWorkspaceView(WORKSPACE_VIEWS.FORECAST);
+  },
+
   closeDialogs() {
     set({
       isFilterDialogOpen: false,
@@ -766,6 +797,7 @@ export const createForecastViewStore = (
     set({
       ...createFilterState(createDefaultFilters()),
       thresholds: createThresholds(DEFAULT_THRESHOLDS),
+      workspaceView: WORKSPACE_VIEWS.FORECAST,
       isFilterPanelOpen: false,
       isFilterDialogOpen: false,
       isThresholdDialogOpen: false,

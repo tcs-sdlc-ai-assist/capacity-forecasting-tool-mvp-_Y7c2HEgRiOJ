@@ -9,6 +9,7 @@ const TOOLBAR_ACTIONS = Object.freeze({
   THRESHOLDS: 'thresholds',
   SCENARIOS: 'scenarios',
   IMPORT: 'import',
+  EXPORT: 'export',
 });
 
 const normalizeCount = (value) => {
@@ -90,6 +91,18 @@ const ImportIcon = () => (
   </svg>
 );
 
+const ExportIcon = () => (
+  <svg
+    className="h-4 w-4"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M9.25 13.25a.75.75 0 0 0 1.5 0V5.56l2.72 2.72a.75.75 0 1 0 1.06-1.06l-4-4a.75.75 0 0 0-1.06 0l-4 4a.75.75 0 0 0 1.06 1.06l2.72-2.72v7.69Z" />
+    <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
+  </svg>
+);
+
 const ClearIcon = () => (
   <svg
     className="h-4 w-4"
@@ -151,6 +164,8 @@ ToolbarButton.propTypes = {
  *   onScenariosClick?: Function,
  *   onImport?: Function,
  *   onImportClick?: Function,
+ *   onExport?: Function,
+ *   onExportClick?: Function,
  *   isDemoData?: boolean,
  *   isLocalOnly?: boolean,
  *   dataLabel?: string,
@@ -177,6 +192,8 @@ export const ForecastToolbar = ({
   onScenariosClick = null,
   onImport = null,
   onImportClick = null,
+  onExport = null,
+  onExportClick = null,
   isDemoData = true,
   isLocalOnly = true,
   dataLabel = '',
@@ -266,6 +283,7 @@ export const ForecastToolbar = ({
   const thresholdsCallback = onOpenThresholds ?? onThresholdsClick;
   const scenariosCallback = onManageScenarios ?? onScenariosClick;
   const importCallback = onImport ?? onImportClick;
+  const exportCallback = onExport ?? onExportClick;
   const resultLabel = resolvedTotalCount !== null
     && resolvedTotalCount !== resolvedResultCount
     ? `${resolvedResultCount} of ${resolvedTotalCount} results`
@@ -386,6 +404,20 @@ export const ForecastToolbar = ({
               ? 'Opening…'
               : 'Import'}
           </ToolbarButton>
+
+          <ToolbarButton
+            disabled={actionsDisabled || typeof exportCallback !== 'function'}
+            icon={<ExportIcon />}
+            onClick={() => runAction(
+              TOOLBAR_ACTIONS.EXPORT,
+              exportCallback,
+              'The active dataset could not be exported.',
+            )}
+          >
+            {busyAction === TOOLBAR_ACTIONS.EXPORT
+              ? 'Exporting…'
+              : 'Export'}
+          </ToolbarButton>
         </div>
       </div>
 
@@ -446,6 +478,8 @@ ForecastToolbar.propTypes = {
   onScenariosClick: PropTypes.func,
   onImport: PropTypes.func,
   onImportClick: PropTypes.func,
+  onExport: PropTypes.func,
+  onExportClick: PropTypes.func,
   isDemoData: PropTypes.bool,
   isLocalOnly: PropTypes.bool,
   dataLabel: PropTypes.string,

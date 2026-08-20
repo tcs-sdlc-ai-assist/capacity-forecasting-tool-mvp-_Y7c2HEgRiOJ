@@ -9,10 +9,18 @@ import {
   forecastViewStore,
 } from '../../features/forecast/store/forecastViewStore.js';
 import { useDataset } from '../../hooks/useDataset.js';
+import { useProfileImage } from '../../hooks/useProfileImage.js';
 import { useAuthContext } from '../../providers/AuthProvider.jsx';
+import datasetExportFacade, {
+  DATASET_EXPORT_FORMATS,
+} from '../../facades/datasetExportFacade.js';
+import ResetLocalDataDialog from '../../features/settings/components/ResetLocalDataDialog.jsx';
+import ProfileAvatar from '../profile/ProfileAvatar.jsx';
+import ProfilePanel from '../profile/ProfilePanel.jsx';
 
 const ACTIONS = Object.freeze({
   IMPORT: 'import',
+  EXPORT: 'export',
   THRESHOLDS: 'thresholds',
   SCENARIOS: 'scenarios',
   REMOVE_DATA: 'remove-data',
@@ -47,7 +55,7 @@ const ActionIcon = ({ action }) => {
   if (action === ACTIONS.IMPORT) {
     return (
       <svg
-        className="h-4 w-4"
+        className="h-3.5 w-3.5"
         viewBox="0 0 20 20"
         fill="currentColor"
         aria-hidden="true"
@@ -58,10 +66,24 @@ const ActionIcon = ({ action }) => {
     );
   }
 
+  if (action === ACTIONS.EXPORT) {
+    return (
+      <svg
+        className="h-3.5 w-3.5"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d="M9.25 13.25a.75.75 0 0 0 1.5 0V5.56l2.72 2.72a.75.75 0 1 0 1.06-1.06l-4-4a.75.75 0 0 0-1.06 0l-4 4a.75.75 0 0 0 1.06 1.06l2.72-2.72v7.69Z" />
+        <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
+      </svg>
+    );
+  }
+
   if (action === ACTIONS.THRESHOLDS) {
     return (
       <svg
-        className="h-4 w-4"
+        className="h-3.5 w-3.5"
         viewBox="0 0 20 20"
         fill="currentColor"
         aria-hidden="true"
@@ -74,7 +96,7 @@ const ActionIcon = ({ action }) => {
   if (action === ACTIONS.SCENARIOS) {
     return (
       <svg
-        className="h-4 w-4"
+        className="h-3.5 w-3.5"
         viewBox="0 0 20 20"
         fill="currentColor"
         aria-hidden="true"
@@ -91,7 +113,7 @@ const ActionIcon = ({ action }) => {
   if (action === ACTIONS.REMOVE_DATA) {
     return (
       <svg
-        className="h-4 w-4"
+        className="h-3.5 w-3.5"
         viewBox="0 0 20 20"
         fill="currentColor"
         aria-hidden="true"
@@ -107,7 +129,7 @@ const ActionIcon = ({ action }) => {
 
   return (
     <svg
-      className="h-4 w-4"
+      className="h-3.5 w-3.5"
       viewBox="0 0 20 20"
       fill="currentColor"
       aria-hidden="true"
@@ -133,8 +155,8 @@ const HeaderAction = ({
   variant = 'secondary',
 }) => {
   const className = variant === 'danger'
-    ? 'inline-flex min-h-9 items-center justify-center gap-2 rounded-md border border-red-300/60 px-3 py-2 text-sm font-semibold text-red-50 transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60'
-    : 'inline-flex min-h-9 items-center justify-center gap-2 rounded-md border border-teal-600 px-3 py-2 text-sm font-semibold text-teal-50 transition-colors hover:border-teal-400 hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-60';
+    ? 'inline-flex h-8 shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-md border border-red-300/60 px-2.5 text-xs font-medium text-red-50 transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60'
+    : 'inline-flex h-8 shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-md border border-teal-600 px-2.5 text-xs font-medium text-teal-50 transition-colors hover:border-teal-400 hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-60';
 
   return (
     <button
@@ -167,6 +189,7 @@ HeaderAction.propTypes = {
  *   scenariosPath?: string,
  *   removeDataPath?: string,
  *   onImport?: Function,
+ *   onExport?: Function,
  *   onManageThresholds?: Function,
  *   onManageScenarios?: Function,
  *   onRemoveData?: Function,
@@ -177,10 +200,11 @@ HeaderAction.propTypes = {
 export const AppHeader = ({
   dataLabel = '',
   forecastPath = '/forecast',
-  importPath = '/import',
-  scenariosPath = '/scenarios',
-  removeDataPath = '/settings#remove-local-data',
+  importPath: _importPath = '/import',
+  scenariosPath: _scenariosPath = '/scenarios',
+  removeDataPath: _removeDataPath = '/settings#remove-local-data',
   onImport = null,
+  onExport = null,
   onManageThresholds = null,
   onManageScenarios = null,
   onRemoveData = null,
@@ -191,11 +215,18 @@ export const AppHeader = ({
   const navigate = useNavigate();
   const [busyAction, setBusyAction] = useState(null);
   const [actionError, setActionError] = useState(null);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isResetOpen, setIsResetOpen] = useState(false);
   const resolvedDataLabel = resolveDataLabel(metadata, dataLabel);
   const displayName = auth.session?.displayName
     ?? auth.session?.username
     ?? 'Signed-in user';
   const username = auth.session?.username ?? '';
+  const {
+    imageSrc,
+    saveImage,
+    removeImage,
+  } = useProfileImage(username);
 
   const runAction = useCallback(async (
     action,
@@ -231,8 +262,22 @@ export const AppHeader = ({
   const handleImport = () => runAction(
     ACTIONS.IMPORT,
     onImport,
-    () => navigate(importPath),
+    () => {
+      navigate(forecastPath);
+      forecastViewStore.getState().openImportWorkspace();
+
+      return { ok: true };
+    },
     'The dataset import workspace could not be opened.',
+  );
+
+  const handleExport = () => runAction(
+    ACTIONS.EXPORT,
+    onExport,
+    () => datasetExportFacade.exportDataset({
+      format: DATASET_EXPORT_FORMATS.CSV,
+    }),
+    'The active dataset could not be exported.',
   );
 
   const handleThresholds = () => runAction(
@@ -240,6 +285,7 @@ export const AppHeader = ({
     onManageThresholds,
     () => {
       navigate(forecastPath);
+      forecastViewStore.getState().openForecastWorkspace();
       forecastViewStore.getState().openThresholdDialog();
 
       return { ok: true };
@@ -250,16 +296,29 @@ export const AppHeader = ({
   const handleScenarios = () => runAction(
     ACTIONS.SCENARIOS,
     onManageScenarios,
-    () => navigate(scenariosPath),
+    () => {
+      navigate(forecastPath);
+      forecastViewStore.getState().openScenariosWorkspace();
+
+      return { ok: true };
+    },
     'Scenario management could not be opened.',
   );
 
   const handleRemoveData = () => runAction(
     ACTIONS.REMOVE_DATA,
     onRemoveData,
-    () => navigate(removeDataPath),
+    () => {
+      setIsResetOpen(true);
+
+      return { ok: true };
+    },
     'The local-data removal settings could not be opened.',
   );
+
+  const openForecastWorkspace = () => {
+    forecastViewStore.getState().openForecastWorkspace();
+  };
 
   const handleLogout = () => runAction(
     ACTIONS.LOGOUT,
@@ -276,124 +335,156 @@ export const AppHeader = ({
 
   return (
     <header className="bg-teal-950 text-white shadow-sm">
-      <div className="mx-auto flex w-full max-w-screen-2xl flex-col gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-          <div className="flex min-w-0 flex-wrap items-center gap-3">
+      <div className="mx-auto flex w-full max-w-screen-2xl items-center gap-3 px-4 py-2 sm:px-6 lg:px-8">
+        <div className="flex min-w-0 shrink-0 items-center gap-2.5">
+          <NavLink
+            to={forecastPath}
+            className="inline-flex items-center gap-2 rounded-md text-white transition-opacity hover:opacity-90"
+            aria-label={`${APP_NAME} forecast workspace`}
+            onClick={openForecastWorkspace}
+          >
+            <span
+              className="grid h-8 w-8 shrink-0 grid-cols-3 items-end gap-0.5 rounded-md bg-teal-700 p-1.5"
+              aria-hidden="true"
+            >
+              <span className="h-1.5 rounded-sm bg-white" />
+              <span className="h-3 rounded-sm bg-white" />
+              <span className="h-5 rounded-sm bg-white" />
+            </span>
+            <span className="whitespace-nowrap text-sm font-semibold sm:text-base">
+              {APP_NAME}
+            </span>
+          </NavLink>
+
+          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-teal-700 bg-teal-900 px-2 py-0.5 text-[11px] font-medium text-teal-100">
+            <span
+              className="h-1.5 w-1.5 rounded-full bg-teal-300"
+              aria-hidden="true"
+            />
+            {resolvedDataLabel}
+          </span>
+        </div>
+
+        <div className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto">
+          <nav
+            className="flex shrink-0 items-center"
+            aria-label="Primary navigation"
+          >
             <NavLink
               to={forecastPath}
-              className="inline-flex min-w-0 items-center gap-3 rounded-md text-white transition-opacity hover:opacity-90"
-              aria-label={`${APP_NAME} forecast workspace`}
+              className={({ isActive }) => (
+                `inline-flex h-8 items-center whitespace-nowrap rounded-md px-2.5 text-xs font-medium transition-colors ${
+                  isActive
+                    ? 'bg-teal-700 text-white'
+                    : 'text-teal-100 hover:bg-teal-900 hover:text-white'
+                }`
+              )}
+              onClick={openForecastWorkspace}
             >
-              <span
-                className="grid h-10 w-10 shrink-0 grid-cols-3 items-end gap-1 rounded-lg bg-teal-700 p-2"
-                aria-hidden="true"
-              >
-                <span className="h-2 rounded-sm bg-white" />
-                <span className="h-4 rounded-sm bg-white" />
-                <span className="h-6 rounded-sm bg-white" />
-              </span>
-              <span className="truncate text-lg font-semibold sm:text-xl">
-                {APP_NAME}
-              </span>
+              Forecast
             </NavLink>
+          </nav>
 
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-teal-700 bg-teal-900 px-2.5 py-1 text-xs font-semibold text-teal-100">
-              <span
-                className="h-2 w-2 rounded-full bg-teal-300"
-                aria-hidden="true"
-              />
-              {resolvedDataLabel}
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-            <nav
-              className="flex flex-wrap items-center gap-1"
-              aria-label="Primary navigation"
+          <div
+            className="flex shrink-0 items-center gap-1.5"
+            aria-label="Workspace actions"
+          >
+            <HeaderAction
+              action={ACTIONS.IMPORT}
+              disabled={actionsDisabled}
+              onClick={handleImport}
             >
-              <NavLink
-                to={forecastPath}
-                className={({ isActive }) => (
-                  `rounded-md px-3 py-2 text-sm font-semibold transition-colors ${
-                    isActive
-                      ? 'bg-teal-700 text-white'
-                      : 'text-teal-100 hover:bg-teal-900 hover:text-white'
-                  }`
-                )}
-              >
-                Forecast
-              </NavLink>
-            </nav>
-
-            <div
-              className="flex flex-wrap items-center gap-2"
-              aria-label="Workspace actions"
+              Import
+            </HeaderAction>
+            <HeaderAction
+              action={ACTIONS.EXPORT}
+              disabled={actionsDisabled}
+              onClick={handleExport}
             >
-              <HeaderAction
-                action={ACTIONS.IMPORT}
-                disabled={actionsDisabled}
-                onClick={handleImport}
-              >
-                Import
-              </HeaderAction>
-              <HeaderAction
-                action={ACTIONS.THRESHOLDS}
-                disabled={actionsDisabled}
-                onClick={handleThresholds}
-              >
-                Thresholds
-              </HeaderAction>
-              <HeaderAction
-                action={ACTIONS.SCENARIOS}
-                disabled={actionsDisabled}
-                onClick={handleScenarios}
-              >
-                Scenarios
-              </HeaderAction>
-              <HeaderAction
-                action={ACTIONS.REMOVE_DATA}
-                disabled={actionsDisabled}
-                onClick={handleRemoveData}
-                variant="danger"
-              >
-                Remove data
-              </HeaderAction>
-            </div>
-
-            <div className="flex items-center gap-3 border-t border-teal-800 pt-3 lg:border-l lg:border-t-0 lg:pl-4 lg:pt-0">
-              <div className="min-w-0 text-right">
-                <p className="truncate text-sm font-semibold text-white">
-                  {displayName}
-                </p>
-                {username ? (
-                  <p className="truncate text-xs text-teal-200">
-                    {username}
-                  </p>
-                ) : null}
-              </div>
-
-              <HeaderAction
-                action={ACTIONS.LOGOUT}
-                disabled={actionsDisabled}
-                onClick={handleLogout}
-              >
-                {busyAction === ACTIONS.LOGOUT
-                  ? 'Signing out…'
-                  : 'Sign out'}
-              </HeaderAction>
-            </div>
+              {busyAction === ACTIONS.EXPORT
+                ? 'Exporting…'
+                : 'Export'}
+            </HeaderAction>
+            <HeaderAction
+              action={ACTIONS.THRESHOLDS}
+              disabled={actionsDisabled}
+              onClick={handleThresholds}
+            >
+              Thresholds
+            </HeaderAction>
+            <HeaderAction
+              action={ACTIONS.SCENARIOS}
+              disabled={actionsDisabled}
+              onClick={handleScenarios}
+            >
+              Scenarios
+            </HeaderAction>
+            <HeaderAction
+              action={ACTIONS.REMOVE_DATA}
+              disabled={actionsDisabled}
+              onClick={handleRemoveData}
+              variant="danger"
+            >
+              Remove data
+            </HeaderAction>
+            <HeaderAction
+              action={ACTIONS.LOGOUT}
+              disabled={actionsDisabled}
+              onClick={handleLogout}
+            >
+              {busyAction === ACTIONS.LOGOUT
+                ? 'Signing out…'
+                : 'Sign out'}
+            </HeaderAction>
           </div>
         </div>
 
-        {actionError ? (
+        <button
+          type="button"
+          className="ml-auto flex shrink-0 items-center gap-2 rounded-md border-l border-teal-800 py-0.5 pl-3 transition-colors hover:bg-teal-900"
+          aria-haspopup="dialog"
+          aria-expanded={isProfileOpen}
+          aria-label={`View account details for ${displayName}`}
+          onClick={() => setIsProfileOpen(true)}
+        >
+          <div className="whitespace-nowrap text-right leading-tight">
+            <p className="text-xs font-semibold text-white">
+              {displayName}
+            </p>
+            {username ? (
+              <p className="text-[11px] text-teal-200">
+                {username}
+              </p>
+            ) : null}
+          </div>
+          <ProfileAvatar imageSrc={imageSrc} alt="" />
+        </button>
+      </div>
+
+      <ProfilePanel
+        isOpen={isProfileOpen}
+        session={auth.session}
+        imageSrc={imageSrc}
+        onClose={() => setIsProfileOpen(false)}
+        onSaveImage={saveImage}
+        onRemoveImage={removeImage}
+      />
+
+      <ResetLocalDataDialog
+        isOpen={isResetOpen}
+        onClose={() => setIsResetOpen(false)}
+      />
+
+      {actionError ? (
+        <div className="mx-auto w-full max-w-screen-2xl px-4 pb-2 sm:px-6 lg:px-8">
           <div
-            className="rounded-md border border-red-300/60 bg-red-950/40 px-4 py-3 text-sm font-medium text-red-50"
+            className="rounded-md border border-red-300/60 bg-red-950/40 px-3 py-2 text-xs font-medium text-red-50"
             role="alert"
           >
             {actionError.message}
           </div>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
     </header>
   );
 };
@@ -405,6 +496,7 @@ AppHeader.propTypes = {
   scenariosPath: PropTypes.string,
   removeDataPath: PropTypes.string,
   onImport: PropTypes.func,
+  onExport: PropTypes.func,
   onManageThresholds: PropTypes.func,
   onManageScenarios: PropTypes.func,
   onRemoveData: PropTypes.func,

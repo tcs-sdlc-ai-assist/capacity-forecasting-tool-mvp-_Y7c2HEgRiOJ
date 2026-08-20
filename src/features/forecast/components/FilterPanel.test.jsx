@@ -9,9 +9,9 @@ import FilterPanel from './FilterPanel.jsx';
 
 const FILTER_OPTIONS = Object.freeze({
   planningLevels: Object.freeze([
-    'PI 2026.3',
-    'PI 2026.4',
-    'PI 2027.1',
+    'Current PI',
+    'Distribution Train',
+    '2027 PI 1',
   ]),
   owners: Object.freeze([
     'Alex Planner',
@@ -61,24 +61,24 @@ describe('FilterPanel', () => {
     });
 
     await user.click(planningLevelInput);
-    await user.type(planningLevelInput, '2027.1');
+    await user.type(planningLevelInput, '2027');
 
     const listbox = screen.getByRole('listbox', {
       name: 'Planning level options',
     });
 
     expect(within(listbox).getByRole('option', {
-      name: 'PI 2027.1',
+      name: '2027 PI 1',
     })).toBeInTheDocument();
     expect(within(listbox).queryByRole('option', {
-      name: 'PI 2026.3',
+      name: 'Current PI',
     })).not.toBeInTheDocument();
 
     await user.keyboard('{ArrowDown}{Enter}');
 
     await waitFor(() => {
       expect(onPlanningLevelChange).toHaveBeenCalledWith(
-        'PI 2027.1',
+        '2027 PI 1',
       );
     });
 
@@ -100,7 +100,7 @@ describe('FilterPanel', () => {
     }));
 
     renderFilterPanel({
-      selectedPlanningLevel: 'PI 2026.3',
+      selectedPlanningLevel: 'Current PI',
       selectedOwners: ['Alex Planner'],
       selectedPrograms: ['Customer Experience'],
       selectedTeams: ['Atlas'],
@@ -128,7 +128,7 @@ describe('FilterPanel', () => {
         'Taylor Planner',
       ]);
       expect(onFiltersChange).toHaveBeenCalledWith({
-        selectedPlanningLevels: ['PI 2026.3'],
+        selectedPlanningLevels: ['Current PI'],
         selectedOwners: [
           'Alex Planner',
           'Taylor Planner',

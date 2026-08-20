@@ -11,6 +11,7 @@ export const STORAGE_KEYS = Object.freeze({
   FILTERS: `${STORAGE_PREFIX}filters`,
   THRESHOLDS: `${STORAGE_PREFIX}thresholds`,
   SCENARIOS: `${STORAGE_PREFIX}scenarios`,
+  PROFILES: `${STORAGE_PREFIX}profiles`,
 });
 
 export const CFT_STORAGE_KEYS = Object.freeze(Object.values(STORAGE_KEYS));

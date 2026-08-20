@@ -260,6 +260,14 @@ export class AuthService {
       return invalidCredentialsResult();
     }
 
+    if (typeof this.demoUserRepository?.ensureSeeded === 'function') {
+      try {
+        this.demoUserRepository.ensureSeeded();
+      } catch {
+        // Seeding failures are reported by the subsequent credential lookup.
+      }
+    }
+
     const userResult = readUser(this.demoUserRepository, username);
 
     if (!userResult?.ok) {

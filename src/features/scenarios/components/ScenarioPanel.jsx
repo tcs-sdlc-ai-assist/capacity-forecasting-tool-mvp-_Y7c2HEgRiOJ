@@ -602,7 +602,7 @@ export const ScenarioPanel = ({
 
   return (
     <section
-      className={`overflow-hidden rounded-xl border border-neutral-200 bg-neutral-0 shadow-sm ${className}`}
+      className={`rounded-xl border border-neutral-200 bg-neutral-0 shadow-sm ${className}`}
       aria-labelledby={`${panelId}-title`}
       aria-busy={busyAction !== null || undefined}
     >

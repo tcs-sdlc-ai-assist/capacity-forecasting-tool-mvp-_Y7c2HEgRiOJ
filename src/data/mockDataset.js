@@ -4,19 +4,31 @@ import {
   createNormalizedDataset,
 } from '../domain/schemas.js';
 
-const MOCK_DATASET_ID = 'cft-bundled-demo-v1';
+const MOCK_DATASET_ID = 'cft-bundled-demo-v3';
 const MOCK_DATASET_DATE = '2026-08-20T00:00:00.000Z';
 
 const PLANNING_LEVELS = Object.freeze([
-  'PI 2026.3',
-  'PI 2026.4',
-  'PI 2027.1',
-  'PI 2027.2',
-  'PI 2027.3',
-  'PI 2027.4',
+  'Current PI',
+  'Distribution Train',
+  'Manufacturing Train',
+  'TSS Train',
+  '2026 PI 4',
+  '2027 PI 1',
 ]);
 
 const PLANNING_LEVEL_DATES = Object.freeze([
+  Object.freeze({
+    startDate: '2026-07-01',
+    endDate: '2026-09-30',
+  }),
+  Object.freeze({
+    startDate: '2026-07-01',
+    endDate: '2026-09-30',
+  }),
+  Object.freeze({
+    startDate: '2026-07-01',
+    endDate: '2026-09-30',
+  }),
   Object.freeze({
     startDate: '2026-07-01',
     endDate: '2026-09-30',
@@ -28,18 +40,6 @@ const PLANNING_LEVEL_DATES = Object.freeze([
   Object.freeze({
     startDate: '2027-01-01',
     endDate: '2027-03-31',
-  }),
-  Object.freeze({
-    startDate: '2027-04-01',
-    endDate: '2027-06-30',
-  }),
-  Object.freeze({
-    startDate: '2027-07-01',
-    endDate: '2027-09-30',
-  }),
-  Object.freeze({
-    startDate: '2027-10-01',
-    endDate: '2027-12-31',
   }),
 ]);
 
@@ -84,18 +84,18 @@ const OWNERS = Object.freeze([
 ]);
 
 const TEAMS = Object.freeze([
-  'Atlas',
-  'Beacon',
-  'Cirrus',
-  'Delta',
-  'Ember',
-  'Falcon',
-  'Gemini',
-  'Harbor',
-  'Ion',
-  'Juniper',
-  'Keystone',
-  'Lumen',
+  'IDEA',
+  'IDT',
+  'Investment Data Mastery',
+  'ITIOP',
+  'ITMID OPS',
+  'LASERR',
+  'OTC',
+  'PACE',
+  'PC',
+  'PR',
+  'Product Master',
+  'IT Collaboration',
 ]);
 
 const ARTS = Object.freeze([

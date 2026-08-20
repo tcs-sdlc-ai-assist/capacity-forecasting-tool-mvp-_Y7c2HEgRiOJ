@@ -1,8 +1,12 @@
 import {
+  useCallback,
+  useEffect,
   useId,
+  useLayoutEffect,
   useRef,
   useState,
 } from 'react';
+import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import {
   createCapacityAriaLabel,
@@ -76,27 +80,108 @@ const formatNumber = (value) => {
 const formatPoints = (value) => {
   const formatted = formatNumber(value);
 
-  return formatted === null ? 'Unavailable' : `${formatted} points`;
+  return formatted === null ? '' : `${formatted} points`;
 };
 
 const formatDifferential = (value) => {
   const formatted = formatNumber(value);
 
-  if (formatted === null) {
-    return 'Unavailable';
-  }
-
-  if (value > 0) {
-    return `+${formatted} points`;
-  }
-
-  return `${formatted} points`;
+  return formatted === null ? '' : `${formatted} points`;
 };
 
 const formatUtilization = (value) => {
   const formatted = formatNumber(value);
 
-  return formatted === null ? 'Unavailable' : `${formatted}%`;
+  return formatted === null ? '' : `${formatted}%`;
+};
+
+const VIEWPORT_PADDING = 8;
+const POPOVER_GAP = 8;
+const POPOVER_WIDTH = 288;
+const FALLBACK_POPOVER_HEIGHT = 260;
+
+const clamp = (value, minimum, maximum) => (
+  Math.min(Math.max(value, minimum), maximum)
+);
+
+const resolvePopoverPlacement = ({
+  height,
+  spaceAbove,
+  spaceBelow,
+}) => {
+  if (spaceAbove >= height + POPOVER_GAP) {
+    return 'top';
+  }
+
+  if (spaceBelow >= height + POPOVER_GAP) {
+    return 'bottom';
+  }
+
+  return spaceBelow >= spaceAbove ? 'bottom' : 'top';
+};
+
+const measurePopoverPosition = (triggerElement, popoverElement) => {
+  if (
+    typeof window === 'undefined'
+    || !triggerElement
+  ) {
+    return {
+      top: VIEWPORT_PADDING,
+      left: VIEWPORT_PADDING,
+      maxHeight: FALLBACK_POPOVER_HEIGHT,
+      placement: 'top',
+      arrowLeft: POPOVER_WIDTH / 2,
+    };
+  }
+
+  const trigger = triggerElement.getBoundingClientRect();
+  const measuredHeight = popoverElement?.offsetHeight;
+  const measuredWidth = popoverElement?.offsetWidth;
+  const height = measuredHeight > 0 ? measuredHeight : FALLBACK_POPOVER_HEIGHT;
+  const width = measuredWidth > 0 ? measuredWidth : POPOVER_WIDTH;
+  const viewportLeft = VIEWPORT_PADDING;
+  const viewportTop = VIEWPORT_PADDING;
+  const viewportRight = window.innerWidth - VIEWPORT_PADDING;
+  const viewportBottom = window.innerHeight - VIEWPORT_PADDING;
+  const maxHeight = Math.max(
+    120,
+    viewportBottom - viewportTop,
+  );
+  const boundedHeight = Math.min(height, maxHeight);
+  const spaceAbove = trigger.top - viewportTop;
+  const spaceBelow = viewportBottom - trigger.bottom;
+  const placement = resolvePopoverPlacement({
+    height: boundedHeight,
+    spaceAbove,
+    spaceBelow,
+  });
+  const preferredTop = placement === 'top'
+    ? trigger.top - boundedHeight - POPOVER_GAP
+    : trigger.bottom + POPOVER_GAP;
+  const top = clamp(
+    preferredTop,
+    viewportTop,
+    Math.max(viewportTop, viewportBottom - boundedHeight),
+  );
+  const preferredLeft = trigger.left + (trigger.width / 2) - (width / 2);
+  const left = clamp(
+    preferredLeft,
+    viewportLeft,
+    Math.max(viewportLeft, viewportRight - width),
+  );
+  const arrowLeft = clamp(
+    trigger.left + (trigger.width / 2) - left,
+    16,
+    Math.max(16, width - 16),
+  );
+
+  return {
+    top,
+    left,
+    maxHeight,
+    placement,
+    arrowLeft,
+  };
 };
 
 const resolveDetailSource = ({
@@ -252,7 +337,15 @@ export const CapacityDetailPopover = ({
   const generatedId = useId();
   const popoverId = `capacity-detail-${generatedId.replace(/:/g, '')}`;
   const triggerRef = useRef(null);
+  const popoverRef = useRef(null);
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const [position, setPosition] = useState({
+    top: VIEWPORT_PADDING,
+    left: VIEWPORT_PADDING,
+    maxHeight: FALLBACK_POPOVER_HEIGHT,
+    placement: 'top',
+    arrowLeft: POPOVER_WIDTH / 2,
+  });
   const controlledOpen = isOpen ?? open;
   const resolvedOpen = controlledOpen ?? internalOpen;
   const source = resolveDetailSource({
@@ -337,6 +430,13 @@ export const CapacityDetailPopover = ({
   const resolvedAriaLabel = ariaLabel.trim()
     || `View capacity details for ${resolvedFeature}. ${generatedAriaLabel}`;
 
+  const updatePosition = useCallback(() => {
+    setPosition(measurePopoverPosition(
+      triggerRef.current,
+      popoverRef.current,
+    ));
+  }, []);
+
   const updateOpen = (nextOpen) => {
     if (disabled || nextOpen === resolvedOpen) {
       return;
@@ -363,11 +463,61 @@ export const CapacityDetailPopover = ({
     }
   };
 
+  useLayoutEffect(() => {
+    if (!resolvedOpen || typeof window === 'undefined') {
+      return undefined;
+    }
+
+    updatePosition();
+    const frameId = window.requestAnimationFrame(updatePosition);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+    };
+  }, [resolvedOpen, updatePosition, resolvedFeature, unavailable]);
+
+  useEffect(() => {
+    if (!resolvedOpen || typeof window === 'undefined') {
+      return undefined;
+    }
+
+    const handleReposition = () => {
+      updatePosition();
+    };
+
+    window.addEventListener('resize', handleReposition);
+    window.addEventListener('scroll', handleReposition, true);
+
+    return () => {
+      window.removeEventListener('resize', handleReposition);
+      window.removeEventListener('scroll', handleReposition, true);
+    };
+  }, [resolvedOpen, updatePosition]);
+
   const handleMouseEnter = () => {
     updateOpen(true);
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (event) => {
+    if (popoverRef.current?.contains(event.relatedTarget)) {
+      return;
+    }
+
+    if (
+      typeof document !== 'undefined'
+      && triggerRef.current?.contains(document.activeElement)
+    ) {
+      return;
+    }
+
+    updateOpen(false);
+  };
+
+  const handlePopoverMouseLeave = (event) => {
+    if (triggerRef.current?.contains(event.relatedTarget)) {
+      return;
+    }
+
     if (
       typeof document !== 'undefined'
       && triggerRef.current?.contains(document.activeElement)
@@ -383,7 +533,10 @@ export const CapacityDetailPopover = ({
   };
 
   const handleBlur = (event) => {
-    if (event.currentTarget.contains(event.relatedTarget)) {
+    if (
+      event.currentTarget.contains(event.relatedTarget)
+      || popoverRef.current?.contains(event.relatedTarget)
+    ) {
       return;
     }
 
@@ -399,6 +552,84 @@ export const CapacityDetailPopover = ({
     event.stopPropagation();
     updateOpen(false);
   };
+
+  const popoverContent = resolvedOpen ? (
+    <span
+      ref={popoverRef}
+      id={popoverId}
+      role="tooltip"
+      className={`fixed z-[80] block w-72 max-w-[calc(100vw-1rem)] rounded-lg border border-neutral-200 bg-neutral-0 p-4 text-left text-neutral-900 shadow-lg ${popoverClassName}`}
+      style={{
+        top: `${position.top}px`,
+        left: `${position.left}px`,
+      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handlePopoverMouseLeave}
+    >
+      <span
+        className={`absolute h-3 w-3 -translate-x-1/2 rotate-45 border-neutral-200 bg-neutral-0 ${
+          position.placement === 'bottom'
+            ? '-top-1.5 border-l border-t'
+            : '-bottom-1.5 border-b border-r'
+        }`}
+        style={{ left: `${position.arrowLeft}px` }}
+        aria-hidden="true"
+      />
+
+      <span className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-3">
+        <span className="text-sm font-semibold text-neutral-600">
+          Feature
+        </span>
+        <span className="min-w-0">
+          <span className="block text-sm font-semibold leading-5 text-neutral-900">
+            {resolvedFeature}
+          </span>
+          {(resolvedTeam || resolvedPlanningLevel) ? (
+            <span className="mt-1 block text-xs text-neutral-600">
+              {[resolvedTeam, resolvedPlanningLevel]
+                .filter(Boolean)
+                .join(' · ')}
+            </span>
+          ) : null}
+        </span>
+      </span>
+
+      <span className="mt-4 block border-t border-neutral-200 pt-3">
+        <span className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-4 gap-y-2 text-sm">
+          <span className="text-neutral-600">Capacity Running Total</span>
+          <span className="text-right font-semibold text-neutral-900">
+            {formatPoints(resolvedRunningTotal)}
+          </span>
+
+          <span className="text-neutral-600">Team Capacity</span>
+          <span className="text-right font-semibold text-neutral-900">
+            {unavailable ? '' : formatPoints(resolvedTeamCapacity)}
+          </span>
+
+          <span className="text-neutral-600">Differential</span>
+          <span className="text-right font-semibold text-neutral-900">
+            {unavailable ? '' : formatDifferential(resolvedDifferential)}
+          </span>
+
+          <span className="text-neutral-600">Utilization</span>
+          <span className="text-right font-semibold text-neutral-900">
+            {unavailable ? '' : formatUtilization(resolvedUtilization)}
+          </span>
+
+          <span className="self-center text-neutral-600">State</span>
+          <span className="text-right">
+            {unavailable ? null : (
+              <span
+                className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ${stateConfig.className}`}
+              >
+                {stateConfig.label}
+              </span>
+            )}
+          </span>
+        </span>
+      </span>
+    </span>
+  ) : null;
 
   return (
     <span
@@ -420,80 +651,9 @@ export const CapacityDetailPopover = ({
         {triggerContent}
       </button>
 
-      {resolvedOpen ? (
-        <span
-          id={popoverId}
-          role="tooltip"
-          className={`absolute bottom-full left-1/2 z-40 mb-2 block w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-lg border border-neutral-200 bg-neutral-0 p-4 text-left text-neutral-900 shadow-lg ${popoverClassName}`}
-        >
-          <span
-            className="absolute left-1/2 top-full h-3 w-3 -translate-x-1/2 -translate-y-1/2 rotate-45 border-b border-r border-neutral-200 bg-neutral-0"
-            aria-hidden="true"
-          />
-
-          <span className="block text-xs font-semibold uppercase tracking-wide text-neutral-500">
-            {title}
-          </span>
-
-          <span className="mt-1 block text-sm font-semibold leading-5 text-neutral-900">
-            {resolvedFeature}
-          </span>
-
-          {(resolvedTeam || resolvedPlanningLevel) ? (
-            <span className="mt-1 block text-xs text-neutral-600">
-              {[resolvedTeam, resolvedPlanningLevel]
-                .filter(Boolean)
-                .join(' · ')}
-            </span>
-          ) : null}
-
-          <span className="mt-4 block border-t border-neutral-200 pt-3">
-            <span className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-4 gap-y-2 text-sm">
-              <span className="text-neutral-600">Feature</span>
-              <span className="max-w-40 text-right font-medium text-neutral-900">
-                {resolvedFeature}
-              </span>
-
-              <span className="text-neutral-600">Running total</span>
-              <span className="text-right font-semibold text-neutral-900">
-                {formatPoints(resolvedRunningTotal)}
-              </span>
-
-              <span className="text-neutral-600">Team capacity</span>
-              <span className="text-right font-semibold text-neutral-900">
-                {unavailable
-                  ? unavailableLabel
-                  : formatPoints(resolvedTeamCapacity)}
-              </span>
-
-              <span className="text-neutral-600">Differential</span>
-              <span className="text-right font-semibold text-neutral-900">
-                {unavailable
-                  ? unavailableLabel
-                  : formatDifferential(resolvedDifferential)}
-              </span>
-
-              <span className="text-neutral-600">Utilization</span>
-              <span className="text-right font-semibold text-neutral-900">
-                {unavailable
-                  ? unavailableLabel
-                  : formatUtilization(resolvedUtilization)}
-              </span>
-
-              <span className="self-center text-neutral-600">State</span>
-              <span className="text-right">
-                <span
-                  className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ${stateConfig.className}`}
-                >
-                  {unavailable
-                    ? unavailableLabel
-                    : stateConfig.label}
-                </span>
-              </span>
-            </span>
-          </span>
-        </span>
-      ) : null}
+      {typeof document === 'undefined' || !popoverContent
+        ? null
+        : createPortal(popoverContent, document.body)}
     </span>
   );
 };

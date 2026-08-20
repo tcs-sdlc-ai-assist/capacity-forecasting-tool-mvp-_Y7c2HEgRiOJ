@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNotices } from '../../hooks/useNotices.js';
+import { MISSING_DATASET_NOTICE_MESSAGE } from '../../services/recoveryService.js';
 
 const SEVERITY_CONFIG = Object.freeze({
   info: Object.freeze({
@@ -143,6 +144,9 @@ export const NoticeCenter = () => {
     dismissNotice,
   } = useNotices();
   const [dismissalError, setDismissalError] = useState(null);
+  const visibleNotices = notices.filter((notice) => (
+    notice.message !== MISSING_DATASET_NOTICE_MESSAGE
+  ));
 
   const handleDismiss = (noticeId) => {
     try {
@@ -162,7 +166,7 @@ export const NoticeCenter = () => {
     }
   };
 
-  if (notices.length === 0 && dismissalError === null) {
+  if (visibleNotices.length === 0 && dismissalError === null) {
     return null;
   }
 
@@ -183,7 +187,7 @@ export const NoticeCenter = () => {
       ) : null}
 
       <ul className="space-y-3" aria-label="Current system notices">
-        {notices.map((notice) => {
+        {visibleNotices.map((notice) => {
           const severity = resolveSeverityConfig(notice.severity);
 
           return (

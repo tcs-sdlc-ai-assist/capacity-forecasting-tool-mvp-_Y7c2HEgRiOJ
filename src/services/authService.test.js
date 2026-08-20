@@ -113,6 +113,39 @@ describe('AuthService', () => {
     );
   });
 
+  it('reseeds bundled demo users before login when they are missing', () => {
+    const userRepository = {
+      ensureSeeded: vi.fn(() => ({
+        ok: true,
+        data: {
+          initialized: true,
+          users: [{ ...DEMO_USER }],
+        },
+      })),
+      findByUsername: vi.fn(() => ({
+        ok: true,
+        data: { ...DEMO_USER },
+      })),
+    };
+    const sessionRepository = createSessionRepository();
+    const service = createService({
+      userRepository,
+      sessionRepository,
+    });
+
+    const result = service.login({
+      username: DEMO_USER.username,
+      password: DEMO_USER.password,
+    });
+
+    expect(userRepository.ensureSeeded).toHaveBeenCalledTimes(1);
+    expect(userRepository.findByUsername).toHaveBeenCalledWith(
+      DEMO_USER.username,
+    );
+    expect(result.ok).toBe(true);
+    expect(result.data.session.username).toBe(DEMO_USER.username);
+  });
+
   it('returns the same generic error for unknown users and wrong passwords', () => {
     const unknownUserRepository = createUserRepository({
       ok: true,

@@ -6,6 +6,9 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 import datasetImportFacade from '../../../facades/datasetImportFacade.js';
+import datasetExportFacade, {
+  DATASET_EXPORT_FORMATS,
+} from '../../../facades/datasetExportFacade.js';
 
 const ACCEPTED_FILE_TYPES = [
   '.csv',
@@ -213,6 +216,9 @@ SummaryMetric.propTypes = {
  *   importer?: {
  *     importFile: Function
  *   },
+ *   exporter?: {
+ *     exportDataset: Function
+ *   },
  *   onImportComplete?: Function
  * }} props Import panel properties.
  * @returns {import('react').ReactNode} Dataset import panel.
@@ -220,6 +226,7 @@ SummaryMetric.propTypes = {
 export const ImportPanel = ({
   className = '',
   importer = datasetImportFacade,
+  exporter = datasetExportFacade,
   onImportComplete = null,
 }) => {
   const generatedId = useId();
@@ -229,6 +236,8 @@ export const ImportPanel = ({
   const [status, setStatus] = useState(IMPORT_STATUSES.IDLE);
   const [error, setError] = useState(null);
   const [result, setResult] = useState(null);
+  const [exportError, setExportError] = useState(null);
+  const [exportFormat, setExportFormat] = useState(null);
   const summary = useMemo(
     () => resolveImportSummary(result),
     [result],
@@ -250,6 +259,7 @@ export const ImportPanel = ({
     [summary],
   );
   const isImporting = status === IMPORT_STATUSES.IMPORTING;
+  const isExporting = exportFormat !== null;
   const unsupportedInput = Boolean(
     error?.unsupported || isUnsupportedError(error),
   );
@@ -379,6 +389,47 @@ export const ImportPanel = ({
     }
   };
 
+  const handleExport = (format) => {
+    if (isImporting || exportFormat !== null) {
+      return;
+    }
+
+    if (typeof exporter?.exportDataset !== 'function') {
+      setExportError(createError(
+        'DATASET_EXPORT_UNAVAILABLE',
+        'The dataset export service is unavailable.',
+      ));
+      return;
+    }
+
+    setExportFormat(format);
+    setExportError(null);
+
+    let exportResult;
+
+    try {
+      exportResult = exporter.exportDataset({ format });
+    } catch {
+      exportResult = {
+        ok: false,
+        data: null,
+        error: createError(
+          'DATASET_EXPORT_FAILED',
+          'The active dataset could not be exported.',
+        ),
+      };
+    }
+
+    if (!exportResult?.ok) {
+      setExportError(exportResult?.error ?? createError(
+        'DATASET_EXPORT_FAILED',
+        'The active dataset could not be exported.',
+      ));
+    }
+
+    setExportFormat(null);
+  };
+
   return (
     <section
       className={`rounded-xl border border-neutral-200 bg-neutral-0 shadow-sm ${className}`}
@@ -398,6 +449,58 @@ export const ImportPanel = ({
       </div>
 
       <div className="space-y-6 p-5 sm:p-6">
+        <section
+          className="rounded-lg border border-neutral-200 bg-neutral-50 p-4"
+          aria-labelledby={`${inputId}-export-title`}
+        >
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0">
+              <h2
+                id={`${inputId}-export-title`}
+                className="text-sm font-semibold text-neutral-900"
+              >
+                Export current dataset
+              </h2>
+              <p className="mt-1 text-sm leading-5 text-neutral-600">
+                Download the active dataset as CSV or JSON. Either file can
+                be re-imported later.
+              </p>
+            </div>
+
+            <div className="flex flex-col-reverse gap-2 sm:flex-row">
+              <button
+                type="button"
+                className="inline-flex min-h-10 items-center justify-center rounded-md border border-neutral-300 bg-neutral-0 px-4 py-2 text-sm font-semibold text-neutral-700 shadow-xs transition-colors hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-60"
+                disabled={isImporting || isExporting}
+                onClick={() => handleExport(DATASET_EXPORT_FORMATS.CSV)}
+              >
+                {exportFormat === DATASET_EXPORT_FORMATS.CSV
+                  ? 'Exporting…'
+                  : 'Download CSV'}
+              </button>
+              <button
+                type="button"
+                className="inline-flex min-h-10 items-center justify-center rounded-md border border-teal-700 bg-teal-700 px-4 py-2 text-sm font-semibold text-white shadow-xs transition-colors hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-60"
+                disabled={isImporting || isExporting}
+                onClick={() => handleExport(DATASET_EXPORT_FORMATS.JSON)}
+              >
+                {exportFormat === DATASET_EXPORT_FORMATS.JSON
+                  ? 'Exporting…'
+                  : 'Download JSON'}
+              </button>
+            </div>
+          </div>
+
+          {exportError ? (
+            <p
+              className="mt-3 text-sm font-medium text-red-700"
+              role="alert"
+            >
+              {exportError.message}
+            </p>
+          ) : null}
+        </section>
+
         <div>
           <label
             htmlFor={inputId}
@@ -626,6 +729,9 @@ ImportPanel.propTypes = {
   className: PropTypes.string,
   importer: PropTypes.shape({
     importFile: PropTypes.func.isRequired,
+  }),
+  exporter: PropTypes.shape({
+    exportDataset: PropTypes.func.isRequired,
   }),
   onImportComplete: PropTypes.func,
 };

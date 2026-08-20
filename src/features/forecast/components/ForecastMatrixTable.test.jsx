@@ -106,15 +106,10 @@ describe('ForecastMatrixTable', () => {
     availableAllocation.focus();
     expect(availableAllocation).toHaveFocus();
 
-    const unavailableAllocation = screen.getByLabelText(
+    expect(screen.queryByText('Unavailable')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(
       'Beacon: Allocation unavailable.',
-    );
-
-    expect(unavailableAllocation).toHaveTextContent('Unavailable');
-    expect(unavailableAllocation).toHaveAttribute('tabindex', '0');
-
-    unavailableAllocation.focus();
-    expect(unavailableAllocation).toHaveFocus();
+    )).not.toBeInTheDocument();
   });
 
   it('applies sticky positioning classes to the leading identity headers and cells', () => {

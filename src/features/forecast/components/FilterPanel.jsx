@@ -433,7 +433,7 @@ export const FilterPanel = ({
         </button>
       </div>
 
-      <div className="grid gap-5 p-5 sm:p-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="relative z-10 grid gap-5 overflow-visible p-5 sm:p-6 md:grid-cols-2 xl:grid-cols-3">
         <SearchableSingleSelect
           id="forecast-filter-planning-level"
           label="Planning level"

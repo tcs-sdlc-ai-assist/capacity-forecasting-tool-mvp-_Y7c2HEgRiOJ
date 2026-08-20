@@ -114,6 +114,14 @@ export const ResetLocalDataDialog = ({
       }
     }
 
+    // Hard-reload so bootstrap can re-seed demo users and the bundled dataset.
+    // Client-side navigation leaves the one-shot startup cache in place, which
+    // makes sign-in fail because demo credentials were just removed.
+    if (typeof window !== 'undefined' && typeof window.location?.replace === 'function') {
+      window.location.replace(loginPath);
+      return;
+    }
+
     navigate(loginPath, {
       replace: true,
       state: null,

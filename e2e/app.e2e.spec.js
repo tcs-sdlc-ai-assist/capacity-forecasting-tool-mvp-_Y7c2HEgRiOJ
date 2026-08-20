@@ -97,7 +97,7 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
 
     await expect(page).toHaveURL(/\/forecast$/);
     await expect(page.getByRole('heading', {
-      name: 'Synthetic demo data',
+      name: 'Capacity forecast',
     })).toBeVisible();
     await expect(page.getByText(
       '36 work items · 12 teams',
@@ -153,7 +153,7 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
     })).toBeVisible();
 
     const allocationButton = page.getByRole('button', {
-      name: /^Atlas: \d+(?:\.\d+)? allocation points,/,
+      name: /^IDEA: \d+(?:\.\d+)? allocation points,/,
     }).first();
 
     await allocationButton.focus();
@@ -161,9 +161,8 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
     const tooltip = page.getByRole('tooltip');
 
     await expect(tooltip).toBeVisible();
-    await expect(tooltip).toContainText('Capacity details');
-    await expect(tooltip).toContainText('Running total');
-    await expect(tooltip).toContainText('Team capacity');
+    await expect(tooltip).toContainText('Capacity Running Total');
+    await expect(tooltip).toContainText('Team Capacity');
 
     await allocationButton.press('Escape');
     await expect(tooltip).toBeHidden();
@@ -178,7 +177,7 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
 
     await planningLevelInput.click();
     await page.getByRole('option', {
-      name: 'PI 2027.4',
+      name: '2027 PI 1',
       exact: true,
     }).click();
 
@@ -285,7 +284,7 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
     })).toBeVisible();
 
     await page.getByLabel('Scenario name').fill(
-      'E2E Atlas adjustment',
+      'E2E IDEA adjustment',
     );
     await page.getByLabel('Description').fill(
       'Verify scenario changes do not modify the baseline.',
@@ -306,16 +305,16 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
       exact: true,
     });
     const workItem = featureHeading.locator('xpath=ancestor::li[1]');
-    const atlasAllocation = workItem.getByRole('spinbutton', {
-      name: 'Atlas',
+    const ideaAllocation = workItem.getByRole('spinbutton', {
+      name: 'IDEA',
     });
 
-    await atlasAllocation.fill('7');
-    await atlasAllocation.locator('xpath=../..').getByRole('button', {
+    await ideaAllocation.fill('7');
+    await ideaAllocation.locator('xpath=../..').getByRole('button', {
       name: 'Apply',
     }).click();
 
-    await expect(atlasAllocation).toHaveValue('7');
+    await expect(ideaAllocation).toHaveValue('7');
 
     await page.getByRole('button', {
       name: 'Back to forecast',
@@ -328,7 +327,7 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
     }).fill('CFT-1201');
 
     await expect(page.getByRole('button', {
-      name: /^Atlas: 7 allocation points,/,
+      name: /^IDEA: 7 allocation points,/,
     })).toBeVisible();
 
     await controls.getByRole('button', {
@@ -345,10 +344,10 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
     }).click();
 
     await expect(page.getByRole('button', {
-      name: /^Atlas: 0 allocation points,/,
+      name: /^IDEA: 0 allocation points,/,
     })).toBeVisible();
     await expect(page.getByRole('button', {
-      name: /^Atlas: 7 allocation points,/,
+      name: /^IDEA: 7 allocation points,/,
     })).toHaveCount(0);
   });
 
@@ -437,6 +436,37 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
     await expect(page.getByRole('button', {
       name: /^E2E Team: 16 allocation points,/,
     })).toBeVisible();
+  });
+
+  test('exports the active dataset as a re-importable CSV file', async ({
+    page,
+  }) => {
+    await signInAsPlanner(page);
+
+    const downloadPromise = page.waitForEvent('download');
+
+    await getForecastControls(page).getByRole('button', {
+      name: 'Export',
+    }).click();
+
+    const download = await downloadPromise;
+
+    expect(download.suggestedFilename()).toMatch(
+      /^cft-dataset-\d{4}-\d{2}-\d{2}\.csv$/,
+    );
+
+    const stream = await download.createReadStream();
+    const chunks = [];
+
+    for await (const chunk of stream) {
+      chunks.push(chunk);
+    }
+
+    const text = Buffer.concat(chunks).toString('utf8');
+
+    expect(text).toContain('recordType');
+    expect(text).toContain('workItem');
+    expect(text).toContain('capacityRecord');
   });
 
   test('removes CFT-owned browser data and rebootstraps clean demo state on the next load', async ({
@@ -531,7 +561,7 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
 
     await expect(page).toHaveURL(/\/forecast$/);
     await expect(page.getByRole('heading', {
-      name: 'Synthetic demo data',
+      name: 'Capacity forecast',
     })).toBeVisible();
     await expect(page.getByText(
       '36 work items · 12 teams',

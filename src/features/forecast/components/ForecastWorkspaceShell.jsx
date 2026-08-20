@@ -11,12 +11,10 @@ import ImportPanel from '../../import/components/ImportPanel.jsx';
 import ScenarioComparison from '../../scenarios/components/ScenarioComparison.jsx';
 import ScenarioPanel from '../../scenarios/components/ScenarioPanel.jsx';
 import useForecastViewModel from '../hooks/useForecastViewModel.js';
-
-const WORKSPACE_VIEWS = Object.freeze({
-  FORECAST: 'forecast',
-  IMPORT: 'import',
-  SCENARIOS: 'scenarios',
-});
+import { WORKSPACE_VIEWS } from '../store/forecastViewStore.js';
+import datasetExportFacade, {
+  DATASET_EXPORT_FORMATS,
+} from '../../../facades/datasetExportFacade.js';
 
 const normalizeView = (view) => (
   Object.values(WORKSPACE_VIEWS).includes(view)
@@ -132,11 +130,10 @@ export const ForecastWorkspaceShell = ({
   className = '',
 }) => {
   const viewModel = useForecastViewModel();
-  const [internalView, setInternalView] = useState(
-    normalizeView(initialView),
-  );
   const [workspaceError, setWorkspaceError] = useState(null);
-  const resolvedView = normalizeView(view ?? internalView);
+  const resolvedView = normalizeView(
+    view ?? viewModel.workspaceView ?? initialView,
+  );
   const dataset = viewModel.dataset;
   const baselineDataset = viewModel.baselineDataset;
   const metadata = viewModel.metadata;
@@ -164,7 +161,7 @@ export const ForecastWorkspaceShell = ({
       }
 
       if (view === undefined) {
-        setInternalView(normalizedView);
+        viewModel.setWorkspaceView(normalizedView);
       }
 
       return result ?? {
@@ -193,6 +190,12 @@ export const ForecastWorkspaceShell = ({
     typeof onImport === 'function'
       ? onImport()
       : changeView(WORKSPACE_VIEWS.IMPORT)
+  );
+
+  const handleExport = () => (
+    datasetExportFacade.exportDataset({
+      format: DATASET_EXPORT_FORMATS.CSV,
+    })
   );
 
   const handleOpenScenarios = () => (
@@ -382,6 +385,7 @@ export const ForecastWorkspaceShell = ({
             onOpenThresholds={handleOpenThresholds}
             onManageScenarios={handleOpenScenarios}
             onImport={handleOpenImport}
+            onExport={handleExport}
             isDemoData={
               metadata?.sourceType === 'mock'
               || metadata?.sourceType === 'recovered-mock'
@@ -395,6 +399,16 @@ export const ForecastWorkspaceShell = ({
             <FilterPanel
               filterOptions={viewModel.filterOptionDescriptors}
               filters={viewModel.filters}
+              onPlanningLevelChange={(planningLevel) => (
+                viewModel.setSelectedPlanningLevels(
+                  planningLevel ? [planningLevel] : [],
+                )
+              )}
+              onSelectedOwnersChange={viewModel.setSelectedOwners}
+              onSelectedProgramsChange={viewModel.setSelectedPrograms}
+              onSelectedTeamsChange={viewModel.setSelectedTeams}
+              onSelectedArtsChange={viewModel.setSelectedArts}
+              onResetFilters={viewModel.resetFilters}
             />
           ) : null}
 

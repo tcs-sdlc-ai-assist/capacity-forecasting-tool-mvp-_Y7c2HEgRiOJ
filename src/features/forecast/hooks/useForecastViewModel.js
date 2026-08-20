@@ -223,6 +223,10 @@ export const useForecastViewModel = () => {
     closeFilterDialog: forecastState.closeFilterDialog,
     openThresholdDialog: forecastState.openThresholdDialog,
     closeThresholdDialog: forecastState.closeThresholdDialog,
+    setWorkspaceView: forecastState.setWorkspaceView,
+    openImportWorkspace: forecastState.openImportWorkspace,
+    openScenariosWorkspace: forecastState.openScenariosWorkspace,
+    openForecastWorkspace: forecastState.openForecastWorkspace,
     closeDialogs: forecastState.closeDialogs,
     clearPersistenceError: forecastState.clearPersistenceError,
   }), [forecastState]);
@@ -346,6 +350,7 @@ export const useForecastViewModel = () => {
       isFilterPanelOpen: forecastState.isFilterPanelOpen,
       isFilterDialogOpen: forecastState.isFilterDialogOpen,
       isThresholdDialogOpen: forecastState.isThresholdDialogOpen,
+      workspaceView: forecastState.workspaceView,
       activeDialog: forecastState.activeDialog,
       isHydratingPreferences: forecastState.isHydrating,
       arePreferencesHydrated: forecastState.isHydrated,

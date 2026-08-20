@@ -148,6 +148,47 @@ describe('datasetSelectors', () => {
       ]);
     });
 
+    it('orders planning level options as current PI, trains, then future PIs', () => {
+      const options = selectFilterOptions({
+        workItems: [
+          createValidWorkItemFixture({
+            recordId: 'pl-2027',
+            planningLevel: '2027 PI 1',
+          }),
+          createValidWorkItemFixture({
+            recordId: 'pl-manufacturing',
+            planningLevel: 'Manufacturing Train',
+          }),
+          createValidWorkItemFixture({
+            recordId: 'pl-current',
+            planningLevel: 'Current PI',
+          }),
+          createValidWorkItemFixture({
+            recordId: 'pl-tss',
+            planningLevel: 'TSS Train',
+          }),
+          createValidWorkItemFixture({
+            recordId: 'pl-2026',
+            planningLevel: '2026 PI 4',
+          }),
+          createValidWorkItemFixture({
+            recordId: 'pl-distribution',
+            planningLevel: 'Distribution Train',
+          }),
+        ],
+        capacityRecords: [],
+      });
+
+      expect(options.planningLevels).toEqual([
+        'Current PI',
+        'Distribution Train',
+        'Manufacturing Train',
+        'TSS Train',
+        '2026 PI 4',
+        '2027 PI 1',
+      ]);
+    });
+
     it('creates one TanStack-compatible allocation column per dataset team', () => {
       const baseDataset = createValidDatasetFixture();
       const dataset = createValidDatasetFixture({

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title description">
+  <title id="title">Capacity Forecast Tool</title>
+  <desc id="description">Teal chart with three ascending white bars</desc>
+  <rect width="64" height="64" rx="12" fill="#0f766e"/>
+  <path d="M16 44V30h8v14H16zm12 0V20h8v24h-8zm12 0V12h8v32h-8z" fill="#fff"/>
+</svg>

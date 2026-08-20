@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply h-full bg-neutral-50 font-sans text-neutral-900 antialiased;
+  }
+
+  body {
+    @apply m-0 min-h-full tabular-nums;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-focus-ring ring-offset-2 ring-offset-focus-offset;
+  }
+}

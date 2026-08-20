@@ -329,6 +329,7 @@ Use a fresh browser context for the initial smoke test:
 12. Import a valid CSV or JSON dataset.
 13. Refresh and confirm the imported dataset remains active.
 14. Verify direct refresh on `/forecast` does not produce a host-level 404.
+
 15. Remove CFT-owned browser data and reload.
 16. Confirm the application returns to `/login` and clean demo data is bootstrapped.
 

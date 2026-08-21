@@ -64,21 +64,6 @@ const ThresholdIcon = () => (
   </svg>
 );
 
-const ScenarioIcon = () => (
-  <svg
-    className="h-4 w-4"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-    aria-hidden="true"
-  >
-    <path
-      fillRule="evenodd"
-      d="M10.79 2.21a1.12 1.12 0 0 0-1.58 0l-7 7a1.12 1.12 0 0 0 0 1.58l7 7a1.12 1.12 0 0 0 1.58 0l7-7a1.12 1.12 0 0 0 0-1.58l-7-7ZM6.75 9.25a.75.75 0 0 0 0 1.5h4.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 0 0-1.06 1.06l1.72 1.72H6.75Z"
-      clipRule="evenodd"
-    />
-  </svg>
-);
-
 const ImportIcon = () => (
   <svg
     className="h-4 w-4"
@@ -114,22 +99,44 @@ const ClearIcon = () => (
   </svg>
 );
 
+const RemoveDataIcon = () => (
+  <svg
+    className="h-5 w-5"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path
+      fillRule="evenodd"
+      d="M8.5 2.5A1.5 1.5 0 0 0 7 4H4.75a.75.75 0 0 0 0 1.5h.44l.7 10.13A2.5 2.5 0 0 0 8.38 18h3.24a2.5 2.5 0 0 0 2.49-2.37l.7-10.13h.44a.75.75 0 0 0 0-1.5H13a1.5 1.5 0 0 0-1.5-1.5h-3Zm.38 4.75a.75.75 0 0 0-1.5.1l.5 7.5a.75.75 0 0 0 1.5-.1l-.5-7.5Zm3.74.1a.75.75 0 0 0-1.5-.1l-.5 7.5a.75.75 0 0 0 1.5.1l.5-7.5Z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
+
 const ToolbarButton = ({
   children,
   disabled,
   icon,
   onClick,
   primary = false,
+  danger = false,
+  title = '',
+  'aria-label': ariaLabel = '',
 }) => (
   <button
     type="button"
-    className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-semibold shadow-xs transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
-      primary
-        ? 'border border-teal-700 bg-teal-700 text-white hover:border-teal-800 hover:bg-teal-800'
-        : 'border border-neutral-300 bg-neutral-0 text-neutral-700 hover:border-neutral-400 hover:bg-neutral-50 hover:text-neutral-900'
+    className={`inline-flex min-h-9 items-center justify-center gap-1.5 rounded border px-3 py-1.5 text-[13px] font-semibold shadow-xs transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
+      danger
+        ? 'border-neutral-300 bg-neutral-0 text-red-600 hover:border-red-300 hover:bg-red-50 hover:text-red-700'
+        : primary
+          ? 'border-teal-700 bg-teal-700 text-white hover:border-teal-800 hover:bg-teal-800'
+          : 'border-neutral-300 bg-neutral-0 text-neutral-700 hover:border-neutral-400 hover:bg-neutral-50 hover:text-neutral-900'
     }`}
     disabled={disabled}
     onClick={onClick}
+    title={title}
+    aria-label={ariaLabel || title}
   >
     {icon}
     {children}
@@ -137,82 +144,49 @@ const ToolbarButton = ({
 );
 
 ToolbarButton.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   disabled: PropTypes.bool,
   icon: PropTypes.node.isRequired,
   onClick: PropTypes.func.isRequired,
   primary: PropTypes.bool,
+  danger: PropTypes.bool,
+  title: PropTypes.string,
+  'aria-label': PropTypes.string,
 };
 
-/**
- * Renders the primary controls and context for the forecast workspace.
- *
- * @param {{
- *   searchTerm?: string,
- *   searchValue?: string,
- *   onSearchChange?: Function,
- *   onSearchTermChange?: Function,
- *   activeFilterCount?: number,
- *   resultCount?: number,
- *   visibleCount?: number,
- *   totalCount?: number,
- *   onOpenFilters?: Function,
- *   onFiltersClick?: Function,
- *   onOpenThresholds?: Function,
- *   onThresholdsClick?: Function,
- *   onManageScenarios?: Function,
- *   onScenariosClick?: Function,
- *   onImport?: Function,
- *   onImportClick?: Function,
- *   onExport?: Function,
- *   onExportClick?: Function,
- *   isDemoData?: boolean,
- *   isLocalOnly?: boolean,
- *   dataLabel?: string,
- *   disabled?: boolean,
- *   searchPlaceholder?: string,
- *   className?: string
- * }} props Toolbar properties.
- * @returns {import('react').ReactNode} Forecast toolbar.
- */
 export const ForecastToolbar = ({
   searchTerm = '',
   searchValue = undefined,
   onSearchChange = null,
   onSearchTermChange = null,
   activeFilterCount = 0,
-  resultCount = 0,
-  visibleCount = undefined,
-  totalCount = undefined,
+  resultCount: _resultCount = 0,
+  visibleCount: _visibleCount = undefined,
+  totalCount: _totalCount = undefined,
   onOpenFilters = null,
   onFiltersClick = null,
   onOpenThresholds = null,
   onThresholdsClick = null,
-  onManageScenarios = null,
-  onScenariosClick = null,
+  onManageScenarios: _onManageScenarios = null,
+  onScenariosClick: _onScenariosClick = null,
   onImport = null,
   onImportClick = null,
   onExport = null,
   onExportClick = null,
-  isDemoData = true,
-  isLocalOnly = true,
-  dataLabel = '',
+  onRemoveData = null,
+  isDemoData: _isDemoData = true,
+  isLocalOnly: _isLocalOnly = true,
+  dataLabel: _dataLabel = '',
   disabled = false,
   searchPlaceholder = 'Search programs, features, owners, or teams',
+  titleNode = null,
+  embedded = false,
   className = '',
 }) => {
   const [busyAction, setBusyAction] = useState(null);
   const [actionError, setActionError] = useState(null);
   const resolvedSearchTerm = searchValue ?? searchTerm;
-  const resolvedResultCount = normalizeCount(
-    visibleCount ?? resultCount,
-  );
-  const resolvedTotalCount = totalCount === undefined
-    ? null
-    : normalizeCount(totalCount);
   const resolvedFilterCount = normalizeCount(activeFilterCount);
-  const resolvedDataLabel = dataLabel.trim()
-    || (isDemoData ? 'Demo data' : 'Active dataset');
   const actionsDisabled = disabled || busyAction !== null;
 
   const runAction = useCallback(async (
@@ -281,177 +255,149 @@ export const ForecastToolbar = ({
 
   const filtersCallback = onOpenFilters ?? onFiltersClick;
   const thresholdsCallback = onOpenThresholds ?? onThresholdsClick;
-  const scenariosCallback = onManageScenarios ?? onScenariosClick;
   const importCallback = onImport ?? onImportClick;
   const exportCallback = onExport ?? onExportClick;
-  const resultLabel = resolvedTotalCount !== null
-    && resolvedTotalCount !== resolvedResultCount
-    ? `${resolvedResultCount} of ${resolvedTotalCount} results`
-    : `${resolvedResultCount} result${resolvedResultCount === 1 ? '' : 's'}`;
+
+  const containerClass = embedded
+    ? `flex flex-col lg:flex-row lg:items-center gap-4 ${className}`
+    : `rounded-xl border border-neutral-200 bg-neutral-0 p-4 shadow-sm flex flex-col lg:flex-row lg:items-center gap-4 ${className}`;
 
   return (
     <section
-      className={`rounded-xl border border-neutral-200 bg-neutral-0 p-4 shadow-sm sm:p-5 ${className}`}
+      className={containerClass}
       aria-label="Forecast controls"
     >
-      <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
-        <div className="w-full xl:max-w-xl">
-          <label
-            htmlFor="forecast-global-search"
-            className="block text-sm font-semibold text-neutral-800"
-          >
-            Global search
-          </label>
-
-          <div className="relative mt-1.5">
-            <span
-              className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-neutral-500"
-              aria-hidden="true"
-            >
-              <SearchIcon />
-            </span>
-
-            <input
-              id="forecast-global-search"
-              type="search"
-              className="min-h-10 w-full rounded-md border border-neutral-300 bg-neutral-0 py-2 pl-10 pr-10 text-sm text-neutral-900 shadow-xs transition-colors placeholder:text-neutral-500 hover:border-neutral-400 disabled:cursor-not-allowed disabled:bg-neutral-100 disabled:text-neutral-500"
-              value={resolvedSearchTerm}
-              placeholder={searchPlaceholder}
-              disabled={disabled}
-              autoComplete="off"
-              onChange={handleSearchChange}
-            />
-
-            {resolvedSearchTerm ? (
-              <button
-                type="button"
-                className="absolute inset-y-0 right-0 inline-flex w-10 items-center justify-center rounded-r-md text-neutral-500 transition-colors hover:text-neutral-900 disabled:cursor-not-allowed disabled:opacity-60"
-                aria-label="Clear global search"
-                disabled={disabled}
-                onClick={handleClearSearch}
-              >
-                <ClearIcon />
-              </button>
-            ) : null}
-          </div>
-        </div>
-
-        <div
-          className="flex flex-wrap items-center gap-2"
-          aria-label="Forecast actions"
-        >
-          <ToolbarButton
-            disabled={actionsDisabled || typeof filtersCallback !== 'function'}
-            icon={<FilterIcon />}
-            onClick={() => runAction(
-              TOOLBAR_ACTIONS.FILTERS,
-              filtersCallback,
-              'Forecast filters could not be opened.',
-            )}
-          >
-            <span>Filters</span>
-            {resolvedFilterCount > 0 ? (
-              <span
-                className="inline-flex min-w-5 items-center justify-center rounded-full bg-teal-100 px-1.5 py-0.5 text-xs font-bold text-teal-800"
-                aria-label={`${resolvedFilterCount} active filter${resolvedFilterCount === 1 ? '' : 's'}`}
-              >
-                {resolvedFilterCount}
-              </span>
-            ) : null}
-          </ToolbarButton>
-
-          <ToolbarButton
-            disabled={
-              actionsDisabled
-              || typeof thresholdsCallback !== 'function'
-            }
-            icon={<ThresholdIcon />}
-            onClick={() => runAction(
-              TOOLBAR_ACTIONS.THRESHOLDS,
-              thresholdsCallback,
-              'Capacity threshold settings could not be opened.',
-            )}
-          >
-            Thresholds
-          </ToolbarButton>
-
-          <ToolbarButton
-            disabled={
-              actionsDisabled
-              || typeof scenariosCallback !== 'function'
-            }
-            icon={<ScenarioIcon />}
-            onClick={() => runAction(
-              TOOLBAR_ACTIONS.SCENARIOS,
-              scenariosCallback,
-              'Scenario management could not be opened.',
-            )}
-          >
-            Scenarios
-          </ToolbarButton>
-
-          <ToolbarButton
-            primary
-            disabled={actionsDisabled || typeof importCallback !== 'function'}
-            icon={<ImportIcon />}
-            onClick={() => runAction(
-              TOOLBAR_ACTIONS.IMPORT,
-              importCallback,
-              'The dataset import workspace could not be opened.',
-            )}
-          >
-            {busyAction === TOOLBAR_ACTIONS.IMPORT
-              ? 'Opening…'
-              : 'Import'}
-          </ToolbarButton>
-
-          <ToolbarButton
-            disabled={actionsDisabled || typeof exportCallback !== 'function'}
-            icon={<ExportIcon />}
-            onClick={() => runAction(
-              TOOLBAR_ACTIONS.EXPORT,
-              exportCallback,
-              'The active dataset could not be exported.',
-            )}
-          >
-            {busyAction === TOOLBAR_ACTIONS.EXPORT
-              ? 'Exporting…'
-              : 'Export'}
-          </ToolbarButton>
-        </div>
+      <div className="flex shrink-0 items-center min-w-0">
+        {titleNode || (
+          <h2 className="sr-only">
+            Forecast Controls
+          </h2>
+        )}
       </div>
 
-      <div className="mt-4 flex flex-col gap-3 border-t border-neutral-200 pt-4 sm:flex-row sm:items-center sm:justify-between">
-        <p
-          className="text-sm font-semibold text-neutral-700"
-          aria-live="polite"
+      <div className="flex-1 w-full min-w-0 lg:max-w-sm">
+        <label
+          htmlFor="forecast-global-search"
+          className="sr-only"
         >
-          {resultLabel}
-        </p>
+          Global search
+        </label>
 
-        <div
-          className="flex flex-wrap items-center gap-2"
-          aria-label="Dataset context"
-        >
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-50 px-2.5 py-1 text-xs font-semibold text-teal-800">
-            <span
-              className="h-2 w-2 rounded-full bg-teal-600"
-              aria-hidden="true"
-            />
-            {resolvedDataLabel}
+        <div className="relative">
+          <span
+            className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-neutral-500"
+            aria-hidden="true"
+          >
+            <SearchIcon />
           </span>
 
-          {isLocalOnly ? (
-            <span className="inline-flex items-center rounded-full bg-neutral-100 px-2.5 py-1 text-xs font-semibold text-neutral-700">
-              Local-only
-            </span>
+          <input
+            id="forecast-global-search"
+            type="search"
+            className="min-h-9 w-full rounded border border-neutral-300 bg-neutral-0 py-1.5 pl-9 pr-9 text-[13px] text-neutral-900 shadow-xs transition-colors placeholder:text-neutral-500 hover:border-neutral-400 disabled:cursor-not-allowed disabled:bg-neutral-100 disabled:text-neutral-500"
+            value={resolvedSearchTerm}
+            placeholder={searchPlaceholder}
+            disabled={disabled}
+            autoComplete="off"
+            onChange={handleSearchChange}
+          />
+
+          {resolvedSearchTerm ? (
+            <button
+              type="button"
+              className="absolute inset-y-0 right-0 inline-flex w-9 items-center justify-center rounded-r text-neutral-500 transition-colors hover:text-neutral-900 disabled:cursor-not-allowed disabled:opacity-60"
+              aria-label="Clear global search"
+              disabled={disabled}
+              onClick={handleClearSearch}
+            >
+              <ClearIcon />
+            </button>
           ) : null}
         </div>
       </div>
 
+      <div
+        className="flex shrink-0 flex-wrap items-center gap-2 lg:ml-auto"
+        aria-label="Forecast actions"
+      >
+        <ToolbarButton
+          disabled={actionsDisabled || typeof filtersCallback !== 'function'}
+          icon={<FilterIcon />}
+          onClick={() => runAction(
+            TOOLBAR_ACTIONS.FILTERS,
+            filtersCallback,
+            'Forecast filters could not be opened.',
+          )}
+        >
+          <span>Filters</span>
+          {resolvedFilterCount > 0 ? (
+            <span
+              className="inline-flex min-w-5 items-center justify-center rounded-full bg-teal-100 px-1.5 py-0.5 text-xs font-bold text-teal-800"
+              aria-label={`${resolvedFilterCount} active filter${resolvedFilterCount === 1 ? '' : 's'}`}
+            >
+              {resolvedFilterCount}
+            </span>
+          ) : null}
+        </ToolbarButton>
+
+        <ToolbarButton
+          disabled={
+            actionsDisabled
+            || typeof thresholdsCallback !== 'function'
+          }
+          icon={<ThresholdIcon />}
+          onClick={() => runAction(
+            TOOLBAR_ACTIONS.THRESHOLDS,
+            thresholdsCallback,
+            'Capacity threshold settings could not be opened.',
+          )}
+        >
+          Thresholds
+        </ToolbarButton>
+
+        <ToolbarButton
+          disabled={actionsDisabled || typeof importCallback !== 'function'}
+          icon={<ImportIcon />}
+          onClick={() => runAction(
+            TOOLBAR_ACTIONS.IMPORT,
+            importCallback,
+            'The dataset import workspace could not be opened.',
+          )}
+        >
+          {busyAction === TOOLBAR_ACTIONS.IMPORT
+            ? 'Opening…'
+            : 'Import'}
+        </ToolbarButton>
+
+        <ToolbarButton
+          disabled={actionsDisabled || typeof exportCallback !== 'function'}
+          icon={<ExportIcon />}
+          onClick={() => runAction(
+            TOOLBAR_ACTIONS.EXPORT,
+            exportCallback,
+            'The active dataset could not be exported.',
+          )}
+        >
+          {busyAction === TOOLBAR_ACTIONS.EXPORT
+            ? 'Exporting…'
+            : 'Export'}
+        </ToolbarButton>
+
+        {typeof onRemoveData === 'function' && (
+          <ToolbarButton
+            danger
+            disabled={actionsDisabled}
+            icon={<RemoveDataIcon />}
+            onClick={onRemoveData}
+          >
+            Remove Data
+          </ToolbarButton>
+        )}
+      </div>
+
       {actionError ? (
         <div
-          className="mt-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-800"
+          className="mt-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-800 w-full"
           role="alert"
         >
           {actionError.message}
@@ -480,12 +426,15 @@ ForecastToolbar.propTypes = {
   onImportClick: PropTypes.func,
   onExport: PropTypes.func,
   onExportClick: PropTypes.func,
+  onRemoveData: PropTypes.func,
   isDemoData: PropTypes.bool,
   isLocalOnly: PropTypes.bool,
   dataLabel: PropTypes.string,
   disabled: PropTypes.bool,
   searchPlaceholder: PropTypes.string,
   className: PropTypes.string,
+  embedded: PropTypes.bool,
+  titleNode: PropTypes.node,
 };
 
 export default ForecastToolbar;

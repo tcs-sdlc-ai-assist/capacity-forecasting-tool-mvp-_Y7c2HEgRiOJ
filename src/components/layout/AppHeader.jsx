@@ -4,26 +4,20 @@ import {
   NavLink,
   useNavigate,
 } from 'react-router-dom';
+import { useStore } from 'zustand';
 import { APP_NAME } from '../../config/appConfig.js';
 import {
   forecastViewStore,
+  WORKSPACE_VIEWS,
 } from '../../features/forecast/store/forecastViewStore.js';
-import { useDataset } from '../../hooks/useDataset.js';
+
 import { useProfileImage } from '../../hooks/useProfileImage.js';
 import { useAuthContext } from '../../providers/AuthProvider.jsx';
-import datasetExportFacade, {
-  DATASET_EXPORT_FORMATS,
-} from '../../facades/datasetExportFacade.js';
-import ResetLocalDataDialog from '../../features/settings/components/ResetLocalDataDialog.jsx';
 import ProfileAvatar from '../profile/ProfileAvatar.jsx';
 import ProfilePanel from '../profile/ProfilePanel.jsx';
 
 const ACTIONS = Object.freeze({
-  IMPORT: 'import',
-  EXPORT: 'export',
-  THRESHOLDS: 'thresholds',
   SCENARIOS: 'scenarios',
-  REMOVE_DATA: 'remove-data',
   LOGOUT: 'logout',
 });
 
@@ -36,67 +30,12 @@ const createActionError = (error, fallbackMessage) => ({
     : fallbackMessage,
 });
 
-const resolveDataLabel = (metadata, suppliedLabel) => {
-  if (typeof suppliedLabel === 'string' && suppliedLabel.trim()) {
-    return suppliedLabel.trim();
-  }
-
-  if (
-    metadata?.sourceType === 'mock'
-    || metadata?.sourceType === 'recovered-mock'
-  ) {
-    return 'Demo data';
-  }
-
-  return metadata ? 'Imported data' : 'Browser-local data';
-};
 
 const ActionIcon = ({ action }) => {
-  if (action === ACTIONS.IMPORT) {
-    return (
-      <svg
-        className="h-3.5 w-3.5"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v7.69L6.53 7.72a.75.75 0 0 0-1.06 1.06l4 4a.75.75 0 0 0 1.06 0l4-4a.75.75 0 1 0-1.06-1.06l-2.72 2.72V2.75Z" />
-        <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
-      </svg>
-    );
-  }
-
-  if (action === ACTIONS.EXPORT) {
-    return (
-      <svg
-        className="h-3.5 w-3.5"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        <path d="M9.25 13.25a.75.75 0 0 0 1.5 0V5.56l2.72 2.72a.75.75 0 1 0 1.06-1.06l-4-4a.75.75 0 0 0-1.06 0l-4 4a.75.75 0 0 0 1.06 1.06l2.72-2.72v7.69Z" />
-        <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
-      </svg>
-    );
-  }
-
-  if (action === ACTIONS.THRESHOLDS) {
-    return (
-      <svg
-        className="h-3.5 w-3.5"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        <path d="M3.25 4.5a.75.75 0 0 1 .75-.75h7.1a2.75 2.75 0 0 1 5.3 0H17a.75.75 0 0 1 0 1.5h-.6a2.75 2.75 0 0 1-5.3 0H4a.75.75 0 0 1-.75-.75Zm9.25 0a1.25 1.25 0 1 0 2.5 0 1.25 1.25 0 0 0-2.5 0ZM3 10a.75.75 0 0 1 .75-.75h.85a2.75 2.75 0 0 1 5.3 0H17a.75.75 0 0 1 0 1.5H9.9a2.75 2.75 0 0 1-5.3 0h-.85A.75.75 0 0 1 3 10Zm3.25-1.25a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5ZM3 15.5a.75.75 0 0 1 .75-.75h7.35a2.75 2.75 0 0 1 5.3 0H17a.75.75 0 0 1 0 1.5h-.6a2.75 2.75 0 0 1-5.3 0H3.75A.75.75 0 0 1 3 15.5Zm9.5 0a1.25 1.25 0 1 0 2.5 0 1.25 1.25 0 0 0-2.5 0Z" />
-      </svg>
-    );
-  }
-
   if (action === ACTIONS.SCENARIOS) {
     return (
       <svg
-        className="h-3.5 w-3.5"
+        className="h-5 w-5"
         viewBox="0 0 20 20"
         fill="currentColor"
         aria-hidden="true"
@@ -110,33 +49,16 @@ const ActionIcon = ({ action }) => {
     );
   }
 
-  if (action === ACTIONS.REMOVE_DATA) {
-    return (
-      <svg
-        className="h-3.5 w-3.5"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        <path
-          fillRule="evenodd"
-          d="M8.5 2.5A1.5 1.5 0 0 0 7 4H4.75a.75.75 0 0 0 0 1.5h.44l.7 10.13A2.5 2.5 0 0 0 8.38 18h3.24a2.5 2.5 0 0 0 2.49-2.37l.7-10.13h.44a.75.75 0 0 0 0-1.5H13a1.5 1.5 0 0 0-1.5-1.5h-3Zm.38 4.75a.75.75 0 0 0-1.5.1l.5 7.5a.75.75 0 0 0 1.5-.1l-.5-7.5Zm3.74.1a.75.75 0 0 0-1.5-.1l-.5 7.5a.75.75 0 0 0 1.5.1l.5-7.5Z"
-          clipRule="evenodd"
-        />
-      </svg>
-    );
-  }
-
   return (
     <svg
-      className="h-3.5 w-3.5"
+      className="h-5 w-5"
       viewBox="0 0 20 20"
       fill="currentColor"
       aria-hidden="true"
     >
       <path
         fillRule="evenodd"
-        d="M3 4.75A2.75 2.75 0 0 1 5.75 2h5.5A2.75 2.75 0 0 1 14 4.75V6a.75.75 0 0 1-1.5 0V4.75c0-.69-.56-1.25-1.25-1.25h-5.5c-.69 0-1.25.56-1.25 1.25v10.5c0 .69.56 1.25 1.25 1.25h5.5c.69 0 1.25-.56 1.25-1.25V14a.75.75 0 0 1 1.5 0v1.25A2.75 2.75 0 0 1 11.25 18h-5.5A2.75 2.75 0 0 1 3 15.25V4.75Zm10.47 3.22a.75.75 0 0 1 1.06 0l1.5 1.5a.75.75 0 0 1 0 1.06l-1.5 1.5a.75.75 0 1 1-1.06-1.06l.22-.22H8.75a.75.75 0 0 1 0-1.5h4.94l-.22-.22a.75.75 0 0 1 0-1.06Z"
+        d="M3 4.75A2.75 2.75 0 0 1 5.75 2h5.5A2.75 2.75 0 0 1 14 4.75v2.5a.75.75 0 0 1-1.5 0v-2.5c0-.69-.56-1.25-1.25-1.25h-5.5c-.69 0-1.25.56-1.25 1.25v10.5c0 .69.56 1.25 1.25 1.25h5.5c.69 0 1.25-.56 1.25-1.25v-2.5a.75.75 0 0 1 1.5 0v2.5A2.75 2.75 0 0 1 11.25 18h-5.5A2.75 2.75 0 0 1 3 15.25V4.75Zm12.78 2.47a.75.75 0 0 1 0 1.06L14.06 10h1.69a.75.75 0 0 1 0 1.5h-1.69l1.72 1.72a.75.75 0 1 1-1.06 1.06l-3-3a.75.75 0 0 1 0-1.06l3-3a.75.75 0 0 1 1.06 0Z"
         clipRule="evenodd"
       />
     </svg>
@@ -147,77 +69,64 @@ ActionIcon.propTypes = {
   action: PropTypes.oneOf(Object.values(ACTIONS)).isRequired,
 };
 
-const HeaderAction = ({
+const HeaderIconButton = ({
   action,
-  children,
+  label,
   disabled,
   onClick,
   variant = 'secondary',
 }) => {
   const className = variant === 'danger'
-    ? 'inline-flex h-8 shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-md border border-red-300/60 px-2.5 text-xs font-medium text-red-50 transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60'
-    : 'inline-flex h-8 shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-md border border-teal-600 px-2.5 text-xs font-medium text-teal-50 transition-colors hover:border-teal-400 hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-60';
+    ? 'inline-flex p-1.5 shrink-0 items-center justify-center rounded-md text-red-200 transition-colors hover:text-red-50 hover:bg-red-900/50 disabled:cursor-not-allowed disabled:opacity-60'
+    : 'inline-flex p-1.5 shrink-0 items-center justify-center rounded-md text-teal-200 transition-colors hover:text-white hover:bg-teal-800/80 disabled:cursor-not-allowed disabled:opacity-60';
 
   return (
     <button
       type="button"
       className={className}
       disabled={disabled}
+      title={label}
+      aria-label={label}
       onClick={onClick}
     >
       <ActionIcon action={action} />
-      <span>{children}</span>
     </button>
   );
 };
 
-HeaderAction.propTypes = {
+HeaderIconButton.propTypes = {
   action: PropTypes.oneOf(Object.values(ACTIONS)).isRequired,
-  children: PropTypes.node.isRequired,
+  label: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   variant: PropTypes.oneOf(['secondary', 'danger']),
 };
 
 /**
- * Renders protected application navigation, identity, and workspace actions.
+ * Renders protected application navigation, identity, and utility actions.
  *
  * @param {{
  *   dataLabel?: string,
  *   forecastPath?: string,
- *   importPath?: string,
- *   scenariosPath?: string,
- *   removeDataPath?: string,
- *   onImport?: Function,
- *   onExport?: Function,
- *   onManageThresholds?: Function,
- *   onManageScenarios?: Function,
- *   onRemoveData?: Function,
  *   onLogout?: Function
  * }} props Header properties.
  * @returns {import('react').ReactNode} Protected application header.
  */
 export const AppHeader = ({
-  dataLabel = '',
+  dataLabel: _dataLabel = '',
   forecastPath = '/forecast',
-  importPath: _importPath = '/import',
-  scenariosPath: _scenariosPath = '/scenarios',
-  removeDataPath: _removeDataPath = '/settings#remove-local-data',
-  onImport = null,
-  onExport = null,
-  onManageThresholds = null,
-  onManageScenarios = null,
-  onRemoveData = null,
   onLogout = null,
 }) => {
   const auth = useAuthContext();
-  const { metadata } = useDataset();
   const navigate = useNavigate();
+  const workspaceView = useStore(
+    forecastViewStore,
+    (state) => state.workspaceView,
+  );
+  const isScenarioView = workspaceView === WORKSPACE_VIEWS.SCENARIOS;
   const [busyAction, setBusyAction] = useState(null);
   const [actionError, setActionError] = useState(null);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isResetOpen, setIsResetOpen] = useState(false);
-  const resolvedDataLabel = resolveDataLabel(metadata, dataLabel);
   const displayName = auth.session?.displayName
     ?? auth.session?.username
     ?? 'Signed-in user';
@@ -259,65 +168,12 @@ export const AppHeader = ({
     }
   }, [busyAction]);
 
-  const handleImport = () => runAction(
-    ACTIONS.IMPORT,
-    onImport,
-    () => {
-      navigate(forecastPath);
-      forecastViewStore.getState().openImportWorkspace();
-
-      return { ok: true };
-    },
-    'The dataset import workspace could not be opened.',
-  );
-
-  const handleExport = () => runAction(
-    ACTIONS.EXPORT,
-    onExport,
-    () => datasetExportFacade.exportDataset({
-      format: DATASET_EXPORT_FORMATS.CSV,
-    }),
-    'The active dataset could not be exported.',
-  );
-
-  const handleThresholds = () => runAction(
-    ACTIONS.THRESHOLDS,
-    onManageThresholds,
-    () => {
-      navigate(forecastPath);
-      forecastViewStore.getState().openForecastWorkspace();
-      forecastViewStore.getState().openThresholdDialog();
-
-      return { ok: true };
-    },
-    'Capacity threshold settings could not be opened.',
-  );
-
-  const handleScenarios = () => runAction(
-    ACTIONS.SCENARIOS,
-    onManageScenarios,
-    () => {
-      navigate(forecastPath);
-      forecastViewStore.getState().openScenariosWorkspace();
-
-      return { ok: true };
-    },
-    'Scenario management could not be opened.',
-  );
-
-  const handleRemoveData = () => runAction(
-    ACTIONS.REMOVE_DATA,
-    onRemoveData,
-    () => {
-      setIsResetOpen(true);
-
-      return { ok: true };
-    },
-    'The local-data removal settings could not be opened.',
-  );
-
   const openForecastWorkspace = () => {
     forecastViewStore.getState().openForecastWorkspace();
+  };
+
+  const openScenariosWorkspace = () => {
+    forecastViewStore.getState().openScenariosWorkspace();
   };
 
   const handleLogout = () => runAction(
@@ -334,109 +190,91 @@ export const AppHeader = ({
   const actionsDisabled = busyAction !== null;
 
   return (
-    <header className="bg-teal-950 text-white shadow-sm">
+    <header className="sticky top-0 z-50 bg-teal-950 text-white shadow-sm">
       <div className="mx-auto flex w-full max-w-screen-2xl items-center gap-3 px-4 py-2 sm:px-6 lg:px-8">
-        <div className="flex min-w-0 shrink-0 items-center gap-2.5">
-          <NavLink
-            to={forecastPath}
-            className="inline-flex items-center gap-2 rounded-md text-white transition-opacity hover:opacity-90"
-            aria-label={`${APP_NAME} forecast workspace`}
-            onClick={openForecastWorkspace}
-          >
-            <span
-              className="grid h-8 w-8 shrink-0 grid-cols-3 items-end gap-0.5 rounded-md bg-teal-700 p-1.5"
-              aria-hidden="true"
-            >
-              <span className="h-1.5 rounded-sm bg-white" />
-              <span className="h-3 rounded-sm bg-white" />
-              <span className="h-5 rounded-sm bg-white" />
-            </span>
-            <span className="whitespace-nowrap text-sm font-semibold sm:text-base">
-              {APP_NAME}
-            </span>
-          </NavLink>
-
-          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-teal-700 bg-teal-900 px-2 py-0.5 text-[11px] font-medium text-teal-100">
-            <span
-              className="h-1.5 w-1.5 rounded-full bg-teal-300"
-              aria-hidden="true"
-            />
-            {resolvedDataLabel}
-          </span>
+        <div className="flex min-w-0 shrink-0 items-center gap-2.5 flex-1">
+          {isScenarioView ? (
+            <>
+              <button
+                type="button"
+                className="inline-flex items-center gap-1.5 rounded-md py-1 pr-1 text-sm font-medium text-teal-200 transition-colors hover:text-white"
+                onClick={openForecastWorkspace}
+              >
+                <svg
+                  className="h-4 w-4"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M17.25 10a.75.75 0 0 1-.75.75H5.31l3.22 3.22a.75.75 0 1 1-1.06 1.06l-4.5-4.5a.75.75 0 0 1 0-1.06l4.5-4.5a.75.75 0 0 1 1.06 1.06L5.31 9.25H16.5a.75.75 0 0 1 .75.75Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                Back
+              </button>
+              <span className="text-teal-600" aria-hidden="true">|</span>
+              <span
+                className="grid h-8 w-8 shrink-0 grid-cols-3 items-end gap-0.5 rounded-md bg-teal-700 p-1.5"
+                aria-hidden="true"
+              >
+                <span className="h-1.5 rounded-sm bg-white" />
+                <span className="h-3 rounded-sm bg-white" />
+                <span className="h-5 rounded-sm bg-white" />
+              </span>
+              <span className="whitespace-nowrap text-sm font-semibold sm:text-base text-white">
+                Scenario Workspace
+              </span>
+            </>
+          ) : (
+            <>
+              <NavLink
+                to={forecastPath}
+                className="inline-flex items-center gap-2 rounded-md text-white transition-opacity hover:opacity-90"
+                aria-label={`${APP_NAME} forecast workspace`}
+                onClick={openForecastWorkspace}
+              >
+                <span
+                  className="grid h-8 w-8 shrink-0 grid-cols-3 items-end gap-0.5 rounded-md bg-teal-700 p-1.5"
+                  aria-hidden="true"
+                >
+                  <span className="h-1.5 rounded-sm bg-white" />
+                  <span className="h-3 rounded-sm bg-white" />
+                  <span className="h-5 rounded-sm bg-white" />
+                </span>
+                <span className="whitespace-nowrap text-sm font-semibold sm:text-base">
+                  {APP_NAME}
+                </span>
+              </NavLink>
+              <span className="ml-2 inline-flex items-center rounded bg-teal-800/60 px-2 py-0.5 text-[10px] font-medium text-teal-100 uppercase tracking-wide border border-teal-700">
+                Demo data
+              </span>
+            </>
+          )}
         </div>
 
-        <div className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto">
-          <nav
-            className="flex shrink-0 items-center"
-            aria-label="Primary navigation"
-          >
-            <NavLink
-              to={forecastPath}
-              className={({ isActive }) => (
-                `inline-flex h-8 items-center whitespace-nowrap rounded-md px-2.5 text-xs font-medium transition-colors ${
-                  isActive
-                    ? 'bg-teal-700 text-white'
-                    : 'text-teal-100 hover:bg-teal-900 hover:text-white'
-                }`
-              )}
-              onClick={openForecastWorkspace}
-            >
-              Forecast
-            </NavLink>
-          </nav>
-
-          <div
-            className="flex shrink-0 items-center gap-1.5"
-            aria-label="Workspace actions"
-          >
-            <HeaderAction
-              action={ACTIONS.IMPORT}
+        <div
+          className="flex shrink-0 items-center gap-2"
+          aria-label="Utility actions"
+        >
+          <HeaderIconButton
+            action={ACTIONS.LOGOUT}
+            label={busyAction === ACTIONS.LOGOUT ? 'Signing out…' : 'Sign out'}
+            disabled={actionsDisabled}
+            onClick={handleLogout}
+          />
+          {isScenarioView ? null : (
+            <button
+              type="button"
+              className="inline-flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-md border border-teal-700 bg-teal-800/50 px-3 text-xs font-semibold text-teal-50 shadow-xs transition-colors hover:border-teal-600 hover:bg-teal-700 hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
               disabled={actionsDisabled}
-              onClick={handleImport}
+              onClick={openScenariosWorkspace}
             >
-              Import
-            </HeaderAction>
-            <HeaderAction
-              action={ACTIONS.EXPORT}
-              disabled={actionsDisabled}
-              onClick={handleExport}
-            >
-              {busyAction === ACTIONS.EXPORT
-                ? 'Exporting…'
-                : 'Export'}
-            </HeaderAction>
-            <HeaderAction
-              action={ACTIONS.THRESHOLDS}
-              disabled={actionsDisabled}
-              onClick={handleThresholds}
-            >
-              Thresholds
-            </HeaderAction>
-            <HeaderAction
-              action={ACTIONS.SCENARIOS}
-              disabled={actionsDisabled}
-              onClick={handleScenarios}
-            >
+              <ActionIcon action={ACTIONS.SCENARIOS} />
               Scenarios
-            </HeaderAction>
-            <HeaderAction
-              action={ACTIONS.REMOVE_DATA}
-              disabled={actionsDisabled}
-              onClick={handleRemoveData}
-              variant="danger"
-            >
-              Remove data
-            </HeaderAction>
-            <HeaderAction
-              action={ACTIONS.LOGOUT}
-              disabled={actionsDisabled}
-              onClick={handleLogout}
-            >
-              {busyAction === ACTIONS.LOGOUT
-                ? 'Signing out…'
-                : 'Sign out'}
-            </HeaderAction>
-          </div>
+            </button>
+          )}
         </div>
 
         <button
@@ -457,7 +295,7 @@ export const AppHeader = ({
               </p>
             ) : null}
           </div>
-          <ProfileAvatar imageSrc={imageSrc} alt="" />
+          <ProfileAvatar imageSrc={imageSrc || '/demo-profile.jpg'} alt="" />
         </button>
       </div>
 
@@ -468,11 +306,6 @@ export const AppHeader = ({
         onClose={() => setIsProfileOpen(false)}
         onSaveImage={saveImage}
         onRemoveImage={removeImage}
-      />
-
-      <ResetLocalDataDialog
-        isOpen={isResetOpen}
-        onClose={() => setIsResetOpen(false)}
       />
 
       {actionError ? (
@@ -492,14 +325,6 @@ export const AppHeader = ({
 AppHeader.propTypes = {
   dataLabel: PropTypes.string,
   forecastPath: PropTypes.string,
-  importPath: PropTypes.string,
-  scenariosPath: PropTypes.string,
-  removeDataPath: PropTypes.string,
-  onImport: PropTypes.func,
-  onExport: PropTypes.func,
-  onManageThresholds: PropTypes.func,
-  onManageScenarios: PropTypes.func,
-  onRemoveData: PropTypes.func,
   onLogout: PropTypes.func,
 };
 

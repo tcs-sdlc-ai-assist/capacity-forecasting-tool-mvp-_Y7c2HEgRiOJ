@@ -267,7 +267,7 @@ const StateIcon = ({ state }) => {
   if (state === 'available' || state === 'healthy') {
     return (
       <svg
-        className="h-4 w-4"
+        className="h-3.5 w-3.5"
         viewBox="0 0 20 20"
         fill="currentColor"
         aria-hidden="true"
@@ -284,7 +284,7 @@ const StateIcon = ({ state }) => {
   if (state === 'constrained' || state === 'warning') {
     return (
       <svg
-        className="h-4 w-4"
+        className="h-3.5 w-3.5"
         viewBox="0 0 20 20"
         fill="currentColor"
         aria-hidden="true"
@@ -301,7 +301,7 @@ const StateIcon = ({ state }) => {
   if (state === 'exceeded' || state === 'critical') {
     return (
       <svg
-        className="h-4 w-4"
+        className="h-3.5 w-3.5"
         viewBox="0 0 20 20"
         fill="currentColor"
         aria-hidden="true"
@@ -343,23 +343,24 @@ const AllocationContent = ({
 
   return (
     <span
-      className={`flex min-h-12 w-full items-center justify-between gap-2 rounded-md border px-2.5 py-2 text-left transition-colors ${stateConfig.containerClassName}`}
+      className={`flex flex-col w-full rounded-md text-center transition-colors ${stateConfig.containerClassName} px-2 py-1 border shadow-sm`}
     >
-      <span className="min-w-0">
-        <span className="block text-sm font-semibold leading-5">
-          {formattedValue}
-          <span className="sr-only"> allocation points</span>
+      <span className="flex items-center justify-center gap-1">
+        <span
+          className={`shrink-0 ${stateConfig.iconClassName}`}
+          aria-hidden="true"
+        >
+          <StateIcon state={state} />
         </span>
-        <span className="block truncate text-xs font-medium opacity-80">
-          {stateConfig.label}
+        <span className="text-[12px] font-bold leading-none">
+          {formattedValue}
+        </span>
+        <span className="text-[10px] font-medium leading-none">
+          Points
         </span>
       </span>
-
-      <span
-        className={`shrink-0 ${stateConfig.iconClassName}`}
-        aria-hidden="true"
-      >
-        <StateIcon state={state} />
+      <span className="mt-0.5 block text-center text-[9px] font-semibold opacity-90 leading-none">
+        {stateConfig.label}
       </span>
     </span>
   );
@@ -484,7 +485,7 @@ export const AllocationCell = ({
   if (formattedValue === null) {
     return (
       <span
-        className={`block min-h-12 w-full ${className}`}
+        className={`block min-h-9 w-full ${className}`}
         aria-hidden="true"
       />
     );

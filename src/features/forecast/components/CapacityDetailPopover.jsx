@@ -595,6 +595,11 @@ export const CapacityDetailPopover = ({
 
       <span className="mt-4 block border-t border-neutral-200 pt-3">
         <span className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-4 gap-y-2 text-sm">
+          <span className="text-neutral-600">Item Allocation</span>
+          <span className="text-right font-semibold text-neutral-900">
+            {formatPoints(source.allocationPoints)}
+          </span>
+          
           <span className="text-neutral-600">Capacity Running Total</span>
           <span className="text-right font-semibold text-neutral-900">
             {formatPoints(resolvedRunningTotal)}

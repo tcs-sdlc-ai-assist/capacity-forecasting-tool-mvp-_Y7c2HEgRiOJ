@@ -1,6 +1,7 @@
 import {
   useMemo,
   useState,
+  cloneElement,
 } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -15,16 +16,8 @@ import {
 
 const STICKY_COLUMN_CONFIG = Object.freeze({
   program: Object.freeze({
-    headerClassName: 'sticky left-0 z-30 w-40 min-w-40 max-w-40',
-    cellClassName: 'sticky left-0 z-10 w-40 min-w-40 max-w-40',
-  }),
-  epic: Object.freeze({
-    headerClassName: 'sticky left-40 z-30 w-48 min-w-48 max-w-48',
-    cellClassName: 'sticky left-40 z-10 w-48 min-w-48 max-w-48',
-  }),
-  feature: Object.freeze({
-    headerClassName: 'sticky left-[22rem] z-30 w-80 min-w-80 max-w-80',
-    cellClassName: 'sticky left-[22rem] z-10 w-80 min-w-80 max-w-80',
+    headerClassName: 'sticky left-0 z-40 w-40 min-w-40 max-w-60 shadow-[1px_0_0_0_#d4d4d8]',
+    cellClassName: 'sticky left-0 z-10 w-40 min-w-40 max-w-60 shadow-[1px_0_0_0_#e4e4e7]',
   }),
 });
 
@@ -33,75 +26,109 @@ const IDENTITY_COLUMN_CONFIG = Object.freeze([
     id: 'program',
     header: 'Program',
     accessorKey: 'program',
-    className: 'w-40 min-w-40 max-w-40',
+    className: 'w-40 min-w-40 max-w-60',
   }),
   Object.freeze({
     id: 'epic',
     header: 'Epic',
     accessorKey: 'epic',
-    className: 'w-48 min-w-48 max-w-48',
+    className: 'w-52 min-w-52 max-w-80',
   }),
   Object.freeze({
     id: 'feature',
     header: 'Feature',
     accessorKey: 'feature',
-    className: 'w-80 min-w-80 max-w-80',
+    className: 'w-72 min-w-72 max-w-xl',
   }),
   Object.freeze({
     id: 'itemId',
     header: 'Item ID',
     accessorKey: 'itemId',
-    className: 'w-32 min-w-32 max-w-32',
+    className: 'w-28 min-w-28 max-w-36',
+    cell: ({ getValue }) => {
+      const val = String(getValue() || '').trim();
+      if (!val) return '—';
+      return (
+        <span className="inline-flex items-center rounded-md bg-neutral-100 px-2 py-0.5 text-[11px] font-medium text-neutral-600 ring-1 ring-inset ring-neutral-200">
+          {val}
+        </span>
+      );
+    },
   }),
   Object.freeze({
     id: 'featureWorkType',
-    header: 'Work type',
+    header: 'Work Type',
     accessorKey: 'featureWorkType',
-    className: 'w-36 min-w-36 max-w-36',
+    className: 'w-32 min-w-32 max-w-44',
   }),
   Object.freeze({
     id: 'owner',
     header: 'Owner',
     accessorKey: 'owner',
-    className: 'w-40 min-w-40 max-w-40',
+    className: 'w-44 min-w-44 max-w-60',
   }),
   Object.freeze({
     id: 'estimatedPoints',
-    header: 'Estimated points',
+    header: 'Est. Pts',
     accessorKey: 'estimatedPoints',
-    className: 'w-32 min-w-32 max-w-32 text-right',
+    className: 'w-20 min-w-20 max-w-28',
   }),
   Object.freeze({
     id: 'team',
-    header: 'Assigned teams',
+    header: 'Assigned Teams',
     accessorFn: (row) => (
       Array.isArray(row?.team) ? row.team.join(', ') : ''
     ),
-    className: 'w-44 min-w-44 max-w-44',
+    className: 'w-52 min-w-52 max-w-80',
   }),
   Object.freeze({
     id: 'art',
     header: 'ART',
     accessorKey: 'art',
-    className: 'w-40 min-w-40 max-w-40',
+    className: 'w-32 min-w-32 max-w-48',
   }),
   Object.freeze({
     id: 'status',
     header: 'Status',
     accessorKey: 'status',
-    className: 'w-32 min-w-32 max-w-32',
+    className: 'w-32 min-w-32 max-w-40',
+    cell: ({ getValue }) => {
+      const val = String(getValue() || '').trim();
+      if (!val) return '—';
+      
+      let colorClass = "bg-neutral-100 text-neutral-700 ring-neutral-200";
+      const lower = val.toLowerCase();
+      
+      if (lower.includes('implementing') || lower.includes('lights on') || lower.includes('active')) {
+        colorClass = "bg-blue-50 text-blue-700 ring-blue-200";
+      } else if (lower.includes('tech debt') || lower.includes('issue')) {
+        colorClass = "bg-orange-50 text-orange-700 ring-orange-200";
+      } else if (lower.includes('strategic') || lower.includes('epic')) {
+        colorClass = "bg-purple-50 text-purple-700 ring-purple-200";
+      } else if (lower.includes('qa') || lower.includes('review') || lower.includes('analyzing')) {
+        colorClass = "bg-yellow-50 text-yellow-700 ring-yellow-200";
+      } else if (lower.includes('complete') || lower.includes('done')) {
+        colorClass = "bg-emerald-50 text-emerald-700 ring-emerald-200";
+      }
+      
+      return (
+        <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset ${colorClass}`}>
+          {val}
+        </span>
+      );
+    }
   }),
   Object.freeze({
     id: 'startDate',
-    header: 'Start date',
+    header: 'Start Date',
     accessorKey: 'startDate',
-    className: 'w-32 min-w-32 max-w-32',
+    className: 'w-28 min-w-28 max-w-32',
   }),
   Object.freeze({
     id: 'endDate',
-    header: 'End date',
+    header: 'End Date',
     accessorKey: 'endDate',
-    className: 'w-32 min-w-32 max-w-32',
+    className: 'w-28 min-w-28 max-w-32',
   }),
 ]);
 
@@ -269,14 +296,14 @@ const createIdentityColumns = () => (
     accessorFn: config.accessorFn,
     header: config.header,
     enableSorting: true,
-    cell: ({ getValue }) => (
+    cell: config.cell || (({ getValue }) => (
       <span
         className="block overflow-hidden text-ellipsis"
         title={normalizeText(getValue()) || undefined}
       >
         {formatCellValue(getValue(), config.id)}
       </span>
-    ),
+    )),
     meta: {
       className: config.className,
       identity: true,
@@ -316,7 +343,7 @@ const createTeamColumns = (teams) => (
       );
     },
     meta: {
-      className: 'w-36 min-w-36 max-w-36',
+      className: 'w-36 min-w-36 max-w-52',
       identity: false,
       sticky: false,
       team,
@@ -331,33 +358,35 @@ const getStickyConfig = (columnId) => (
 const getHeaderClassName = (column) => {
   const stickyConfig = getStickyConfig(column.id);
   const baseClassName = (
-    'border-b border-r border-neutral-300 bg-neutral-100 '
-    + 'px-3 py-3 text-left align-bottom text-xs font-semibold '
-    + 'uppercase tracking-wide text-neutral-700 last:border-r-0'
+    'sticky top-0 border-b-2 border-r border-neutral-300 bg-neutral-100 '
+    + 'px-3.5 py-3 text-left align-middle text-sm font-semibold '
+    + 'text-neutral-900 last:border-r-0'
   );
 
   if (stickyConfig) {
-    return `${baseClassName} ${stickyConfig.headerClassName}`;
+    return `${baseClassName} ${stickyConfig.headerClassName} bg-neutral-100`;
   }
 
-  return `${baseClassName} relative z-20 ${column.columnDef.meta?.className ?? ''}`;
+  return `${baseClassName} z-30 ${column.columnDef.meta?.className ?? ''}`;
 };
 
 const getCellClassName = (column, rowIndex) => {
   const stickyConfig = getStickyConfig(column.id);
-  const backgroundClassName = rowIndex % 2 === 0
-    ? 'bg-neutral-0'
-    : 'bg-neutral-50';
+  const isEven = rowIndex % 2 === 0;
+  
+  const normalBackground = isEven ? 'bg-white group-hover:bg-teal-50/50' : 'bg-slate-50 group-hover:bg-teal-50/50';
+  const stickyBackground = isEven ? 'bg-white group-hover:bg-teal-50' : 'bg-slate-50 group-hover:bg-teal-50';
+  
   const baseClassName = (
-    'border-b border-r border-neutral-200 px-3 py-2.5 '
-    + 'align-top text-sm text-neutral-800 last:border-r-0'
+    'border-b border-r border-neutral-200 px-4 py-2 '
+    + 'align-middle text-left text-[12px] leading-5 text-neutral-800 last:border-r-0 transition-colors'
   );
 
   if (stickyConfig) {
-    return `${baseClassName} ${stickyConfig.cellClassName} ${backgroundClassName}`;
+    return `${baseClassName} ${stickyConfig.cellClassName} ${stickyBackground}`;
   }
 
-  return `${baseClassName} ${column.columnDef.meta?.className ?? ''} ${backgroundClassName}`;
+  return `${baseClassName} ${column.columnDef.meta?.className ?? ''} ${normalBackground}`;
 };
 
 const SortIndicator = ({ direction }) => (
@@ -461,6 +490,7 @@ export const ForecastMatrixTable = ({
   caption = 'Forecast work items and team allocation capacity',
   emptyMessage = 'No work items are available for the current forecast view.',
   className = '',
+  headerControls = null,
 }) => {
   const storeSorting = useForecastViewStore((state) => state.sorting);
   const setStoreSorting = useForecastViewStore(
@@ -561,37 +591,36 @@ export const ForecastMatrixTable = ({
   const isTableLoading = isLoading || loading;
   const columnCount = Math.max(1, table.getAllLeafColumns().length);
 
+  const titleNode = (
+    <div className="flex items-center">
+      <h2
+        id="forecast-matrix-title"
+        className="text-xl font-bold text-neutral-900 whitespace-nowrap"
+      >
+        {title}
+      </h2>
+    </div>
+  );
+
   return (
     <section
-      className={`overflow-hidden rounded-xl border border-neutral-200 bg-neutral-0 shadow-sm ${className}`}
+      className={`overflow-hidden rounded-xl border border-neutral-200 bg-neutral-0 shadow-sm flex flex-col ${className}`}
       aria-labelledby="forecast-matrix-title"
       aria-busy={isTableLoading || isSorting || undefined}
     >
-      <div className="flex flex-col gap-2 border-b border-neutral-200 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-        <div className="min-w-0">
-          <h2
-            id="forecast-matrix-title"
-            className="text-lg font-semibold text-neutral-900"
-          >
-            {title}
-          </h2>
-          <p className="mt-1 text-sm text-neutral-600">
-            {resolvedRows.length} work item
-            {resolvedRows.length === 1 ? '' : 's'}
-            {' · '}
-            {resolvedTeams.length} team
-            {resolvedTeams.length === 1 ? '' : 's'}
-          </p>
-        </div>
-
-        <p className="text-xs text-neutral-500">
+      <div className="shrink-0 border-b border-neutral-200 px-5 py-4 sm:px-6">
+        {headerControls 
+          ? cloneElement(headerControls, { titleNode })
+          : titleNode
+        }
+        <p className="mt-2 text-xs text-neutral-500 sm:hidden">
           Scroll horizontally to view team allocations.
         </p>
       </div>
 
       {suppliedErrorMessage ? (
         <div
-          className="border-b border-red-200 bg-red-50 px-5 py-3 text-sm font-medium text-red-800 sm:px-6"
+          className="shrink-0 border-b border-red-200 bg-red-50 px-5 py-3 text-sm font-medium text-red-800 sm:px-6"
           role="alert"
         >
           {suppliedErrorMessage}
@@ -600,7 +629,7 @@ export const ForecastMatrixTable = ({
 
       {sortingError ? (
         <div
-          className="border-b border-red-200 bg-red-50 px-5 py-3 text-sm font-medium text-red-800 sm:px-6"
+          className="shrink-0 border-b border-red-200 bg-red-50 px-5 py-3 text-sm font-medium text-red-800 sm:px-6"
           role="alert"
         >
           {sortingError.message}
@@ -608,7 +637,7 @@ export const ForecastMatrixTable = ({
       ) : null}
 
       <div
-        className="max-w-full overflow-x-auto overscroll-x-contain"
+        className="max-w-full flex-1 overflow-auto overscroll-contain"
         tabIndex={0}
         role="region"
         aria-label="Scrollable forecast matrix"
@@ -616,7 +645,7 @@ export const ForecastMatrixTable = ({
         <table className="min-w-max border-separate border-spacing-0">
           <caption className="sr-only">{caption}</caption>
 
-          <thead className="relative z-20">
+          <thead className="z-30">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -773,6 +802,7 @@ ForecastMatrixTable.propTypes = {
   caption: PropTypes.string,
   emptyMessage: PropTypes.string,
   className: PropTypes.string,
+  headerControls: PropTypes.node,
 };
 
 export default ForecastMatrixTable;

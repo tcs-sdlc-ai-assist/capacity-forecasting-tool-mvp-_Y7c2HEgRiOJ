@@ -195,7 +195,7 @@ export const FilterPanel = ({
   onResetFilters = null,
   onClearFilters = null,
   title = 'Forecast filters',
-  description = 'Choose one planning level and any number of owners, programs, teams, or ARTs.',
+  description: _description = 'Choose one planning level and any number of owners, programs, teams, or ARTs.',
   disabled = false,
   className = '',
 }) => {
@@ -395,147 +395,164 @@ export const FilterPanel = ({
   );
   const controlsDisabled = disabled || busyField !== null;
 
+  const handleBackdropClick = (event) => {
+    if (event.target === event.currentTarget) {
+      if (typeof onClearFilters === 'function') {
+        // Wait, wait, this is just backdrop click. We should close the panel.
+        // I need to add an onClose prop or call forecastState.toggleFilterPanel().
+        forecastState.toggleFilterPanel();
+      } else {
+        forecastState.toggleFilterPanel();
+      }
+    }
+  };
+
   return (
-    <section
-      className={`rounded-xl border border-neutral-200 bg-neutral-0 shadow-sm ${className}`}
-      aria-labelledby="forecast-filter-panel-title"
-      aria-busy={busyField !== null || undefined}
+    <div
+      className="fixed inset-0 z-[60] flex items-start justify-center overflow-y-auto bg-neutral-950/20 backdrop-blur-sm px-4 py-6 sm:px-6 sm:pt-20"
+      onClick={handleBackdropClick}
     >
-      <div className="flex flex-col gap-4 border-b border-neutral-200 px-5 py-5 sm:flex-row sm:items-start sm:justify-between sm:px-6">
-        <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <h2
-              id="forecast-filter-panel-title"
-              className="text-lg font-semibold text-neutral-900"
-            >
-              {title}
-            </h2>
-            {activeSelectionCount > 0 ? (
-              <span className="inline-flex items-center rounded-full bg-teal-100 px-2.5 py-1 text-xs font-semibold text-teal-800">
-                {activeSelectionCount} active
-              </span>
-            ) : null}
+      <section
+        className={`w-full max-w-7xl rounded-xl border border-neutral-200 bg-neutral-0 shadow-xl ${className}`}
+        aria-labelledby="forecast-filter-panel-title"
+        aria-busy={busyField !== null || undefined}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-start justify-between gap-4 border-b border-neutral-200 px-5 py-4 sm:px-6">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <h2
+                id="forecast-filter-panel-title"
+                className="text-lg font-semibold text-neutral-900"
+              >
+                {title}
+              </h2>
+              {activeSelectionCount > 0 ? (
+                <span className="inline-flex items-center rounded-full bg-teal-100 px-2.5 py-1 text-xs font-semibold text-teal-800">
+                  {activeSelectionCount} active
+                </span>
+              ) : null}
+            </div>
           </div>
-          {description ? (
-            <p className="mt-1 max-w-3xl text-sm leading-6 text-neutral-600">
-              {description}
-            </p>
-          ) : null}
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className="inline-flex h-9 items-center justify-center rounded-md px-3 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-900 disabled:cursor-not-allowed disabled:opacity-60"
+              disabled={controlsDisabled || activeSelectionCount === 0}
+              onClick={handleReset}
+            >
+              {busyField === 'reset' ? 'Clearing…' : 'Clear filters'}
+            </button>
+            <button
+              type="button"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-800"
+              aria-label="Close filters"
+              onClick={() => forecastState.toggleFilterPanel()}
+            >
+              <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+              </svg>
+            </button>
+          </div>
         </div>
 
-        <button
-          type="button"
-          className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-md border border-neutral-300 bg-neutral-0 px-4 py-2 text-sm font-semibold text-neutral-700 shadow-xs transition-colors hover:border-neutral-400 hover:bg-neutral-50 hover:text-neutral-900 disabled:cursor-not-allowed disabled:opacity-60"
-          disabled={controlsDisabled || activeSelectionCount === 0}
-          onClick={handleReset}
-        >
-          {busyField === 'reset' ? 'Clearing…' : 'Clear filters'}
-        </button>
-      </div>
+        <div className="relative z-10 grid gap-4 overflow-visible p-5 sm:p-6 lg:grid-cols-5">
+          <SearchableSingleSelect
+            id="forecast-filter-planning-level"
+            label="Planning level"
+            options={resolvedOptions.planningLevels}
+            value={resolvedPlanningLevel}
+            onChange={handlePlanningLevelChange}
+            placeholder="All levels"
+            searchPlaceholder="Search"
+            clearLabel="Clear planning level"
+            disabled={controlsDisabled}
+          />
 
-      <div className="relative z-10 grid gap-5 overflow-visible p-5 sm:p-6 md:grid-cols-2 xl:grid-cols-3">
-        <SearchableSingleSelect
-          id="forecast-filter-planning-level"
-          label="Planning level"
-          options={resolvedOptions.planningLevels}
-          value={resolvedPlanningLevel}
-          onChange={handlePlanningLevelChange}
-          placeholder="All planning levels"
-          searchPlaceholder="Search planning levels"
-          clearLabel="Clear planning level"
-          helperText="Select at most one planning level."
-          disabled={controlsDisabled}
-        />
+          <SearchableMultiSelect
+            id="forecast-filter-owners"
+            label="Owner"
+            options={resolvedOptions.owners}
+            value={resolvedOwners}
+            onChange={(value) => handleMultiSelectChange(
+              FILTER_KEYS.OWNERS,
+              value,
+              onOwnersChange,
+              onSelectedOwnersChange,
+              forecastState.setSelectedOwners,
+              'The owner filters could not be updated.',
+            )}
+            placeholder="All owners"
+            searchPlaceholder="Search owners"
+            disabled={controlsDisabled}
+          />
 
-        <SearchableMultiSelect
-          id="forecast-filter-owners"
-          label="Owner"
-          options={resolvedOptions.owners}
-          value={resolvedOwners}
-          onChange={(value) => handleMultiSelectChange(
-            FILTER_KEYS.OWNERS,
-            value,
-            onOwnersChange,
-            onSelectedOwnersChange,
-            forecastState.setSelectedOwners,
-            'The owner filters could not be updated.',
-          )}
-          placeholder="All owners"
-          searchPlaceholder="Search owners"
-          disabled={controlsDisabled}
-        />
+          <SearchableMultiSelect
+            id="forecast-filter-programs"
+            label="Program"
+            options={resolvedOptions.programs}
+            value={resolvedPrograms}
+            onChange={(value) => handleMultiSelectChange(
+              FILTER_KEYS.PROGRAMS,
+              value,
+              onProgramsChange,
+              onSelectedProgramsChange,
+              forecastState.setSelectedPrograms,
+              'The program filters could not be updated.',
+            )}
+            placeholder="All programs"
+            searchPlaceholder="Search programs"
+            disabled={controlsDisabled}
+          />
 
-        <SearchableMultiSelect
-          id="forecast-filter-programs"
-          label="Program"
-          options={resolvedOptions.programs}
-          value={resolvedPrograms}
-          onChange={(value) => handleMultiSelectChange(
-            FILTER_KEYS.PROGRAMS,
-            value,
-            onProgramsChange,
-            onSelectedProgramsChange,
-            forecastState.setSelectedPrograms,
-            'The program filters could not be updated.',
-          )}
-          placeholder="All programs"
-          searchPlaceholder="Search programs"
-          disabled={controlsDisabled}
-        />
+          <SearchableMultiSelect
+            id="forecast-filter-teams"
+            label="Team"
+            options={resolvedOptions.teams}
+            value={resolvedTeams}
+            onChange={(value) => handleMultiSelectChange(
+              FILTER_KEYS.TEAMS,
+              value,
+              onTeamsChange,
+              onSelectedTeamsChange,
+              forecastState.setSelectedTeams,
+              'The team filters could not be updated.',
+            )}
+            placeholder="All teams"
+            searchPlaceholder="Search teams"
+            disabled={controlsDisabled}
+          />
 
-        <SearchableMultiSelect
-          id="forecast-filter-teams"
-          label="Team"
-          options={resolvedOptions.teams}
-          value={resolvedTeams}
-          onChange={(value) => handleMultiSelectChange(
-            FILTER_KEYS.TEAMS,
-            value,
-            onTeamsChange,
-            onSelectedTeamsChange,
-            forecastState.setSelectedTeams,
-            'The team filters could not be updated.',
-          )}
-          placeholder="All teams"
-          searchPlaceholder="Search teams"
-          disabled={controlsDisabled}
-        />
-
-        <SearchableMultiSelect
-          id="forecast-filter-arts"
-          label="ART"
-          options={resolvedOptions.arts}
-          value={resolvedArts}
-          onChange={(value) => handleMultiSelectChange(
-            FILTER_KEYS.ARTS,
-            value,
-            onArtsChange,
-            onSelectedArtsChange,
-            forecastState.setSelectedArts,
-            'The ART filters could not be updated.',
-          )}
-          placeholder="All ARTs"
-          searchPlaceholder="Search ARTs"
-          disabled={controlsDisabled}
-        />
-      </div>
-
-      <div className="border-t border-neutral-200 bg-neutral-50 px-5 py-3 sm:px-6">
-        <p className="text-xs leading-5 text-neutral-600">
-          Multiple values within a filter are matched using OR. Different
-          filter categories are combined using AND.
-        </p>
-      </div>
-
-      {actionError ? (
-        <div
-          className="border-t border-red-200 bg-red-50 px-5 py-3 text-sm font-medium text-red-800 sm:px-6"
-          role="alert"
-        >
-          {actionError.message}
+          <SearchableMultiSelect
+            id="forecast-filter-arts"
+            label="ART"
+            options={resolvedOptions.arts}
+            value={resolvedArts}
+            onChange={(value) => handleMultiSelectChange(
+              FILTER_KEYS.ARTS,
+              value,
+              onArtsChange,
+              onSelectedArtsChange,
+              forecastState.setSelectedArts,
+              'The ART filters could not be updated.',
+            )}
+            placeholder="All ARTs"
+            searchPlaceholder="Search ARTs"
+            disabled={controlsDisabled}
+          />
         </div>
-      ) : null}
-    </section>
+
+        {actionError ? (
+          <div
+            className="border-t border-red-200 bg-red-50 px-5 py-3 text-sm font-medium text-red-800 sm:px-6"
+            role="alert"
+          >
+            {actionError.message}
+          </div>
+        ) : null}
+      </section>
+    </div>
   );
 };
 

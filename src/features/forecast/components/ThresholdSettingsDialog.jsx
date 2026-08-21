@@ -324,11 +324,11 @@ export const ThresholdSettingsDialog = ({
       closeOnBackdropClick={!isSaving}
       closeOnEscape={!isSaving}
       initialFocusRef={constrainedInputRef}
-      className={className}
+      className={`!max-w-2xl ${className}`}
     >
-      <div className="space-y-5">
+      <div className="space-y-6">
         <fieldset
-          className="space-y-4"
+          className="grid gap-6 sm:grid-cols-2"
           disabled={disabled || isSaving}
         >
           <legend className="sr-only">

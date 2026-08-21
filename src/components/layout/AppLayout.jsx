@@ -69,11 +69,11 @@ export const AppLayout = () => (
   <div className="flex min-h-screen flex-col bg-neutral-50">
     <AppHeader />
 
-    <div className="mx-auto flex w-full max-w-screen-2xl flex-1 flex-col gap-4 px-4 py-5 sm:gap-6 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+    <div className="mx-auto flex w-full max-w-screen-2xl flex-1 flex-col gap-3 px-4 py-4 sm:gap-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6">
       <NoticeCenter />
       <PersistenceWarning />
 
-      <main className="min-w-0 flex-1">
+      <main className="min-w-0 flex-1 flex flex-col">
         <Outlet />
       </main>
     </div>

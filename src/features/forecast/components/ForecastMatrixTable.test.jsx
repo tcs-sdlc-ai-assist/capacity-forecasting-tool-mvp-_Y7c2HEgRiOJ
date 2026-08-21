@@ -124,36 +124,13 @@ describe('ForecastMatrixTable', () => {
     const programHeader = screen.getByRole('columnheader', {
       name: 'Program',
     });
-    const epicHeader = screen.getByRole('columnheader', {
-      name: 'Epic',
-    });
-    const featureHeader = screen.getByRole('columnheader', {
-      name: 'Feature',
-    });
 
-    expect(programHeader).toHaveClass('sticky', 'left-0', 'z-30');
-    expect(epicHeader).toHaveClass('sticky', 'left-40', 'z-30');
-    expect(featureHeader).toHaveClass(
-      'sticky',
-      'left-[22rem]',
-      'z-30',
-    );
+    expect(programHeader).toHaveClass('sticky', 'left-0', 'z-40');
 
     const programCell = screen.getByText('Customer Experience')
       .closest('td');
-    const epicCell = screen.getByText('Account modernization')
-      .closest('td');
-    const featureCell = screen.getByText(
-      'Self-service account recovery',
-    ).closest('td');
 
     expect(programCell).toHaveClass('sticky', 'left-0', 'z-10');
-    expect(epicCell).toHaveClass('sticky', 'left-40', 'z-10');
-    expect(featureCell).toHaveClass(
-      'sticky',
-      'left-[22rem]',
-      'z-10',
-    );
   });
 
   it('forwards sorting updates when a sortable identity header is activated', async () => {
@@ -218,6 +195,5 @@ describe('ForecastMatrixTable', () => {
     expect(screen.queryByLabelText(
       'Atlas: Allocation unavailable.',
     )).not.toBeInTheDocument();
-    expect(screen.getByText('0 work items · 2 teams')).toBeInTheDocument();
   });
 });

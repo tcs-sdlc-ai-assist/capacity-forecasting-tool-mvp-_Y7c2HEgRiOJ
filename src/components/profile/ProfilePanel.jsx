@@ -74,8 +74,8 @@ const formatDateTime = (value) => {
   });
 };
 
-const DetailRow = ({ label, value }) => (
-  <div className="grid gap-1 border-b border-neutral-100 py-3 last:border-b-0 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-4">
+const DetailRow = ({ label, value, fullWidth = false }) => (
+  <div className={`flex flex-col gap-1 ${fullWidth ? 'sm:col-span-2 sm:col-start-1' : ''}`}>
     <dt className="text-xs font-semibold uppercase tracking-wide text-neutral-500">
       {label}
     </dt>
@@ -88,6 +88,7 @@ const DetailRow = ({ label, value }) => (
 DetailRow.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.node,
+  fullWidth: PropTypes.bool,
 };
 
 /**
@@ -126,6 +127,8 @@ export const ProfilePanel = ({
     ?? 'Signed-in user';
   const username = session?.username ?? '';
   const profile = getDemoUserProfile(username);
+  
+  const displayImageSrc = imageSrc || '/demo-profile.jpg';
 
   const requestClose = useCallback(() => {
     if (isProcessing) {
@@ -313,7 +316,7 @@ export const ProfilePanel = ({
         aria-modal="true"
         aria-labelledby={titleId}
         tabIndex={-1}
-        className="w-full max-w-lg rounded-xl border border-neutral-200 bg-neutral-0 p-5 shadow-lg sm:p-6"
+        className="w-full max-w-3xl rounded-xl border border-neutral-200 bg-neutral-0 p-5 shadow-lg sm:p-6"
       >
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -349,7 +352,7 @@ export const ProfilePanel = ({
 
         <div className="mt-5 flex flex-col items-center gap-4 sm:flex-row sm:items-start">
           <ProfileAvatar
-            imageSrc={imageSrc}
+            imageSrc={displayImageSrc}
             size="lg"
             alt=""
             className="border-teal-200 bg-teal-50 text-teal-700"
@@ -402,12 +405,11 @@ export const ProfilePanel = ({
           </div>
         ) : null}
 
-        <dl className="mt-5 rounded-lg border border-neutral-200 bg-neutral-50 px-4">
+        <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-4 rounded-lg border border-neutral-200 bg-neutral-50 p-5 sm:grid-cols-2">
           <DetailRow label="Display name" value={displayName} />
           <DetailRow label="Username" value={username} />
           <DetailRow label="Role" value={profile.role} />
           <DetailRow label="Email" value={profile.email} />
-          <DetailRow label="Access" value={profile.description} />
           <DetailRow label="Account type" value="Demo local" />
           <DetailRow
             label="Signed in"
@@ -417,9 +419,10 @@ export const ProfilePanel = ({
             label="Session expires"
             value={formatDateTime(session?.expiresAt)}
           />
+          <DetailRow label="Access" value={profile.description} fullWidth />
         </dl>
 
-        <div className="mt-5 flex justify-end">
+        <div className="mt-6 flex justify-end">
           <button
             type="button"
             className="inline-flex min-h-10 items-center justify-center rounded-md border border-neutral-300 bg-neutral-0 px-4 py-2 text-sm font-semibold text-neutral-700 shadow-xs transition-colors hover:bg-neutral-50 hover:text-neutral-900 disabled:cursor-not-allowed disabled:opacity-60"

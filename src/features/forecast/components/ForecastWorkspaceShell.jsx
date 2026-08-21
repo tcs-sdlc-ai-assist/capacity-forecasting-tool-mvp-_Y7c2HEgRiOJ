@@ -10,6 +10,7 @@ import ThresholdSettingsDialog from './ThresholdSettingsDialog.jsx';
 import ImportPanel from '../../import/components/ImportPanel.jsx';
 import ScenarioComparison from '../../scenarios/components/ScenarioComparison.jsx';
 import ScenarioPanel from '../../scenarios/components/ScenarioPanel.jsx';
+import ResetLocalDataDialog from '../../settings/components/ResetLocalDataDialog.jsx';
 import useForecastViewModel from '../hooks/useForecastViewModel.js';
 import { WORKSPACE_VIEWS } from '../store/forecastViewStore.js';
 import datasetExportFacade, {
@@ -125,12 +126,13 @@ export const ForecastWorkspaceShell = ({
   onOpenFilters = null,
   onOpenThresholds = null,
   onImportComplete = null,
-  title = 'Capacity forecast',
-  description = 'Explore planned work, team allocations, and capacity across planning levels.',
+  title: _title = 'Capacity forecast',
+  description: _description = 'Explore planned work, team allocations, and capacity across planning levels.',
   className = '',
 }) => {
   const viewModel = useForecastViewModel();
   const [workspaceError, setWorkspaceError] = useState(null);
+  const [isResetOpen, setIsResetOpen] = useState(false);
   const resolvedView = normalizeView(
     view ?? viewModel.workspaceView ?? initialView,
   );
@@ -286,12 +288,6 @@ export const ForecastWorkspaceShell = ({
   if (resolvedView === WORKSPACE_VIEWS.SCENARIOS) {
     return (
       <div className={`space-y-6 ${className}`}>
-        <WorkspaceSubpageHeader
-          title="Scenario workspace"
-          description="Explore browser-local what-if changes without modifying the active baseline dataset."
-          onBack={handleBackToForecast}
-        />
-
         {workspaceError ? (
           <div
             className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-800"
@@ -345,125 +341,110 @@ export const ForecastWorkspaceShell = ({
   }
 
   return (
-    <div className={`space-y-6 ${className}`}>
-      <header>
-        <h1 className="text-2xl font-semibold text-neutral-900">
-          {title}
-        </h1>
-        {description ? (
-          <p className="mt-1 max-w-4xl text-sm leading-6 text-neutral-600">
-            {description}
-          </p>
+    <div className={`flex flex-col gap-4 pb-12 ${className}`}>
+      <div className="shrink-0 flex flex-col gap-4">
+
+        {workspaceError ? (
+          <div
+            className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-800"
+            role="alert"
+          >
+            {workspaceError.message}
+          </div>
         ) : null}
-      </header>
 
-      {workspaceError ? (
-        <div
-          className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-800"
-          role="alert"
-        >
-          {workspaceError.message}
-        </div>
-      ) : null}
+        {viewModel.isFilterPanelOpen ? (
+          <FilterPanel
+            filterOptions={viewModel.filterOptionDescriptors}
+            filters={viewModel.filters}
+            onPlanningLevelChange={(planningLevel) => (
+              viewModel.setSelectedPlanningLevels(
+                planningLevel ? [planningLevel] : [],
+              )
+            )}
+            onSelectedOwnersChange={viewModel.setSelectedOwners}
+            onSelectedProgramsChange={viewModel.setSelectedPrograms}
+            onSelectedTeamsChange={viewModel.setSelectedTeams}
+            onSelectedArtsChange={viewModel.setSelectedArts}
+            onResetFilters={viewModel.resetFilters}
+            onClearFilters={viewModel.resetFilters}
+          />
+        ) : null}
 
-      {!viewModel.hasDataset ? (
-        <NoDataState
-          dataset={baselineDataset}
-          isLoading={viewModel.isLoading}
-          error={viewModel.datasetError}
-          onImport={handleOpenImport}
-          onRecover={viewModel.refreshDataset}
+        <ActiveFilterChips
+          chips={viewModel.activeFilterChips}
         />
-      ) : (
-        <>
-          <ForecastToolbar
-            searchTerm={viewModel.filters.searchTerm}
-            onSearchChange={viewModel.setSearchTerm}
-            activeFilterCount={viewModel.activeFilterCount}
-            visibleCount={visibleCount}
-            totalCount={totalCount}
-            onOpenFilters={handleOpenFilters}
-            onOpenThresholds={handleOpenThresholds}
-            onManageScenarios={handleOpenScenarios}
-            onImport={handleOpenImport}
-            onExport={handleExport}
-            isDemoData={
-              metadata?.sourceType === 'mock'
-              || metadata?.sourceType === 'recovered-mock'
-            }
-            isLocalOnly
-            dataLabel={dataLabel}
-            disabled={viewModel.isLoading}
-          />
 
-          {viewModel.isFilterPanelOpen ? (
-            <FilterPanel
-              filterOptions={viewModel.filterOptionDescriptors}
-              filters={viewModel.filters}
-              onPlanningLevelChange={(planningLevel) => (
-                viewModel.setSelectedPlanningLevels(
-                  planningLevel ? [planningLevel] : [],
-                )
-              )}
-              onSelectedOwnersChange={viewModel.setSelectedOwners}
-              onSelectedProgramsChange={viewModel.setSelectedPrograms}
-              onSelectedTeamsChange={viewModel.setSelectedTeams}
-              onSelectedArtsChange={viewModel.setSelectedArts}
-              onResetFilters={viewModel.resetFilters}
-            />
-          ) : null}
-
-          <ActiveFilterChips
-            chips={viewModel.activeFilterChips}
-          />
-
-          {viewModel.activeScenario ? (
-            <section
-              className="rounded-lg border border-teal-200 bg-teal-50 px-4 py-3 text-teal-950 shadow-xs"
-              aria-label="Active forecast scenario"
-            >
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div className="min-w-0">
-                  <p className="text-sm font-semibold">
-                    Scenario active: {viewModel.activeScenario.name}
-                  </p>
-                  <p className="mt-1 text-sm text-teal-800">
-                    The matrix shows a derived scenario projection. The
-                    baseline dataset remains unchanged.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  className="inline-flex min-h-9 shrink-0 items-center justify-center rounded-md border border-teal-300 bg-neutral-0 px-3 py-2 text-sm font-semibold text-teal-800 shadow-xs transition-colors hover:bg-teal-100"
-                  onClick={handleOpenScenarios}
-                >
-                  Edit scenario
-                </button>
+        {viewModel.activeScenario ? (
+          <section
+            className="rounded-lg border border-teal-200 bg-teal-50 px-4 py-3 text-teal-950 shadow-xs"
+            aria-label="Active forecast scenario"
+          >
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
+                <p className="text-sm font-semibold">
+                  Scenario active: {viewModel.activeScenario.name}
+                </p>
+                <p className="mt-1 text-sm text-teal-800">
+                  The matrix shows a derived scenario projection. The
+                  baseline dataset remains unchanged.
+                </p>
               </div>
-            </section>
-          ) : null}
+              <button
+                type="button"
+                className="inline-flex min-h-9 shrink-0 items-center justify-center rounded-md border border-teal-300 bg-neutral-0 px-3 py-2 text-sm font-semibold text-teal-800 shadow-xs transition-colors hover:bg-teal-100"
+                onClick={handleOpenScenarios}
+              >
+                Edit scenario
+              </button>
+            </div>
+          </section>
+        ) : null}
+      </div>
 
-          {viewModel.hasNoResults ? (
-            <NoResultsState
-              dataset={dataset}
-              noResultsState={viewModel.noResultsState}
-              searchTerm={viewModel.filters.searchTerm}
-              activeFilterCount={viewModel.activeFilterCount}
-              onSearchChange={viewModel.setSearchTerm}
-              onClearFilters={viewModel.resetFilters}
-            />
-          ) : (
-            <ForecastMatrixTable
-              rows={viewModel.rows}
-              dynamicTeamColumns={viewModel.dynamicTeamColumns}
-              sorting={viewModel.sorting}
-              onSortingChange={viewModel.setSorting}
-              isLoading={viewModel.isLoading}
-              error={sharedError}
-            />
-          )}
-        </>
-      )}
+      {viewModel.hasNoResults ? (
+          <NoResultsState
+            dataset={dataset}
+            noResultsState={viewModel.noResultsState}
+            searchTerm={viewModel.filters.searchTerm}
+            activeFilterCount={viewModel.activeFilterCount}
+            onSearchChange={viewModel.setSearchTerm}
+            onClearFilters={viewModel.resetFilters}
+          />
+        ) : (
+          <ForecastMatrixTable
+            className="h-[750px]"
+            rows={viewModel.rows}
+            dynamicTeamColumns={viewModel.dynamicTeamColumns}
+            sorting={viewModel.sorting}
+            onSortingChange={viewModel.setSorting}
+            isLoading={viewModel.isLoading}
+            error={sharedError}
+            headerControls={
+              <ForecastToolbar
+                searchTerm={viewModel.filters.searchTerm}
+                onSearchChange={viewModel.setSearchTerm}
+                activeFilterCount={viewModel.activeFilterCount}
+                visibleCount={visibleCount}
+                totalCount={totalCount}
+                onOpenFilters={handleOpenFilters}
+                onOpenThresholds={handleOpenThresholds}
+                onManageScenarios={handleOpenScenarios}
+                onImport={handleOpenImport}
+                onExport={handleExport}
+                onRemoveData={() => setIsResetOpen(true)}
+                isDemoData={
+                  metadata?.sourceType === 'mock'
+                  || metadata?.sourceType === 'recovered-mock'
+                }
+                isLocalOnly
+                dataLabel={dataLabel}
+                disabled={viewModel.isLoading}
+                embedded={true}
+              />
+            }
+          />
+        )}
 
       <ThresholdSettingsDialog
         isOpen={viewModel.isThresholdDialogOpen}
@@ -471,6 +452,11 @@ export const ForecastWorkspaceShell = ({
         onSave={viewModel.setThresholds}
         onClose={viewModel.closeThresholdDialog}
         onCancel={viewModel.closeThresholdDialog}
+      />
+
+      <ResetLocalDataDialog
+        isOpen={isResetOpen}
+        onClose={() => setIsResetOpen(false)}
       />
     </div>
   );

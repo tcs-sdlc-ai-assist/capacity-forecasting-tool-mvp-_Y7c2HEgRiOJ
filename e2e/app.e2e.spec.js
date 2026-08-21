@@ -177,7 +177,7 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
 
     await planningLevelInput.click();
     await page.getByRole('option', {
-      name: '2027 PI 1',
+      name: '2026 PI 3',
       exact: true,
     }).click();
 
@@ -187,8 +187,22 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
 
     await expect(ownerInput).toBeEnabled();
     await ownerInput.click();
+    await ownerInput.fill('Seth Neo');
     await page.getByRole('option', {
-      name: /Avery Brooks/,
+      name: 'Seth Neo',
+      exact: true,
+    }).click();
+    await ownerInput.press('Escape');
+
+    const teamInput = page.getByRole('combobox', {
+      name: 'Team',
+    });
+
+    await teamInput.click();
+    await teamInput.fill('Product Master');
+    await page.getByRole('option', {
+      name: 'Product Master',
+      exact: true,
     }).click();
 
     const noResultsHeading = page.getByRole('heading', {

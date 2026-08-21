@@ -221,6 +221,35 @@ describe('DatasetImportService', () => {
     });
   });
 
+  it('imports a mixed CSV when recordType is omitted and capacity columns are blank', async () => {
+    const harness = createHarness();
+    const csv = [
+      'planningLevel,program,epic,itemId,feature,featureWorkType,owner,estimatedPoints,team,art,status,startDate,endDate,allocations,capacityPoints,reservedSupportPercent,ptoImpactPoints,holidayImpactPoints,confidence',
+      'Current PI,Customer Experience,Account modernization,CFT-201,Account recovery,Business Feature,Import Planner,8,Atlas,Customer ART,Committed,2026-07-01,2026-09-30,Atlas:8,,,,,',
+      'Current PI,,,,,,,,Atlas,,,,,,40,0,0,0,High',
+    ].join('\n');
+
+    const result = await harness.service.importFile(
+      createCsvDescriptor(csv),
+    );
+
+    expect(result.ok).toBe(true);
+    expect(result.data.dataset.workItems).toHaveLength(1);
+    expect(result.data.dataset.capacityRecords).toHaveLength(1);
+    expect(result.data.dataset.workItems[0]).toMatchObject({
+      feature: 'Account recovery',
+      planningLevel: 'Current PI',
+      allocations: {
+        Atlas: 8,
+      },
+    });
+    expect(result.data.dataset.capacityRecords[0]).toMatchObject({
+      planningLevel: 'Current PI',
+      team: 'Atlas',
+      capacityPoints: 40,
+    });
+  });
+
   it('imports and activates a valid structured JSON dataset', async () => {
     const harness = createHarness();
     const descriptor = createJsonDescriptor(createValidJsonPayload());

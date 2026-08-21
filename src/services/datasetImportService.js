@@ -471,6 +471,7 @@ const createValidationFailure = (
   acceptedRows,
   rejectedRows,
   warningCount,
+  rejections = [],
 ) => {
   const causeCode = typeof sourceError?.code === 'string'
     ? sourceError.code
@@ -486,9 +487,34 @@ const createValidationFailure = (
     details.causeCode = causeCode;
   }
 
+  if (Array.isArray(rejections) && rejections.length > 0) {
+    details.rejections = rejections.slice(0, 8).map((rejection) => ({
+      code: typeof rejection?.code === 'string'
+        ? rejection.code
+        : 'IMPORT_INVALID_ROW',
+      message: typeof rejection?.message === 'string' && rejection.message.trim()
+        ? rejection.message.trim()
+        : 'A row in the uploaded file could not be imported.',
+      rowRefs: Array.isArray(rejection?.rowRefs)
+        ? rejection.rowRefs
+        : undefined,
+      field: typeof rejection?.field === 'string'
+        ? rejection.field
+        : undefined,
+    }));
+  }
+
+  const message = causeCode === 'NO_VALID_ROWS'
+    ? (
+      typeof sourceError?.message === 'string' && sourceError.message.trim()
+        ? sourceError.message.trim()
+        : 'The import must contain at least one valid work item.'
+    )
+    : 'The uploaded file could not be activated.';
+
   return createError(
     DATASET_IMPORT_ERROR_CODES.VALIDATION_FAILED,
-    'The uploaded file could not be activated.',
+    message,
     details,
   );
 };
@@ -830,6 +856,7 @@ export class DatasetImportService {
         acceptedRows,
         rejectedRows,
         preliminaryWarnings.length,
+        normalized?.rejections,
       );
 
       this.publishFailureNotice(error, createdAt);

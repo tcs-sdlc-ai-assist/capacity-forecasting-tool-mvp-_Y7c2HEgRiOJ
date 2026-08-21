@@ -100,7 +100,7 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
       name: 'Capacity forecast',
     })).toBeVisible();
     await expect(page.getByText(
-      '36 work items · 12 teams',
+      '136 work items · 12 teams',
     )).toBeVisible();
 
     const storedBootstrapState = await page.evaluate(() => {
@@ -124,7 +124,7 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
       name: 'Capacity forecast',
     })).toBeVisible();
     await expect(page.getByText(
-      '36 work items · 12 teams',
+      '136 work items · 12 teams',
     )).toBeVisible();
   });
 
@@ -153,7 +153,7 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
     })).toBeVisible();
 
     const allocationButton = page.getByRole('button', {
-      name: /^IDEA: \d+(?:\.\d+)? allocation points,/,
+      name: /^ITIOPS: \d+(?:\.\d+)? allocation points,/,
     }).first();
 
     await allocationButton.focus();
@@ -207,7 +207,7 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
       name: 'Forecast matrix',
     })).toBeVisible();
     await expect(page.getByText(
-      '36 work items · 12 teams',
+      '136 work items · 12 teams',
     )).toBeVisible();
   });
 
@@ -284,7 +284,7 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
     })).toBeVisible();
 
     await page.getByLabel('Scenario name').fill(
-      'E2E IDEA adjustment',
+      'E2E ITIOPS adjustment',
     );
     await page.getByLabel('Description').fill(
       'Verify scenario changes do not modify the baseline.',
@@ -301,20 +301,20 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
     )).toBeVisible();
 
     const featureHeading = page.getByRole('heading', {
-      name: 'Customer Identity: self-service workflow',
+      name: 'MART PI-3 2026 Windows Server 2016 Remediation',
       exact: true,
     });
     const workItem = featureHeading.locator('xpath=ancestor::li[1]');
-    const ideaAllocation = workItem.getByRole('spinbutton', {
-      name: 'IDEA',
+    const itiopsAllocation = workItem.getByRole('spinbutton', {
+      name: 'ITIOPS',
     });
 
-    await ideaAllocation.fill('7');
-    await ideaAllocation.locator('xpath=../..').getByRole('button', {
+    await itiopsAllocation.fill('7');
+    await itiopsAllocation.locator('xpath=../..').getByRole('button', {
       name: 'Apply',
     }).click();
 
-    await expect(ideaAllocation).toHaveValue('7');
+    await expect(itiopsAllocation).toHaveValue('7');
 
     await page.getByRole('button', {
       name: 'Back to forecast',
@@ -324,10 +324,10 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
 
     await controls.getByRole('searchbox', {
       name: 'Global search',
-    }).fill('CFT-1201');
+    }).fill('E-26989');
 
     await expect(page.getByRole('button', {
-      name: /^IDEA: 7 allocation points,/,
+      name: /^ITIOPS: 7 allocation points,/,
     })).toBeVisible();
 
     await controls.getByRole('button', {
@@ -344,10 +344,10 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
     }).click();
 
     await expect(page.getByRole('button', {
-      name: /^IDEA: 0 allocation points,/,
+      name: /^ITIOPS: 15 allocation points,/,
     })).toBeVisible();
     await expect(page.getByRole('button', {
-      name: /^IDEA: 7 allocation points,/,
+      name: /^ITIOPS: 7 allocation points,/,
     })).toHaveCount(0);
   });
 
@@ -564,7 +564,7 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
       name: 'Capacity forecast',
     })).toBeVisible();
     await expect(page.getByText(
-      '36 work items · 12 teams',
+      '136 work items · 12 teams',
     )).toBeVisible();
   });
 });

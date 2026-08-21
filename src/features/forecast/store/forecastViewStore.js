@@ -446,11 +446,11 @@ export const createForecastViewStore = (
     };
 
     if (filtersResult.ok) {
+      // Start each session with no forecast filters applied. Selections
+      // stay in memory only after the user chooses them.
       Object.assign(
         updates,
-        createFilterState(
-          normalizeFilters(filtersResult.data ?? createDefaultFilters()),
-        ),
+        createFilterState(createDefaultFilters()),
       );
     }
 

@@ -8,7 +8,7 @@ The application is built with React 18, Vite 5, Zustand, TanStack Table, Tailwin
 
 > **This project is demonstration software.**
 >
-> - All bundled users, programs, people, teams, work items, and capacity values are synthetic.
+> - Demo credentials are synthetic. The bundled forecast dataset is a 2026 PI 3 MART/ACI sample (136 work items, 12 teams).
 > - Demo credentials are included in the client bundle and are not a production security boundary.
 > - Do not enter enterprise credentials or import confidential, regulated, or production data.
 > - Imported files and application state remain in the current browser, but browser extensions, endpoint controls, hosting analytics, and other client-side software must be evaluated separately.
@@ -72,7 +72,7 @@ The application is built with React 18, Vite 5, Zustand, TanStack Table, Tailwin
 
 - Eight-hour demo sessions.
 - Startup restoration of datasets, filters, thresholds, notices, and scenarios.
-- Automatic bootstrap of a bundled 36-work-item, 12-team demo dataset.
+- Automatic bootstrap of a bundled 136-work-item, 12-team 2026 PI 3 sample dataset.
 - Recovery to known-good demo data when stored dataset content is malformed or incompatible.
 - Memory-only fallback when durable browser storage is unavailable or full.
 - Namespace-safe removal of keys owned by this application.

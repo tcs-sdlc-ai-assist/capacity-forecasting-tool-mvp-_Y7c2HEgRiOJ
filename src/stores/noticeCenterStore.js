@@ -7,6 +7,7 @@ import {
   isNotice,
   NOTICE_SEVERITIES,
 } from '../domain/schemas.js';
+import { NOTICE_CODES } from '../constants/domainConstants.js';
 import persistentStore from '../platform/storage/persistentStore.js';
 
 export const NOTICE_CENTER_ERROR_CODES = Object.freeze({
@@ -28,6 +29,17 @@ const createError = (code, message) => ({
 const cloneNotice = (notice) => createNotice(notice);
 
 const cloneNotices = (notices) => notices.map(cloneNotice);
+
+const isTransientNotice = (notice) => (
+  notice?.severity === 'success'
+  || notice?.code === NOTICE_CODES.IMPORT_SUCCEEDED
+);
+
+const toPersistedNotices = (notices) => (
+  Array.isArray(notices)
+    ? notices.filter((notice) => !isTransientNotice(notice))
+    : []
+);
 
 const sanitizeString = (value, maximumLength) => {
   if (typeof value !== 'string') {
@@ -242,11 +254,11 @@ const readStoredValue = (storage) => {
       };
     }
 
-    const notices = deduplicateNotices(
+    const notices = toPersistedNotices(deduplicateNotices(
       storedNotices
         .map((notice) => sanitizeNotice(notice))
         .filter(Boolean),
-    );
+    ));
 
     return {
       ok: true,
@@ -266,7 +278,7 @@ const readStoredValue = (storage) => {
 
 const writeStoredValue = (storage, notices) => {
   try {
-    const envelope = createNoticeEnvelope(notices);
+    const envelope = createNoticeEnvelope(toPersistedNotices(notices));
     const result = typeof storage?.set === 'function'
       ? storage.set(STORAGE_KEYS.NOTICES, envelope)
       : storage?.setJson?.(STORAGE_KEYS.NOTICES, envelope);

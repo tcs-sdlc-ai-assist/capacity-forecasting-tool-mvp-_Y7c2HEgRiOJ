@@ -623,6 +623,20 @@ export const ImportPanel = ({
             <p className="mt-1 text-sm leading-5">
               {error.message}
             </p>
+            {Array.isArray(error.details?.rejections)
+              && error.details.rejections.length > 0 ? (
+                <ul className="mt-2 list-disc space-y-1 pl-5 text-xs leading-5">
+                  {error.details.rejections.map((rejection, index) => (
+                    <li key={`${rejection.code ?? 'rejection'}:${index}`}>
+                      {Array.isArray(rejection.rowRefs)
+                        && rejection.rowRefs.length > 0
+                        ? `Row ${rejection.rowRefs.join(', ')}: `
+                        : null}
+                      {rejection.message}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
             {!unsupportedInput ? (
               <p className="mt-2 text-xs leading-5">
                 The current active dataset was not replaced.

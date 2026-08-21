@@ -248,6 +248,7 @@ export const ForecastWorkspaceShell = ({
     }
 
     if (result?.ok) {
+      viewModel.resetFilters();
       changeView(WORKSPACE_VIEWS.FORECAST);
     }
   };

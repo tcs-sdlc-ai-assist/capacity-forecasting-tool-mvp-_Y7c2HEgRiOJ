@@ -712,6 +712,18 @@ const combineWarnings = (...results) => (
   ))
 );
 
+const hasPresentValue = (value) => {
+  if (value === undefined || value === null) {
+    return false;
+  }
+
+  if (typeof value === 'string') {
+    return value.trim().length > 0;
+  }
+
+  return true;
+};
+
 const classifyRecord = (record, aliasMap) => {
   const read = createRecordReader(record, aliasMap);
   const explicitType = normalizeRecordType(read('recordType'));
@@ -724,15 +736,20 @@ const classifyRecord = (record, aliasMap) => {
     return 'capacityRecord';
   }
 
-  const capacityFields = [
+  const hasWorkItemIdentity = [
+    'program',
+    'feature',
+    'estimatedPoints',
+    'featureWorkType',
+  ].some((field) => hasPresentValue(read(field)));
+  const hasCapacityValues = [
     'capacityPoints',
     'reservedSupportPercent',
     'ptoImpactPoints',
     'holidayImpactPoints',
-    'confidence',
-  ];
+  ].some((field) => hasPresentValue(read(field)));
 
-  if (capacityFields.some((field) => read(field) !== undefined)) {
+  if (hasCapacityValues && !hasWorkItemIdentity) {
     return 'capacityRecord';
   }
 

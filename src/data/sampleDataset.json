@@ -1,0 +1,3060 @@
+{
+  "workItems": [
+    {
+      "recordId": "E-25913",
+      "planningLevel": "2026 PI 3",
+      "program": "Unassigned",
+      "epic": "",
+      "itemId": "E-25913",
+      "feature": "MART Carry over from 2026 PI 2 to next PI, 2026 PI 3",
+      "featureWorkType": "Unspecified",
+      "owner": "",
+      "estimatedPoints": 22,
+      "team": [
+        "ITIOPS",
+        "Portfolio Construction",
+        "Investment Data Mastery"
+      ],
+      "art": "",
+      "status": "",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 10,
+        "Portfolio Construction": 9,
+        "Investment Data Mastery": 3
+      }
+    },
+    {
+      "recordId": "E-26989",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Lights On",
+      "epic": "Windows Server 2016 Remediation",
+      "itemId": "E-26989",
+      "feature": "MART PI-3 2026 Windows Server 2016 Remediation",
+      "featureWorkType": "Lights On",
+      "owner": "Brandon Mammen, Aaron Boore",
+      "estimatedPoints": 42,
+      "team": [
+        "ITIOPS",
+        "ITMIDOPS",
+        "Investment Data Mastery"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 15,
+        "ITMIDOPS": 8,
+        "Investment Data Mastery": 18
+      }
+    },
+    {
+      "recordId": "E-12296",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Lights On",
+      "epic": "SimCorp Upgrades - 2026",
+      "itemId": "E-12296",
+      "feature": "Simcorp Upgrade 2026",
+      "featureWorkType": "Lights On",
+      "owner": "Kelly Stavola",
+      "estimatedPoints": 42,
+      "team": [
+        "ITIOPS",
+        "ITMIDOPS",
+        "OTC",
+        "PACE",
+        "RDS",
+        "z-InvOps"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 15,
+        "ITMIDOPS": 2,
+        "OTC": 1,
+        "PACE": 3,
+        "RDS": 5,
+        "z-InvOps": 37
+      }
+    },
+    {
+      "recordId": "E-27037",
+      "planningLevel": "2026 PI 3",
+      "program": "Identity Management, Authentication & Access Control",
+      "epic": "Assess and Reset Non-Compliant Service Account Passwords",
+      "itemId": "E-27037",
+      "feature": "ITPACE - Vulnerabilities Mgt & Assess and Reset Non-Compliant Service Account Passwords Resets (PI 3'2026)",
+      "featureWorkType": "Tech Debt",
+      "owner": "Seth Neo",
+      "estimatedPoints": 30,
+      "team": [
+        "PACE"
+      ],
+      "art": "",
+      "status": "Analyzing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "PACE": 30
+      }
+    },
+    {
+      "recordId": "E-27050",
+      "planningLevel": "2026 PI 3",
+      "program": "Identity Management, Authentication & Access Control",
+      "epic": "Assess and Reset Non-Compliant Service Account Passwords",
+      "itemId": "E-27050",
+      "feature": "MART PI3 - Assess and Reset Non-Compliant Service Account Passwords",
+      "featureWorkType": "Lights On",
+      "owner": "Mike Gifford",
+      "estimatedPoints": 9,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Analyze Complete - Ready for Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 9
+      }
+    },
+    {
+      "recordId": "E-26670",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 Keep the Lights On (KTLO) & Tech Optimization (Pilot)",
+      "epic": "MART Vulnerability Tracking 2026",
+      "itemId": "E-26670",
+      "feature": "[CARRYOVER PI2] Cyberark Password Rotation",
+      "featureWorkType": "Lights On",
+      "owner": "Eqan Butt",
+      "estimatedPoints": 7,
+      "team": [
+        "Portfolio Construction",
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Construction": 3,
+        "Portfolio Research": 6
+      }
+    },
+    {
+      "recordId": "E-26977",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 Keep the Lights On (KTLO) & Tech Optimization (Pilot)",
+      "epic": "MART Vulnerability Tracking 2026",
+      "itemId": "E-26977",
+      "feature": "ITIOPS 2026 PI3 Spring Boot 4.x/Spring Framework 7.x Upgrade",
+      "featureWorkType": "Lights On",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 43,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 25
+      }
+    },
+    {
+      "recordId": "E-27035",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 Keep the Lights On (KTLO) & Tech Optimization (Pilot)",
+      "epic": "MART Vulnerability Tracking 2026",
+      "itemId": "E-27035",
+      "feature": "2026 PI3 Vulnerabilities - ITPACE - Spring Boot 4.x/Spring Framework 7.x Upgrade",
+      "featureWorkType": "Tech Debt",
+      "owner": "Pankesh Patel",
+      "estimatedPoints": 20,
+      "team": [
+        "PACE"
+      ],
+      "art": "",
+      "status": "Reviewing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "PACE": 20
+      }
+    },
+    {
+      "recordId": "E-27049",
+      "planningLevel": "2026 PI 3",
+      "program": "Cloud Transformation",
+      "epic": "Cloud Transformation",
+      "itemId": "E-27049",
+      "feature": "Move Capital Markets' Market Data Quality Monitoring (back end) to the Cloud",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Melissa Chapman",
+      "estimatedPoints": 1,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Reviewing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 1
+      }
+    },
+    {
+      "recordId": "E-26613",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 Keep the Lights On (KTLO) & Tech Optimization (Pilot)",
+      "epic": "MART Vulnerability Tracking 2026",
+      "itemId": "E-26613",
+      "feature": "OT&C: Replace RMI Service Interface",
+      "featureWorkType": "Tech Debt",
+      "owner": "Melissa Chapman",
+      "estimatedPoints": 26,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Analyzing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 25
+      }
+    },
+    {
+      "recordId": "E-26662",
+      "planningLevel": "2026 PI 3",
+      "program": "Configuration Management Database (CMDB) Program",
+      "epic": "CMDB Service Mapping - Tier-1 On-Prem",
+      "itemId": "E-26662",
+      "feature": "CARRY OVER - ITIOPS - CMDB - Service Mapping Tier 1 On-Prem: IOP",
+      "featureWorkType": "Lights On",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 8,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 3
+      }
+    },
+    {
+      "recordId": "E-26891",
+      "planningLevel": "2026 PI 3",
+      "program": "Configuration Management Database (CMDB) Program",
+      "epic": "CMDB Service Mapping - Tier-1 On-Prem",
+      "itemId": "E-26891",
+      "feature": "CARRY OVER - ITIOPS - CMDB - Service Mapping Tier 1 On-Prem: PAT",
+      "featureWorkType": "Lights On",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 6,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 3
+      }
+    },
+    {
+      "recordId": "E-27139",
+      "planningLevel": "2026 PI 3",
+      "program": "Configuration Management Database (CMDB) Program",
+      "epic": "CMDB Service Mapping - Tier-2 Cloud",
+      "itemId": "E-27139",
+      "feature": "Datadog Service Mapping - Tier2 Cloud - InvestmentResearchDataServices",
+      "featureWorkType": "Infrastructure",
+      "owner": "Kanaka Shetty",
+      "estimatedPoints": 8,
+      "team": [
+        "RDS"
+      ],
+      "art": "",
+      "status": "Funnel",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "RDS": 8
+      }
+    },
+    {
+      "recordId": "E-26431",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Lights On",
+      "epic": "Windows Server 2016 Remediation",
+      "itemId": "E-26431",
+      "feature": "[PC Carryover PI2] MART PI-2 2026 Windows Server 2016 Remediation",
+      "featureWorkType": "Lights On",
+      "owner": "Brandon Mammen, Aaron Boore",
+      "estimatedPoints": 9,
+      "team": [
+        "Portfolio Construction"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Construction": 7
+      }
+    },
+    {
+      "recordId": "E-26628",
+      "planningLevel": "2026 PI 3",
+      "program": "Configuration Management Database (CMDB) Program",
+      "epic": "CMDB Service Mapping - Tier-1 Cloud",
+      "itemId": "E-26628",
+      "feature": "[CarryOver PI2] Datadog Service Mapping - RDS",
+      "featureWorkType": "Infrastructure",
+      "owner": "Rao Sunkara, Ally Che",
+      "estimatedPoints": 10,
+      "team": [
+        "RDS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "RDS": 4
+      }
+    },
+    {
+      "recordId": "E-27134",
+      "planningLevel": "2026 PI 3",
+      "program": "Configuration Management Database (CMDB) Program",
+      "epic": "CMDB Service Mapping - Tier-1 Cloud",
+      "itemId": "E-27134",
+      "feature": "CarryOver - Service Mapping - EquityPortfolioMgmt",
+      "featureWorkType": "Infrastructure",
+      "owner": "Eqan Butt",
+      "estimatedPoints": 4,
+      "team": [
+        "Portfolio Construction"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Construction": 0
+      }
+    },
+    {
+      "recordId": "E-27135",
+      "planningLevel": "2026 PI 3",
+      "program": "Configuration Management Database (CMDB) Program",
+      "epic": "CMDB Service Mapping - Tier-1 On-Prem",
+      "itemId": "E-27135",
+      "feature": "CARRY OVER - Service Mapping - EquityPortfolioMgmt - Risk Systems",
+      "featureWorkType": "Infrastructure",
+      "owner": "Eqan Butt",
+      "estimatedPoints": 3,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 6
+      }
+    },
+    {
+      "recordId": "E-27235",
+      "planningLevel": "2026 PI 3",
+      "program": "Configuration Management Database (CMDB) Program",
+      "epic": "CMDB Service Mapping - Tier-2 Cloud",
+      "itemId": "E-27235",
+      "feature": "Datadog Service Mapping - InvestmentOpterations-CROP",
+      "featureWorkType": "Lights On",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 5,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 5
+      }
+    },
+    {
+      "recordId": "E-26255",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Lights On",
+      "epic": "2026 MART Lights On",
+      "itemId": "E-26255",
+      "feature": "Update BCLASS Hierarchy - Security Master & DB2 Updates",
+      "featureWorkType": "Lights On",
+      "owner": "Andre Schneider",
+      "estimatedPoints": 7,
+      "team": [
+        "OTC",
+        "Investment Data Mastery"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 3,
+        "Investment Data Mastery": 3
+      }
+    },
+    {
+      "recordId": "E-25271",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-25271",
+      "feature": "2026 PI 3 MART Enhancements - OTC",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Melissa Chapman",
+      "estimatedPoints": 70,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Funnel",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 35
+      }
+    },
+    {
+      "recordId": "E-26668",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 Keep the Lights On (KTLO) & Tech Optimization (Pilot)",
+      "epic": "MART Vulnerability Tracking 2026",
+      "itemId": "E-26668",
+      "feature": "PR: 2026 PI 3 MART Vulnerabilities",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Eqan Butt",
+      "estimatedPoints": 13,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 11
+      }
+    },
+    {
+      "recordId": "E-26994",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-26994",
+      "feature": "2026 PI3 MART Enhancements - ITMIDOPS",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "",
+      "estimatedPoints": 34,
+      "team": [
+        "ITMIDOPS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITMIDOPS": 30
+      }
+    },
+    {
+      "recordId": "E-26981",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-26981",
+      "feature": "2026 PI 3 MART Enhancements - ITIOPS",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 17,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 18
+      }
+    },
+    {
+      "recordId": "E-26996",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Lights On",
+      "epic": "2026 MART Lights On",
+      "itemId": "E-26996",
+      "feature": "2026 PI3 MART Lights On- ITMIDOPS",
+      "featureWorkType": "Lights On",
+      "owner": "",
+      "estimatedPoints": 24,
+      "team": [
+        "ITMIDOPS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITMIDOPS": 18
+      }
+    },
+    {
+      "recordId": "E-26929",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Lights On",
+      "epic": "2026 MART Lights On",
+      "itemId": "E-26929",
+      "feature": "2026 PI3 MART Lights On - Investment Data Mastery",
+      "featureWorkType": "Lights On",
+      "owner": "Julie Spencer",
+      "estimatedPoints": 76,
+      "team": [
+        "Investment Data Mastery"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Investment Data Mastery": 60
+      }
+    },
+    {
+      "recordId": "E-26471",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-26471",
+      "feature": "[CARRY OVER] Add Representative Fee Schedule to Product",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Josie Felden",
+      "estimatedPoints": 26,
+      "team": [
+        "Product Master",
+        "Investment Data Mastery"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Product Master": 13,
+        "Investment Data Mastery": 3
+      }
+    },
+    {
+      "recordId": "E-27206",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-27206",
+      "feature": "New Attribute: ACI Secmaster ID (Investment Strategy)",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "",
+      "estimatedPoints": 14,
+      "team": [
+        "Investment Data Mastery"
+      ],
+      "art": "",
+      "status": "QA",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Investment Data Mastery": 21
+      }
+    },
+    {
+      "recordId": "E-20555",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-20555",
+      "feature": "Upload for Portfolio Class (Master)",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Josie Felden",
+      "estimatedPoints": 10,
+      "team": [
+        "Investment Data Mastery"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Investment Data Mastery": 13
+      }
+    },
+    {
+      "recordId": "E-27418",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-27418",
+      "feature": "File Adjustments to solve Aquata Issues",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "",
+      "estimatedPoints": 18,
+      "team": [
+        "Investment Data Mastery"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Investment Data Mastery": 21
+      }
+    },
+    {
+      "recordId": "E-27169",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-27169",
+      "feature": "Date Null Warning",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "",
+      "estimatedPoints": 5,
+      "team": [
+        "Investment Data Mastery"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Investment Data Mastery": 8
+      }
+    },
+    {
+      "recordId": "E-27245",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-27245",
+      "feature": "Representative Fee Schedule: Remove from Investment Strategy",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "",
+      "estimatedPoints": 5,
+      "team": [
+        "Investment Data Mastery"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Investment Data Mastery": 8
+      }
+    },
+    {
+      "recordId": "E-26643",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-26643",
+      "feature": "2026 PI 3 MART Enhancements - Investment Data Mastery",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Julie Spencer",
+      "estimatedPoints": 56,
+      "team": [
+        "Investment Data Mastery"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Investment Data Mastery": 26
+      }
+    },
+    {
+      "recordId": "E-25420",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Lights On",
+      "epic": "2026 MART Lights On",
+      "itemId": "E-25420",
+      "feature": "2026 PI 3 MART Lights On - RDS",
+      "featureWorkType": "Lights On",
+      "owner": "Ally Che",
+      "estimatedPoints": 92,
+      "team": [
+        "RDS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "RDS": 60
+      }
+    },
+    {
+      "recordId": "E-25412",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Lights On",
+      "epic": "2026 MART Lights On",
+      "itemId": "E-25412",
+      "feature": "2026 PI 3 MART Lights On - OTC",
+      "featureWorkType": "Lights On",
+      "owner": "Melissa Chapman",
+      "estimatedPoints": 80,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Analyzing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 71
+      }
+    },
+    {
+      "recordId": "E-25511",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Lights On",
+      "epic": "2026 MART Lights On",
+      "itemId": "E-25511",
+      "feature": "2026 PI 3 MART Lights On - ITIOPS",
+      "featureWorkType": "Lights On",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 63,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 60
+      }
+    },
+    {
+      "recordId": "E-25644",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Lights On",
+      "epic": "2026 MART Lights On",
+      "itemId": "E-25644",
+      "feature": "ITPACE: 2026 PI 3 MART Lights On",
+      "featureWorkType": "Lights On",
+      "owner": "Pankesh Patel",
+      "estimatedPoints": 70,
+      "team": [
+        "PACE"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "PACE": 60
+      }
+    },
+    {
+      "recordId": "E-27340",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 Keep the Lights On (KTLO) & Tech Optimization (Pilot)",
+      "epic": "MART Vulnerability Tracking 2026",
+      "itemId": "E-27340",
+      "feature": "PC: 2026 MART PI3 Vulnerabilities",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Eqan Butt",
+      "estimatedPoints": 5,
+      "team": [
+        "Portfolio Construction"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Construction": 9
+      }
+    },
+    {
+      "recordId": "E-25361",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Lights On",
+      "epic": "2026 MART Lights On",
+      "itemId": "E-25361",
+      "feature": "PC: 2026 PI 3 MART Lights On",
+      "featureWorkType": "Lights On",
+      "owner": "Cassie Richter",
+      "estimatedPoints": 14,
+      "team": [
+        "Portfolio Construction"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Construction": 12
+      }
+    },
+    {
+      "recordId": "E-25648",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 Keep the Lights On (KTLO) & Tech Optimization (Pilot)",
+      "epic": "MART Vulnerability Tracking 2026",
+      "itemId": "E-25648",
+      "feature": "2026 PI3 Vulnerabilities - OT&C",
+      "featureWorkType": "Tech Debt",
+      "owner": "Melissa Chapman",
+      "estimatedPoints": 3,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Analyzing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 3
+      }
+    },
+    {
+      "recordId": "E-27120",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 Keep the Lights On (KTLO) & Tech Optimization (Pilot)",
+      "epic": "MART Vulnerability Tracking 2026",
+      "itemId": "E-27120",
+      "feature": "RDS: 2026 PI3 Vulnerability and Upgrades",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Ally Che",
+      "estimatedPoints": 23,
+      "team": [
+        "RDS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "RDS": 23
+      }
+    },
+    {
+      "recordId": "E-26976",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 Keep the Lights On (KTLO) & Tech Optimization (Pilot)",
+      "epic": "MART Vulnerability Tracking 2026",
+      "itemId": "E-26976",
+      "feature": "ITIOPS - 2026 PI3 Vulnerabilities and Upgrades",
+      "featureWorkType": "Lights On",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 1,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 10
+      }
+    },
+    {
+      "recordId": "E-24227",
+      "planningLevel": "2026 PI 3",
+      "program": "API Platform Enablement",
+      "epic": "Migrate Applications off MuleSoft",
+      "itemId": "E-24227",
+      "feature": "ITIOPS - Migrate from Global Access Token API to Client Credentials Token API PI3",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 18,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 10
+      }
+    },
+    {
+      "recordId": "E-26627",
+      "planningLevel": "2026 PI 3",
+      "program": "Configuration Management Database (CMDB) Program",
+      "epic": "CMDB Service Mapping - Tier-1 On-Prem",
+      "itemId": "E-26627",
+      "feature": "CARRY OVER - CMDB Service Mapping-RDS-Tier1-OnPrem",
+      "featureWorkType": "Infrastructure",
+      "owner": "Seth Adams, Rao Sunkara, Ally Che",
+      "estimatedPoints": 30,
+      "team": [
+        "RDS"
+      ],
+      "art": "",
+      "status": "Analyzing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "RDS": 14
+      }
+    },
+    {
+      "recordId": "E-27422",
+      "planningLevel": "2026 PI 3",
+      "program": "Configuration Management Database (CMDB) Program",
+      "epic": "CMDB Service Mapping - Tier-1 On-Prem",
+      "itemId": "E-27422",
+      "feature": "Service Mapping - ITMidOps Tier 1",
+      "featureWorkType": "Infrastructure",
+      "owner": "Anirban Bhattacharjee",
+      "estimatedPoints": 9,
+      "team": [
+        "ITMIDOPS"
+      ],
+      "art": "",
+      "status": "Analyzing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITMIDOPS": 9
+      }
+    },
+    {
+      "recordId": "E-26171",
+      "planningLevel": "2026 PI 3",
+      "program": "Product / Vehicle Launches / Product Changes",
+      "epic": "Avantis U.S. Core Equity ETF (AVUC) and Avantis All International Core Equity ETF (AVNC)",
+      "itemId": "E-26171",
+      "feature": "[CARRYOVER PI2] Create AVUC + AVNC Model (Coreaware)",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Julie Bird, Cassie Richter, Charlene Bessetti",
+      "estimatedPoints": 8,
+      "team": [
+        "Portfolio Construction"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Construction": 2
+      }
+    },
+    {
+      "recordId": "E-27130",
+      "planningLevel": "2026 PI 3",
+      "program": "AI | JIM Security Analysis Assistant",
+      "epic": "JIM Post-EBA Alpha Rollout",
+      "itemId": "E-27130",
+      "feature": "JIM EBA solution running on DEV, QA, PROD environment (Platform) (CO PI2)",
+      "featureWorkType": "Innovation",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 38,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Ready to Release",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 5
+      }
+    },
+    {
+      "recordId": "E-27109",
+      "planningLevel": "2026 PI 3",
+      "program": "AI | JIM Security Analysis Assistant",
+      "epic": "JIM Post-EBA Alpha Rollout",
+      "itemId": "E-27109",
+      "feature": "JIM Observation Integration (Platform) (CO PI2)",
+      "featureWorkType": "Innovation",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 6,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "QA",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 5
+      }
+    },
+    {
+      "recordId": "E-27110",
+      "planningLevel": "2026 PI 3",
+      "program": "AI | JIM Security Analysis Assistant",
+      "epic": "JIM Post-EBA Alpha Rollout",
+      "itemId": "E-27110",
+      "feature": "JIM Tools: Web Research",
+      "featureWorkType": "Innovation",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 20,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Ready to Release",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 6
+      }
+    },
+    {
+      "recordId": "E-27118",
+      "planningLevel": "2026 PI 3",
+      "program": "AI | JIM Security Analysis Assistant",
+      "epic": "JIM Post-EBA Alpha Rollout",
+      "itemId": "E-27118",
+      "feature": "JIM Tools: Transcript APIs and FactSet FDS Loader (CO PI2)",
+      "featureWorkType": "Innovation",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 25,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 8
+      }
+    },
+    {
+      "recordId": "E-27114",
+      "planningLevel": "2026 PI 3",
+      "program": "AI | JIM Security Analysis Assistant",
+      "epic": "JIM Post-EBA Alpha Rollout",
+      "itemId": "E-27114",
+      "feature": "JIM Excel Model Ingestion and Research Model Integration Framework",
+      "featureWorkType": "Innovation",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 11,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 8
+      }
+    },
+    {
+      "recordId": "E-27122",
+      "planningLevel": "2026 PI 3",
+      "program": "AI | JIM Security Analysis Assistant",
+      "epic": "JIM Post-EBA Alpha Rollout",
+      "itemId": "E-27122",
+      "feature": "JIM Tools: User Uploaded Documents (CO PI2)",
+      "featureWorkType": "Innovation",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 3,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Ready to Release",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 5
+      }
+    },
+    {
+      "recordId": "E-27009",
+      "planningLevel": "2026 PI 3",
+      "program": "AI | JIM Security Analysis Assistant",
+      "epic": "JIM Post-EBA Alpha Rollout",
+      "itemId": "E-27009",
+      "feature": "JIM Alpha: Chat UI",
+      "featureWorkType": "Innovation",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 21,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 13
+      }
+    },
+    {
+      "recordId": "E-27108",
+      "planningLevel": "2026 PI 3",
+      "program": "AI | JIM Security Analysis Assistant",
+      "epic": "JIM Post-EBA Alpha Rollout",
+      "itemId": "E-27108",
+      "feature": "JIM DataDog Evaluation Integration (CO PI2)",
+      "featureWorkType": "Innovation",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 4,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 8
+      }
+    },
+    {
+      "recordId": "E-27116",
+      "planningLevel": "2026 PI 3",
+      "program": "AI | JIM Security Analysis Assistant",
+      "epic": "JIM Beta: Extending Functionality to Research Workflows",
+      "itemId": "E-27116",
+      "feature": "JIM Tools: FactSet MCP AgentCore Integration",
+      "featureWorkType": "Innovation",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 20,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 8
+      }
+    },
+    {
+      "recordId": "E-27175",
+      "planningLevel": "2026 PI 3",
+      "program": "AI | JIM Security Analysis Assistant",
+      "epic": "JIM Beta: Extending Functionality to Research Workflows",
+      "itemId": "E-27175",
+      "feature": "(DRAFT ) JIM Beta: Observation Integration",
+      "featureWorkType": "Innovation",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 20,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Reviewing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 20
+      }
+    },
+    {
+      "recordId": "E-27307",
+      "planningLevel": "2026 PI 3",
+      "program": "AI | JIM Security Analysis Assistant",
+      "epic": "JIM Beta: Extending Functionality to Research Workflows",
+      "itemId": "E-27307",
+      "feature": "JIM Beta Items (removed from Alpha Scope)",
+      "featureWorkType": "Innovation",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 10,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 13
+      }
+    },
+    {
+      "recordId": "E-27105",
+      "planningLevel": "2026 PI 3",
+      "program": "AI | JIM Security Analysis Assistant",
+      "epic": "JIM Beta: Extending Functionality to Research Workflows",
+      "itemId": "E-27105",
+      "feature": "JIM Chat/Report Editing and Save",
+      "featureWorkType": "Innovation",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 13,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Analyzing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 13
+      }
+    },
+    {
+      "recordId": "E-27104",
+      "planningLevel": "2026 PI 3",
+      "program": "AI | JIM Security Analysis Assistant",
+      "epic": "JIM Beta: Extending Functionality to Research Workflows",
+      "itemId": "E-27104",
+      "feature": "JIM Unified Authorization & Entitlement Gateway for JIM",
+      "featureWorkType": "Innovation",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 8,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Analyzing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 8
+      }
+    },
+    {
+      "recordId": "E-25498",
+      "planningLevel": "2026 PI 3",
+      "program": "Product / Vehicle Launches / Product Changes",
+      "epic": "ACI Insights ETFs Platform Enhancements",
+      "itemId": "E-25498",
+      "feature": "Insights ETF Model Workflow: Integrate the Portfolio API [CO 2.0]",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Cheryl Wood, Cassie Richter",
+      "estimatedPoints": 31,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 11
+      }
+    },
+    {
+      "recordId": "E-26529",
+      "planningLevel": "2026 PI 3",
+      "program": "AI | JIM Security Analysis Assistant",
+      "epic": "JIM: Broker Research Feeds: FactSet Broker API",
+      "itemId": "E-26529",
+      "feature": "JIM FactSet Broker API (Placeholder)",
+      "featureWorkType": "Innovation",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 8,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Reviewing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 8
+      }
+    },
+    {
+      "recordId": "E-21355",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "3.5 Phoenix (transition): Performance/Risk (MPT) Statistics (ABOR, IBOR, Benchmark/Index) - go live 6/30/2026 - 'iterative'",
+      "itemId": "E-21355",
+      "feature": "Phoenix: Performance & NAV - PR (09/30 new Conversion date to Perf.) (CO PI2)",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 24,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 17
+      }
+    },
+    {
+      "recordId": "E-25379",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "6.5 Phoenix (transition): Portfolio Characteristics (Eq, FI, Barra Risk) - go live 11/30/2026 - 'big bang'",
+      "itemId": "E-25379",
+      "feature": "Phoenix - Portfolio Characteristics + Turnover + Stats (Sunset Jobs no longer used)",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 6,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 2
+      }
+    },
+    {
+      "recordId": "E-26589",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Lights On",
+      "epic": "Enterprise Scheduler - UC4 upgrade",
+      "itemId": "E-26589",
+      "feature": "(Carry Over) MART Feature: UC4 Add LoginObject to Events",
+      "featureWorkType": "Lights On",
+      "owner": "Vijay Kumar Singh",
+      "estimatedPoints": 29,
+      "team": [
+        "ITIOPS",
+        "ITMIDOPS",
+        "OTC",
+        "PACE",
+        "RDS",
+        "Portfolio Construction",
+        "Portfolio Research",
+        "Security Master",
+        "Investment Data Mastery"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 5,
+        "ITMIDOPS": 25,
+        "OTC": 3,
+        "PACE": 25,
+        "RDS": 2,
+        "Portfolio Construction": 3,
+        "Portfolio Research": 13,
+        "Security Master": 21,
+        "Investment Data Mastery": 21
+      }
+    },
+    {
+      "recordId": "E-25909",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-25909",
+      "feature": "PR: GNUS/EME ISGV Score Bulk IRN Upload [CO 2.0]",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Cheryl Wood",
+      "estimatedPoints": 11,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 5
+      }
+    },
+    {
+      "recordId": "E-27092",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Maple Program",
+      "epic": "Launch 3 additional Avantis CIBC Asset Allocation Products",
+      "itemId": "E-27092",
+      "feature": "OTC: Set up, Dress Rehearsal and List",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Julie Bird, Kelly Stavola",
+      "estimatedPoints": 7,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 5
+      }
+    },
+    {
+      "recordId": "E-27093",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Maple Program",
+      "epic": "Launch 3 additional Avantis CIBC Asset Allocation Products",
+      "itemId": "E-27093",
+      "feature": "Avantis CIBC ETFs Asset Allocation Seed/List - MART BAU Product Launch Tasks - Aug 27",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Julie Bird, Kelly Stavola",
+      "estimatedPoints": 9,
+      "team": [
+        "ITIOPS",
+        "PACE",
+        "RDS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 1,
+        "PACE": 3,
+        "RDS": 5
+      }
+    },
+    {
+      "recordId": "E-24721",
+      "planningLevel": "2026 PI 3",
+      "program": "Regulatory and Compliance",
+      "epic": "LatentZero Compliance (Sentinel) Upgrade",
+      "itemId": "E-24721",
+      "feature": "Sentinel Application Upgrade - Part 1",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Aaron Hollingshead",
+      "estimatedPoints": 35,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Funnel",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 35
+      }
+    },
+    {
+      "recordId": "E-27142",
+      "planningLevel": "2026 PI 3",
+      "program": "Product / Vehicle Launches / Product Changes",
+      "epic": "MID Changes",
+      "itemId": "E-27142",
+      "feature": "OTC Tasks",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Melissa Chapman",
+      "estimatedPoints": 3,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Analyze Complete - Ready for Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 3
+      }
+    },
+    {
+      "recordId": "E-27143",
+      "planningLevel": "2026 PI 3",
+      "program": "Product / Vehicle Launches / Product Changes",
+      "epic": "MID Changes",
+      "itemId": "E-27143",
+      "feature": "MART Tasks",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Benjamin Crane",
+      "estimatedPoints": 3,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Analyze Complete - Ready for Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 1
+      }
+    },
+    {
+      "recordId": "E-27146",
+      "planningLevel": "2026 PI 3",
+      "program": "Product / Vehicle Launches / Product Changes",
+      "epic": "Balanced Fund Redesign",
+      "itemId": "E-27146",
+      "feature": "OTC Tasks (Balanced Fund Redesign)",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Melissa Chapman",
+      "estimatedPoints": 1,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Analyze Complete - Ready for Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 1
+      }
+    },
+    {
+      "recordId": "E-27147",
+      "planningLevel": "2026 PI 3",
+      "program": "Product / Vehicle Launches / Product Changes",
+      "epic": "Balanced Fund Redesign",
+      "itemId": "E-27147",
+      "feature": "MART Tasks - Balanced Fund Redesign",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "",
+      "estimatedPoints": 8,
+      "team": [
+        "RDS"
+      ],
+      "art": "",
+      "status": "Analyze Complete - Ready for Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "RDS": 2
+      }
+    },
+    {
+      "recordId": "E-26498",
+      "planningLevel": "2026 PI 3",
+      "program": "Product / Vehicle Launches / Product Changes",
+      "epic": "Global Real Estate AUT",
+      "itemId": "E-26498",
+      "feature": "MART BAU Tasks - Gbl RE AUT Launch - needed Oct 15",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Charlene Bessetti",
+      "estimatedPoints": 4,
+      "team": [
+        "ITIOPS",
+        "PACE",
+        "RDS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 1,
+        "PACE": 2,
+        "RDS": 2
+      }
+    },
+    {
+      "recordId": "E-26170",
+      "planningLevel": "2026 PI 3",
+      "program": "Product / Vehicle Launches / Product Changes",
+      "epic": "Avantis U.S. Core Equity ETF (AVUC) and Avantis All International Core Equity ETF (AVNC)",
+      "itemId": "E-26170",
+      "feature": "OTC -AVUC and AVNC Launches: Setup and Enable Systems and Platforms",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Julie Bird, Melissa Chapman, Charlene Bessetti",
+      "estimatedPoints": 5,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 5
+      }
+    },
+    {
+      "recordId": "E-26172",
+      "planningLevel": "2026 PI 3",
+      "program": "Product / Vehicle Launches / Product Changes",
+      "epic": "Avantis U.S. Core Equity ETF (AVUC) and Avantis All International Core Equity ETF (AVNC)",
+      "itemId": "E-26172",
+      "feature": "MART BAU Tasks - AVUC and AVNC Launches - needed 9/24 & 9/30",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Julie Bird, Charlene Bessetti",
+      "estimatedPoints": 7,
+      "team": [
+        "ITIOPS",
+        "ITMIDOPS",
+        "RDS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 2,
+        "ITMIDOPS": 1,
+        "RDS": 2
+      }
+    },
+    {
+      "recordId": "E-27091",
+      "planningLevel": "2026 PI 3",
+      "program": "Product / Vehicle Launches / Product Changes",
+      "epic": "UCITS ETFs - Implement Securities Lending",
+      "itemId": "E-27091",
+      "feature": "UCITS ETFs - Implement Securities Lending - Testing and Validation",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Kelly Stavola",
+      "estimatedPoints": 1,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Funnel",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 1
+      }
+    },
+    {
+      "recordId": "E-26467",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Maple Program",
+      "epic": "Project Maple / CIBC Scalability & Efficiency",
+      "itemId": "E-26467",
+      "feature": "[CARRYOVER] Project Maple - UFO: Overhaul to ETF list assignment",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Julie Bird, Kelly Stavola",
+      "estimatedPoints": 18,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 5
+      }
+    },
+    {
+      "recordId": "E-26588",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Maple Program",
+      "epic": "Project Maple / CIBC Scalability & Efficiency",
+      "itemId": "E-26588",
+      "feature": "[CARRYOVER] Project Maple - Direct to Broker Connectivity (Phase 2)",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Julie Bird, Melissa Chapman, Kelly Stavola",
+      "estimatedPoints": 1,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 1
+      }
+    },
+    {
+      "recordId": "E-26499",
+      "planningLevel": "2026 PI 3",
+      "program": "Product / Vehicle Launches / Product Changes",
+      "epic": "Global Real Estate AUT",
+      "itemId": "E-26499",
+      "feature": "OTC - Gbl RE AUT Launch: Setup and Enable Systems and Platforms",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Melissa Chapman",
+      "estimatedPoints": 1,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 1
+      }
+    },
+    {
+      "recordId": "E-27010",
+      "planningLevel": "2026 PI 3",
+      "program": "Product / Vehicle Launches / Product Changes",
+      "epic": "Product Changes: MUSI & FUSI",
+      "itemId": "E-27010",
+      "feature": "Product Changes: FUSI",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Charlene Bessetti",
+      "estimatedPoints": 4,
+      "team": [
+        "ITMIDOPS",
+        "OTC",
+        "PACE"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITMIDOPS": 1,
+        "OTC": 1,
+        "PACE": 2
+      }
+    },
+    {
+      "recordId": "E-27011",
+      "planningLevel": "2026 PI 3",
+      "program": "Product / Vehicle Launches / Product Changes",
+      "epic": "Product Changes: MUSI & FUSI",
+      "itemId": "E-27011",
+      "feature": "Product Changes: MUSI (effect 9/14)",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Charlene Bessetti",
+      "estimatedPoints": 6,
+      "team": [
+        "ITIOPS",
+        "ITMIDOPS",
+        "OTC",
+        "PACE",
+        "RDS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 1,
+        "ITMIDOPS": 1,
+        "OTC": 2,
+        "PACE": 2,
+        "RDS": 1
+      }
+    },
+    {
+      "recordId": "E-25438",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "PACE Transition: PACE Holdings processes to convert",
+      "itemId": "E-25438",
+      "feature": "NPORT - PACE Decommission",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Pankesh Patel, Kelly Stavola",
+      "estimatedPoints": 2,
+      "team": [
+        "ITIOPS",
+        "PACE"
+      ],
+      "art": "",
+      "status": "Analyzing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 1,
+        "PACE": 8
+      }
+    },
+    {
+      "recordId": "E-24519",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "5. Phoenix (build): Accounting and Market Data Products (NAVs, AUM, Expenses/Waivers, Distributions, Yields)",
+      "itemId": "E-24519",
+      "feature": "[Carryover]ABOR accounting data to Aquata - (NAVs )",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Chris Woods",
+      "estimatedPoints": 22,
+      "team": [
+        "Project Phoenix"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Project Phoenix": 13
+      }
+    },
+    {
+      "recordId": "E-25837",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-25837",
+      "feature": "2026 PI 3 MART Enhancements - Phoenix",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Juanita Phelps",
+      "estimatedPoints": 39,
+      "team": [
+        "Project Phoenix"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Project Phoenix": 75
+      }
+    },
+    {
+      "recordId": "E-19956",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "3.1 Phoenix (history): Performance/Risk (MPT) Statistics (ABOR, IBOR, Benchmark/Index)",
+      "itemId": "E-19956",
+      "feature": "[Carryover]ABOR/IBOR/Benchmark performance history",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Chris Woods",
+      "estimatedPoints": 16,
+      "team": [
+        "Project Phoenix"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Project Phoenix": 10
+      }
+    },
+    {
+      "recordId": "E-26534",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "5. Phoenix (build): ETF Market Data",
+      "itemId": "E-26534",
+      "feature": "[Carryover]ETF Data Availability Notifications",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Chris Woods",
+      "estimatedPoints": 24,
+      "team": [
+        "Project Phoenix"
+      ],
+      "art": "",
+      "status": "Analyzing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Project Phoenix": 25
+      }
+    },
+    {
+      "recordId": "E-25447",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "5. Phoenix (build): Corporate Net Assets and Firm AUM",
+      "itemId": "E-25447",
+      "feature": "[Carryover]PHOENIX: firm_aum",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Chris Woods",
+      "estimatedPoints": 24,
+      "team": [
+        "Project Phoenix"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Project Phoenix": 20
+      }
+    },
+    {
+      "recordId": "E-25294",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "5.1 Phoenix (history): Accounting and Market Data Products",
+      "itemId": "E-25294",
+      "feature": "PHOENIX: Firm AUM - BAU and load history",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Chris Woods",
+      "estimatedPoints": 10,
+      "team": [
+        "Project Phoenix"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Project Phoenix": 10
+      }
+    },
+    {
+      "recordId": "E-22735",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "5.1 Phoenix (history): Accounting and Market Data Products",
+      "itemId": "E-22735",
+      "feature": "ABOR accounting data to Aquata - (NAVs and Distributions) - BAU and load history",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Chris Woods",
+      "estimatedPoints": 17,
+      "team": [
+        "Project Phoenix"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Project Phoenix": 20
+      }
+    },
+    {
+      "recordId": "E-25869",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "5.5 Phoenix (transition): Accounting and Market Data Products (NAVs, AUM, Expenses/Waivers, Distributions, Yields) - go live 9/30/2026 - 'big bang'",
+      "itemId": "E-25869",
+      "feature": "[Carryover]PHOENIX: Data Explore for Net Assets (PIC Replacement",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Chris Woods",
+      "estimatedPoints": 3,
+      "team": [
+        "Project Phoenix"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Project Phoenix": 3
+      }
+    },
+    {
+      "recordId": "E-17850",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "7. Phoenix (build): Position Summary Service (holdings and aggregations) - excluding history",
+      "itemId": "E-17850",
+      "feature": "[Carryover]IBOR Holdings to data platform",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Chris Woods",
+      "estimatedPoints": 24,
+      "team": [
+        "Project Phoenix"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Project Phoenix": 3
+      }
+    },
+    {
+      "recordId": "E-25949",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "6. Phoenix (build): Portfolio Activity (fka; Portfolio Add/Buy/Trim/Sell)",
+      "itemId": "E-25949",
+      "feature": "[carryover]PHOENIX: Portfolio Activity Data Product",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Chris Woods",
+      "estimatedPoints": 43,
+      "team": [
+        "ITMIDOPS",
+        "Project Phoenix"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITMIDOPS": 6,
+        "Project Phoenix": 20
+      }
+    },
+    {
+      "recordId": "E-03364",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "7.5 Phoenix (transition): Position Summary Service (holdings and aggregated) - go live 11/30/2026 - 'big bang'",
+      "itemId": "E-03364",
+      "feature": "[Carryover]Phoenix: Data Explore IBOR portfolio holdings with security attributes (PIC replacement)",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Chris Woods",
+      "estimatedPoints": 4,
+      "team": [
+        "Project Phoenix"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Project Phoenix": 3
+      }
+    },
+    {
+      "recordId": "E-25448",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "7. Phoenix (build): Position Summary Service (holdings and aggregations) - excluding history",
+      "itemId": "E-25448",
+      "feature": "[carryover]Daily MM WAM/WAL - security level data from SSB - Analyze 4/2/2026",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Chris Woods",
+      "estimatedPoints": 40,
+      "team": [
+        "ITIOPS",
+        "PACE",
+        "Project Phoenix"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 10,
+        "PACE": 4,
+        "Project Phoenix": 20
+      }
+    },
+    {
+      "recordId": "E-20423",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "Eagle PACE Decommission - Naga",
+      "itemId": "E-20423",
+      "feature": "Money Market Liquidity Solution without PACE - Eagle Decommission",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Chris Woods",
+      "estimatedPoints": 18,
+      "team": [
+        "RDS"
+      ],
+      "art": "",
+      "status": "Analyzing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "RDS": 18
+      }
+    },
+    {
+      "recordId": "E-25297",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "6. Phoenix (build): Portfolio Activity (fka; Portfolio Add/Buy/Trim/Sell)",
+      "itemId": "E-25297",
+      "feature": "PHOENIX: Name Turnover",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Chris Woods",
+      "estimatedPoints": 12,
+      "team": [
+        "Project Phoenix"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Project Phoenix": 12
+      }
+    },
+    {
+      "recordId": "E-18509",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "PACE Transition: PACE Holdings processes to convert",
+      "itemId": "E-18509",
+      "feature": "NPORT Template - Delivery Testing with Donnelly",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Kelly Stavola",
+      "estimatedPoints": 11,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 5
+      }
+    },
+    {
+      "recordId": "E-26377",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "8.5 Phoenix (transition): Equity Attribution Data Products (Brinson, Barra, and Avantis) - go live 11/30/2026 - 'big bang'",
+      "itemId": "E-26377",
+      "feature": "Attribution .xls files Summary and Detail replacement",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Chris Woods",
+      "estimatedPoints": 10,
+      "team": [
+        "Project Phoenix"
+      ],
+      "art": "",
+      "status": "Funnel",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Project Phoenix": 10
+      }
+    },
+    {
+      "recordId": "E-27209",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Phoenix",
+      "epic": "7.5 Phoenix (transition): Position Summary Service (holdings and aggregated) - go live 11/30/2026 - 'big bang'",
+      "itemId": "E-27209",
+      "feature": "Phoenix: ITIOPS Enhancements - PI3",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 2,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 10
+      }
+    },
+    {
+      "recordId": "E-20552",
+      "planningLevel": "2026 PI 3",
+      "program": "Avantis Platform Development",
+      "epic": "AVEQ - PRS Data Integrity - Securities",
+      "itemId": "E-20552",
+      "feature": "Provide a View for Dually Listed Securities and Exclude Other Fund Holdings",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Julie Bird, Cassie Richter",
+      "estimatedPoints": 4,
+      "team": [
+        "Portfolio Construction"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Construction": 5
+      }
+    },
+    {
+      "recordId": "E-22191",
+      "planningLevel": "2026 PI 3",
+      "program": "Avantis Platform Development",
+      "epic": "AVEQ - Transition PRS Inputs Into PCM Workbench",
+      "itemId": "E-22191",
+      "feature": "Move Country Targets to PCM Workbench",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Julie Bird, Cassie Richter",
+      "estimatedPoints": 27,
+      "team": [
+        "Portfolio Construction"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Construction": 22
+      }
+    },
+    {
+      "recordId": "E-25288",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-25288",
+      "feature": "PC: 2026 PI 3 MART Enhancements",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Julie Bird, Cassie Richter",
+      "estimatedPoints": 17,
+      "team": [
+        "Portfolio Construction"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Construction": 9
+      }
+    },
+    {
+      "recordId": "E-26951",
+      "planningLevel": "2026 PI 3",
+      "program": "Security Implementation Program",
+      "epic": "Interest Rate Swaps on New Underlying Overnight Rates (Deliverable Currencies - USD, JPY, GBP)",
+      "itemId": "E-26951",
+      "feature": "Interest Rate Swaps on New Underlying Overnight Rates ( USD, JPY, GBP): ETFs and Separate Accounts",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Diane Woznick",
+      "estimatedPoints": 9,
+      "team": [
+        "ITMIDOPS"
+      ],
+      "art": "",
+      "status": "Analyzing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITMIDOPS": 3
+      }
+    },
+    {
+      "recordId": "E-24418",
+      "planningLevel": "2026 PI 3",
+      "program": "Security Implementation Program",
+      "epic": "Inverse Floaters/ Residual Interest Bond",
+      "itemId": "E-24418",
+      "feature": "Inverse Floaters - Ph 1: Security Type and Mastering Requirements",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Diane Woznick",
+      "estimatedPoints": 43.5,
+      "team": [
+        "ITIOPS",
+        "OTC",
+        "RDS",
+        "Investment Data Mastery"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 15,
+        "OTC": 2,
+        "RDS": 8,
+        "Investment Data Mastery": 21
+      }
+    },
+    {
+      "recordId": "E-26508",
+      "planningLevel": "2026 PI 3",
+      "program": "Security Implementation Program",
+      "epic": "Inverse Floaters/ Residual Interest Bond",
+      "itemId": "E-26508",
+      "feature": "Inverse Floaters Ph 2: Full End to End Testing",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Diane Woznick",
+      "estimatedPoints": 13,
+      "team": [
+        "ITMIDOPS",
+        "OTC",
+        "PACE",
+        "RDS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITMIDOPS": 2,
+        "OTC": 1,
+        "PACE": 1,
+        "RDS": 5
+      }
+    },
+    {
+      "recordId": "E-20313",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-20313",
+      "feature": "EOD Position Cutover to Production - Enhancements",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Kelly Stavola",
+      "estimatedPoints": 15,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 20
+      }
+    },
+    {
+      "recordId": "E-25745",
+      "planningLevel": "2026 PI 3",
+      "program": "FactSet Platform Optimization",
+      "epic": "Delta-based Security Model Harness",
+      "itemId": "E-25745",
+      "feature": "[Carry Over] Refactor Security Model Integration (from Files) to API",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Ally Che",
+      "estimatedPoints": 33,
+      "team": [
+        "RDS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "RDS": 2
+      }
+    },
+    {
+      "recordId": "E-27163",
+      "planningLevel": "2026 PI 3",
+      "program": "FactSet Platform Optimization",
+      "epic": "Consolidate Supplemental Security Feed Ownership (Organizationally)",
+      "itemId": "E-27163",
+      "feature": "Transfer Ownership All Supplemental Security Feeds",
+      "featureWorkType": "Unspecified",
+      "owner": "Seth Neo, Joseph Wright, Ally Che",
+      "estimatedPoints": 21,
+      "team": [
+        "PACE",
+        "RDS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "PACE": 5,
+        "RDS": 16
+      }
+    },
+    {
+      "recordId": "E-24168",
+      "planningLevel": "2026 PI 3",
+      "program": "ID&A Initiative",
+      "epic": "Automate GNUS Weekly/Daily Excel Macros (via FactSet's Book Builder)",
+      "itemId": "E-24168",
+      "feature": "Automate GNUS Weekly/Daily Excel Macros",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Cheryl Wood, Jacquelyn Hopkins",
+      "estimatedPoints": 10,
+      "team": [
+        "Portfolio Research"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Research": 13
+      }
+    },
+    {
+      "recordId": "E-24751",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-24751",
+      "feature": "Core Matcher Exception Reduction Enhancements",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Andre Schneider",
+      "estimatedPoints": 35,
+      "team": [
+        "Investment Data Mastery"
+      ],
+      "art": "",
+      "status": "Funnel",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Investment Data Mastery": 35
+      }
+    },
+    {
+      "recordId": "E-23388",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-23388",
+      "feature": "[CARRYOVER] FINRA OTC Tier 2 Data",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Melissa Chapman",
+      "estimatedPoints": 22,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 5
+      }
+    },
+    {
+      "recordId": "E-27423",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 Keep the Lights On (KTLO) & Tech Optimization (Pilot)",
+      "epic": "Replace IMAP with Graph using modern authentication",
+      "itemId": "E-27423",
+      "feature": "ITMIDOPS: Replace IMAP with Graph using modern authentication",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Mike Kerton, Melissa Chapman",
+      "estimatedPoints": 25,
+      "team": [
+        "ITMIDOPS",
+        "OTC"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITMIDOPS": 12,
+        "OTC": 1
+      }
+    },
+    {
+      "recordId": "E-26644",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Lights On",
+      "epic": "2026 TSS Keep The Lights On & Tech Optimization (KTLO)",
+      "itemId": "E-26644",
+      "feature": "MART TIBCO BW upgrade",
+      "featureWorkType": "Lights On",
+      "owner": "Jeff Portsche, Aaron Gurley, Vijay Kumar Singh",
+      "estimatedPoints": 19,
+      "team": [
+        "OTC",
+        "PACE"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 1,
+        "PACE": 20
+      }
+    },
+    {
+      "recordId": "E-26614",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 ACI Enhancements",
+      "itemId": "E-26614",
+      "feature": "[Carryover PI2] ITMIDOPS - NDF Settlement Rewrite User Interface",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "",
+      "estimatedPoints": 223,
+      "team": [
+        "ITMIDOPS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITMIDOPS": 75
+      }
+    },
+    {
+      "recordId": "E-26900",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-26900",
+      "feature": "Automate Intake and Processing of other Inst'l. Custodians Capital into PAT",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 9,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 15
+      }
+    },
+    {
+      "recordId": "E-26944",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-26944",
+      "feature": "[INJECT] Remove lambdas",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Melissa Chapman",
+      "estimatedPoints": 8,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 8
+      }
+    },
+    {
+      "recordId": "E-26986",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 Keep the Lights On (KTLO) & Tech Optimization (Pilot)",
+      "epic": "PAT Cash Rewrite - Capital Activity",
+      "itemId": "E-26986",
+      "feature": "PI3 - PAT Cash Rewrite - Capital Activity and Multi-Cash",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 32,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 25
+      }
+    },
+    {
+      "recordId": "E-26988",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Lights On",
+      "epic": "Aurora PostgreSQL Resiliency Enhancements",
+      "itemId": "E-26988",
+      "feature": "ITIOPS 2026 PI3 - Aurora PostgresSQL",
+      "featureWorkType": "Lights On",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 10,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 10
+      }
+    },
+    {
+      "recordId": "E-26995",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-26995",
+      "feature": "2026 PI3 Trade Recap Reporting Enhancements",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "",
+      "estimatedPoints": 11,
+      "team": [
+        "ITMIDOPS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITMIDOPS": 12
+      }
+    },
+    {
+      "recordId": "E-26997",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 ACI Enhancements",
+      "itemId": "E-26997",
+      "feature": "ITMIDOPS - NDF Settlement Rewrite MVP Enhancements (Phase 2)",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Mike Kerton",
+      "estimatedPoints": 20,
+      "team": [
+        "ITMIDOPS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITMIDOPS": 36
+      }
+    },
+    {
+      "recordId": "E-27431",
+      "planningLevel": "2026 PI 3",
+      "program": "Avantis Platform Development",
+      "epic": "AVEQ - Transition PRS Inputs Into PCM Workbench",
+      "itemId": "E-27431",
+      "feature": "Industry Sector Limits to PCM Workbench",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Julie Bird, Cassie Richter",
+      "estimatedPoints": 22,
+      "team": [
+        "Portfolio Construction"
+      ],
+      "art": "",
+      "status": "Analyzing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "Portfolio Construction": 22
+      }
+    },
+    {
+      "recordId": "E-27168",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 Keep the Lights On (KTLO) & Tech Optimization (Pilot)",
+      "epic": "MART Vulnerability Tracking 2026",
+      "itemId": "E-27168",
+      "feature": "ITIOPS - AUT Refine Capital, Variable, and Slippage Processes",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 8,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 15
+      }
+    },
+    {
+      "recordId": "E-27289",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-27289",
+      "feature": "ITMidOps - Bank Loan Transaction Improvement",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Mike Kerton",
+      "estimatedPoints": 4,
+      "team": [
+        "ITMIDOPS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITMIDOPS": 8
+      }
+    },
+    {
+      "recordId": "E-27295",
+      "planningLevel": "2026 PI 3",
+      "program": "Unassigned",
+      "epic": "",
+      "itemId": "E-27295",
+      "feature": "ITIOPS - Expand Tax-Year Distribution Attribute Storage--Foreign Tax Credit",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 10,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 10
+      }
+    },
+    {
+      "recordId": "E-27300",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-27300",
+      "feature": "CIO Monitor Process Enhancement",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Ally Che",
+      "estimatedPoints": 14,
+      "team": [
+        "RDS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "RDS": 14
+      }
+    },
+    {
+      "recordId": "E-27301",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-27301",
+      "feature": "MAS HY / IG Tableau Report Enhancement",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Ally Che",
+      "estimatedPoints": 12,
+      "team": [
+        "RDS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "RDS": 12
+      }
+    },
+    {
+      "recordId": "E-27303",
+      "planningLevel": "2026 PI 3",
+      "program": "Data Tech Transformation (FKA Tahoe)",
+      "epic": "Upgrade SAP BusinessObjects Platform from BO 4.3 to BI 2025",
+      "itemId": "E-27303",
+      "feature": "OTC: SAP BI (Crystal Reports) 2025 Upgrade",
+      "featureWorkType": "Tech Debt",
+      "owner": "Melissa Chapman",
+      "estimatedPoints": 5,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Analyze Complete - Ready for Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 5
+      }
+    },
+    {
+      "recordId": "E-27309",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 Keep the Lights On (KTLO) & Tech Optimization (Pilot)",
+      "epic": "Migration of File Transfers to MOVEit Managed File Transfer Platform",
+      "itemId": "E-27309",
+      "feature": "OTC: MFT - Legacy File Transfer Migrations (Crystal Report files)",
+      "featureWorkType": "Tech Debt",
+      "owner": "Melissa Chapman",
+      "estimatedPoints": 3,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Analyzing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 3
+      }
+    },
+    {
+      "recordId": "E-27315",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-27315",
+      "feature": "ITIOPS - Automate Capital Processing Using SSB API",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 16,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 15
+      }
+    },
+    {
+      "recordId": "E-27351",
+      "planningLevel": "2026 PI 3",
+      "program": "Project Maple Program",
+      "epic": "Project Maple / CIBC Scalability & Efficiency",
+      "itemId": "E-27351",
+      "feature": "BNY Production adjustments to address day to day issues (PI 3)",
+      "featureWorkType": "Lights On",
+      "owner": "Melissa Chapman",
+      "estimatedPoints": 5,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Analyzing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 5
+      }
+    },
+    {
+      "recordId": "E-27373",
+      "planningLevel": "2026 PI 3",
+      "program": "API Platform Enablement",
+      "epic": "Migrate Applications off MuleSoft",
+      "itemId": "E-27373",
+      "feature": "ITIMOT - Migrate from Global Access Token API to Client Credentials Token API PI3",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Melissa Chapman",
+      "estimatedPoints": 8,
+      "team": [
+        "OTC"
+      ],
+      "art": "",
+      "status": "Analyze Complete - Ready for Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "OTC": 8
+      }
+    },
+    {
+      "recordId": "E-27384",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-27384",
+      "feature": "ITIOPS - Expand Tax-Year Distribution Attribute Storage",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 14,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Implementing",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 10
+      }
+    },
+    {
+      "recordId": "E-27390",
+      "planningLevel": "2026 PI 3",
+      "program": "API Platform Enablement",
+      "epic": "Migrate Applications off MuleSoft",
+      "itemId": "E-27390",
+      "feature": "RDS - Mule Migration PI3 (2026)",
+      "featureWorkType": "Unspecified",
+      "owner": "John Sandberg, Praneeth Mamillapalli",
+      "estimatedPoints": 13,
+      "team": [
+        "RDS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "RDS": 13
+      }
+    },
+    {
+      "recordId": "E-27420",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-27420",
+      "feature": "RDS | Exposure Modernization #1",
+      "featureWorkType": "Unspecified",
+      "owner": "Ally Che",
+      "estimatedPoints": 23,
+      "team": [
+        "RDS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "RDS": 23
+      }
+    },
+    {
+      "recordId": "E-27425",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-27425",
+      "feature": "ITMIDOPS - EOD Dashboard Proof of Concept",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Mike Kerton",
+      "estimatedPoints": 6,
+      "team": [
+        "ITMIDOPS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITMIDOPS": 6
+      }
+    },
+    {
+      "recordId": "E-27428",
+      "planningLevel": "2026 PI 3",
+      "program": "Data Tech Transformation (FKA Tahoe)",
+      "epic": "Upgrade SAP BusinessObjects Platform from BO 4.3 to BI 2025",
+      "itemId": "E-27428",
+      "feature": "ITMIDOPS - SAP BI (Crystal Reports) 2025 Upgrade",
+      "featureWorkType": "Tech Debt",
+      "owner": "Mike Kerton",
+      "estimatedPoints": 12,
+      "team": [
+        "ITMIDOPS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITMIDOPS": 8
+      }
+    },
+    {
+      "recordId": "E-27430",
+      "planningLevel": "2026 PI 3",
+      "program": "2026 ACI Enhancements",
+      "epic": "2026 MART Enhancements",
+      "itemId": "E-27430",
+      "feature": "ITIOPS Analyze and Replace PACE Entity Service Dependency in PRER Screen",
+      "featureWorkType": "Strategic & Enhancements",
+      "owner": "Jennifer Beck",
+      "estimatedPoints": 5,
+      "team": [
+        "ITIOPS"
+      ],
+      "art": "",
+      "status": "Backlog",
+      "startDate": null,
+      "endDate": null,
+      "allocations": {
+        "ITIOPS": 18
+      }
+    }
+  ],
+  "capacityRecords": [
+    {
+      "planningLevel": "2026 PI 3",
+      "team": "ITIOPS",
+      "capacityPoints": 364,
+      "reservedSupportPercent": 0,
+      "ptoImpactPoints": 0,
+      "holidayImpactPoints": 0,
+      "confidence": "Medium"
+    },
+    {
+      "planningLevel": "2026 PI 3",
+      "team": "ITMIDOPS",
+      "capacityPoints": 263,
+      "reservedSupportPercent": 0,
+      "ptoImpactPoints": 0,
+      "holidayImpactPoints": 0,
+      "confidence": "Medium"
+    },
+    {
+      "planningLevel": "2026 PI 3",
+      "team": "Investment Data Mastery",
+      "capacityPoints": 261,
+      "reservedSupportPercent": 0,
+      "ptoImpactPoints": 0,
+      "holidayImpactPoints": 0,
+      "confidence": "Medium"
+    },
+    {
+      "planningLevel": "2026 PI 3",
+      "team": "OTC",
+      "capacityPoints": 250,
+      "reservedSupportPercent": 0,
+      "ptoImpactPoints": 0,
+      "holidayImpactPoints": 0,
+      "confidence": "Medium"
+    },
+    {
+      "planningLevel": "2026 PI 3",
+      "team": "PACE",
+      "capacityPoints": 185,
+      "reservedSupportPercent": 0,
+      "ptoImpactPoints": 0,
+      "holidayImpactPoints": 0,
+      "confidence": "Medium"
+    },
+    {
+      "planningLevel": "2026 PI 3",
+      "team": "Portfolio Construction",
+      "capacityPoints": 103,
+      "reservedSupportPercent": 0,
+      "ptoImpactPoints": 0,
+      "holidayImpactPoints": 0,
+      "confidence": "Medium"
+    },
+    {
+      "planningLevel": "2026 PI 3",
+      "team": "Portfolio Research",
+      "capacityPoints": 212,
+      "reservedSupportPercent": 0,
+      "ptoImpactPoints": 0,
+      "holidayImpactPoints": 0,
+      "confidence": "Medium"
+    },
+    {
+      "planningLevel": "2026 PI 3",
+      "team": "Product Master",
+      "capacityPoints": 13,
+      "reservedSupportPercent": 0,
+      "ptoImpactPoints": 0,
+      "holidayImpactPoints": 0,
+      "confidence": "Medium"
+    },
+    {
+      "planningLevel": "2026 PI 3",
+      "team": "Project Phoenix",
+      "capacityPoints": 244,
+      "reservedSupportPercent": 0,
+      "ptoImpactPoints": 0,
+      "holidayImpactPoints": 0,
+      "confidence": "Medium"
+    },
+    {
+      "planningLevel": "2026 PI 3",
+      "team": "RDS",
+      "capacityPoints": 239,
+      "reservedSupportPercent": 0,
+      "ptoImpactPoints": 0,
+      "holidayImpactPoints": 0,
+      "confidence": "Medium"
+    },
+    {
+      "planningLevel": "2026 PI 3",
+      "team": "Security Master",
+      "capacityPoints": 21,
+      "reservedSupportPercent": 0,
+      "ptoImpactPoints": 0,
+      "holidayImpactPoints": 0,
+      "confidence": "Medium"
+    },
+    {
+      "planningLevel": "2026 PI 3",
+      "team": "z-InvOps",
+      "capacityPoints": 37,
+      "reservedSupportPercent": 0,
+      "ptoImpactPoints": 0,
+      "holidayImpactPoints": 0,
+      "confidence": "Medium"
+    }
+  ]
+}

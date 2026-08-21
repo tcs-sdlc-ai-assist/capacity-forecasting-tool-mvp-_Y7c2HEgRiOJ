@@ -29,16 +29,12 @@ const sanitizeDiagnosticString = (value, fallback, maximumLength) => {
   return sanitized || fallback;
 };
 
-const normalizeHeader = (header, index) => {
+const normalizeHeader = (header) => {
   if (typeof header !== 'string') {
     return '';
   }
 
-  const withoutByteOrderMark = index === 0
-    ? header.replace(/^\uFEFF/, '')
-    : header;
-
-  return withoutByteOrderMark.trim();
+  return header.replace(/^\uFEFF/, '').trim();
 };
 
 const hasMeaningfulValue = (value) => {
@@ -223,7 +219,7 @@ export class CsvImportParser {
         skipEmptyLines: 'greedy',
         dynamicTyping: false,
         transformHeader(header, index) {
-          const normalizedHeader = normalizeHeader(header, index);
+          const normalizedHeader = normalizeHeader(header);
           const numericIndex = Number(index);
 
           // Papa Parse can invoke transformHeader twice. Keep the first
@@ -262,7 +258,9 @@ export class CsvImportParser {
       ? parsed.meta.fields.map(normalizeHeader)
       : [...sourceHeaders];
     const parserDiagnostics = Array.isArray(parsed.errors)
-      ? parsed.errors.map(createParserDiagnostic)
+      ? parsed.errors
+        .filter((diagnostic) => diagnostic?.code !== 'TooFewFields')
+        .map(createParserDiagnostic)
       : [];
     const diagnostics = [
       ...createDuplicateHeaderDiagnostics(sourceHeaders),
@@ -290,7 +288,30 @@ export class CsvImportParser {
       );
     }
 
-    const records = parsed.data.filter(isMeaningfulRecord);
+    const records = parsed.data
+      .map((record) => {
+        if (
+          record === null
+          || typeof record !== 'object'
+          || Array.isArray(record)
+        ) {
+          return record;
+        }
+
+        const padded = { ...record };
+
+        headers.forEach((header) => {
+          if (
+            header
+            && !Object.prototype.hasOwnProperty.call(padded, header)
+          ) {
+            padded[header] = '';
+          }
+        });
+
+        return padded;
+      })
+      .filter(isMeaningfulRecord);
 
     if (records.length === 0) {
       return createFailureResult(

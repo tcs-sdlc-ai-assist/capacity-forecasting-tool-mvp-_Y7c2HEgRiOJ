@@ -241,7 +241,7 @@ Browser-local data may have been written by a newer application version. Before 
 - Test upgrade and rollback behavior using populated browser storage.
 - Communicate when users must remove local data to recover from incompatible state.
 
-If stored dataset content is malformed or incompatible with the current supported schema, startup recovery replaces it with the bundled synthetic demo dataset. Users can also use the application’s local-data removal action when a complete reset is required.
+If stored dataset content is malformed or incompatible with the current supported schema, startup recovery replaces it with the bundled sample dataset. Users can also use the application’s local-data removal action when a complete reset is required.
 
 ## Browser storage operations
 
@@ -319,8 +319,8 @@ Use a fresh browser context for the initial smoke test:
 2. Confirm the application redirects to `/login`.
 3. Sign in with a bundled demo account.
 4. Confirm the synthetic demo disclosure appears.
-5. Confirm the dataset reports 36 work items and 12 teams.
-6. Search for a known item such as `CFT-1201`.
+5. Confirm the dataset reports 136 work items and 12 teams.
+6. Search for a known item such as `E-26989`.
 7. Open a capacity detail popover with keyboard focus.
 8. Change and save capacity thresholds.
 9. Refresh and confirm the threshold values persist.

@@ -141,55 +141,6 @@ const createDefaultFilters = () => ({
   sorting: [],
 });
 
-const readSelection = (filters, canonicalKey, aliases = []) => {
-  const candidates = [
-    filters?.[canonicalKey],
-    ...aliases.map((alias) => filters?.[alias]),
-  ];
-  const value = candidates.find(Array.isArray);
-
-  return normalizeSelections(value);
-};
-
-const normalizeFilters = (value) => {
-  const filters = isRecord(value) ? value : {};
-  const searchTerm = filters.searchTerm
-    ?? filters.searchQuery
-    ?? filters.search
-    ?? filters.globalFilter
-    ?? '';
-
-  return {
-    searchTerm: normalizeSearchTerm(searchTerm),
-    selectedPlanningLevels: readSelection(
-      filters,
-      FORECAST_FILTER_KEYS.PLANNING_LEVELS,
-      ['planningLevels', 'planningLevelSelections'],
-    ),
-    selectedOwners: readSelection(
-      filters,
-      FORECAST_FILTER_KEYS.OWNERS,
-      ['owners', 'ownerSelections'],
-    ),
-    selectedPrograms: readSelection(
-      filters,
-      FORECAST_FILTER_KEYS.PROGRAMS,
-      ['programs', 'programSelections'],
-    ),
-    selectedTeams: readSelection(
-      filters,
-      FORECAST_FILTER_KEYS.TEAMS,
-      ['teams', 'teamSelections'],
-    ),
-    selectedArts: readSelection(
-      filters,
-      FORECAST_FILTER_KEYS.ARTS,
-      ['arts', 'artSelections'],
-    ),
-    sorting: normalizeSorting(filters.sorting),
-  };
-};
-
 const createFilterState = (filters = createDefaultFilters()) => ({
   searchTerm: filters.searchTerm,
   searchQuery: filters.searchTerm,

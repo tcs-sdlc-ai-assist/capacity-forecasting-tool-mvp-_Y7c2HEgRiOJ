@@ -187,11 +187,11 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
 
     await expect(ownerInput).toBeEnabled();
     await ownerInput.click();
-    await ownerInput.fill('Seth Neo');
-    await page.getByRole('option', {
-      name: 'Seth Neo',
-      exact: true,
-    }).click();
+    await page.getByRole('listbox', {
+      name: 'Owner options',
+    }).getByRole('option', {
+      name: /Seth Neo/,
+    }).first().click();
     await ownerInput.press('Escape');
 
     const teamInput = page.getByRole('combobox', {
@@ -199,11 +199,11 @@ test.describe('Capacity Forecast Tool critical acceptance', () => {
     });
 
     await teamInput.click();
-    await teamInput.fill('Product Master');
-    await page.getByRole('option', {
-      name: 'Product Master',
-      exact: true,
-    }).click();
+    await page.getByRole('listbox', {
+      name: 'Team options',
+    }).getByRole('option', {
+      name: /Product Master/,
+    }).first().click();
 
     const noResultsHeading = page.getByRole('heading', {
       name: 'No matching work items',
